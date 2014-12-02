@@ -1,0 +1,25 @@
+{
+  "name": "gliding2",
+  "version": "0.0.0",
+  "description": "gliding2 ========",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BenBBear/gliding2"
+  },
+  "author": "Xinyu Zhang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BenBBear/gliding2/issues"
+  },
+  "homepage": "https://github.com/BenBBear/gliding2",
+  "dependencies": {
+    "router": "^1.0.0-beta.2"
+  }
+}
