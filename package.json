@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/BenBBear/gliding2",
   "dependencies": {
-    "router": "^1.0.0-beta.2"
+    "cli-color": "^0.3.2",
+    "light-router": "^0.1.2",
+    "static-route": "^0.1.1",
+    "walk": "^2.3.4"
   }
 }
