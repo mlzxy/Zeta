@@ -37,6 +37,9 @@ var safeRequire = function(path) {
     }
 };
 
+
+
+
 var safePut = function(place, key, val, where) {
     if (place === undefined)
         place = {};
@@ -50,6 +53,13 @@ var safePut = function(place, key, val, where) {
     }
 };
 
+
+var safeCopy = function(x, y, msg) {
+    for (var idx in y) {
+        safePut(x, idx, y[idx], msg);
+    }
+    return x;
+};
 
 
 function updateOptions(a, b) {
@@ -84,6 +94,8 @@ exports.equals = compare.equals;
 
 /*more */
 exports.updateOptions = updateOptions;
+exports.quiteRequire = quiteRequire;
+
 exports.safeRequire = safeRequire;
 exports.safePut = safePut;
-exports.quiteRequire = quiteRequire;
+exports.safeCopy = safeCopy;

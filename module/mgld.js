@@ -1,49 +1,58 @@
 var myUtil = require('../util/util.js');
 var walk = require('walk');
 var options = reqiure('../util/options.js');
-
-
+var rt = require('../route/router.js');
 
 var getmMap = function(path) {
     var mMap = {};
 
     var ff = function(root, stat, next) {
         var filename = root + '/' + stat.name;
-        console.log(filename);
+        if (!myUtil.isHidden(filename) && filename.endsWith(".js")) {
+            var md = myUtil.quiteRequire(filename);
+            if (md !== undefined && md.name !== undefined)
+                mMap[md.name] = md;
+        }
         next();
     };
-    var x = [];
-    var fd = function(root, dirStatsArray, next) {
-        x.push(dirStatsArray);
-        console.log(dirStatsArray);
-        next();
-    };
-
     var walk_options = {
         listeners: {
-            file: ff,
-            directories: fd
+            file: ff
         }
     };
     walk.walkSync(path, walk_options);
     return mMap;
 };
 
-
-
 /*start up functions!
 mMap {mname : module itself}
-*/
-var load = function(mMap) {
+ */
+var load = function(mMap, newOpt) {
     if (mMap === undefined) {
         mMap = getmMap(this.config("ROOT"));
     }
-
-
-
+    var deps = this.dependent;
+    var oldOpt = this.save.options;
+    if (newOpt === undefined)
+        newOpt = oldOpt;
+    else {
+        newOpt = myUtil.updateOptions(oldOpt, options.removeDefault(newOpt));
+    }
+    for (var i = 0; i < deps.length; i++) {
+        var md = mMap[deps[i]].load(mMap, newOpt);
+        md = md.init();
+        this.merge(md);
+    }
+    return this;
 };
-var server = load;
 
+
+
+var server = function() {
+    this.load();
+    var router = rt.mkRouter(this);
+    return router;
+};
 /*modify m.save.options*/
 var config = function(nameObj, val) {
     if (arguments.length == 1) {
@@ -73,12 +82,19 @@ var provider = function(pname, of) {
 var initRoute = function(m) {
     var methods = m.save.options.handlerOpt;
     for (var i = 0; i < methods.length; i++)
-        m[methods[i]] = function(path, f) {
-            myUtil.safePut(this.save.router, path, {
-                method: methods[i],
-                handler: f
-            }, "router " + methods[i]);
+        m[methods[i]] = function(path, chain) {
+            myUtil.safePut(this.save.router, methods[i] + path,
+                chain, "router ");
         };
+};
+
+var merge = function(m) {
+    var mysave = this.save,
+        hesave = m.save;
+    mysave.handler = myUtil.safeCopy(mysave.handler, hesave.handler, "handler ");
+    mysave.provider = myUtil.safeCopy(mysave.provider, hesave.provider, "provider ");
+    mysave.factory = myUtil.safeCopy(mysave.factory, hesave.factory, "factory ");
+    mysave.router = myUtil.safeCopy(mysave.router, hesave.router, "router ");
 };
 
 var init = function(m) {
@@ -98,12 +114,12 @@ var init = function(m) {
     m.provider = provider;
     m.factory = factory;
     m.load = load;
+    m.merge = merge;
     m.server = server;
     m.config = config;
     m = initRoute(m);
     return m;
 };
-
 
 var module = function(mname, mnArr) {
     var m = {};
