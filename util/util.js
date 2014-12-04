@@ -8,6 +8,22 @@ var _ = require('./patch.js');
 var print = require('./print.js');
 var getArg = require('./arg.js');
 var judge = require('./judge.js');
+var compare = require('./compare.js');
+
+
+
+
+var quiteRequire = function(path) {
+
+    try {
+        var m = require(path);
+        return m;
+    } catch (e) {
+        return undefined;
+    }
+};
+
+
 
 var safeRequire = function(path) {
     try {
@@ -17,6 +33,20 @@ var safeRequire = function(path) {
         print.error("Message: " + e.message);
         print.headline("Stack traceback");
         console.log(e.stack);
+        process.exit();
+    }
+};
+
+var safePut = function(place, key, val, where) {
+    if (place === undefined)
+        place = {};
+    try {
+        if (place[key] === undefined)
+            place[key] = val;
+        else
+            throw new Error("Override found in the " + where + ": " + key);
+    } catch (e) {
+        print.warn(e.message);
     }
 };
 
@@ -24,7 +54,7 @@ var safeRequire = function(path) {
 
 function updateOptions(a, b) {
     for (var v in b) {
-        a[v] = a[v] || b[v];
+        a[v] = b[v];
     }
     return a;
 }
@@ -47,7 +77,13 @@ exports.isRegex = judge.isRegex;
 exports.isHidden = judge.isHidden;
 
 
+/*compare two objects*/
+exports.simpleEquals = compare.simpleEquals;
+exports.equals = compare.equals;
+
 
 /*more */
 exports.updateOptions = updateOptions;
 exports.safeRequire = safeRequire;
+exports.safePut = safePut;
+exports.quiteRequire = quiteRequire;
