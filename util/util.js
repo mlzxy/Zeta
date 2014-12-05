@@ -5,10 +5,11 @@
  */
 
 var _ = require('./patch.js');
+var equals = require('deep-equal');
 var print = require('./print.js');
 var getArg = require('./arg.js');
 var judge = require('./judge.js');
-var compare = require('./compare.js');
+var clone = require('clone');
 
 
 
@@ -52,8 +53,7 @@ var safePut = function(place, key, val, where) {
         print.warn(e.message);
     }
 };
-
-
+/*safeCopy is shallow*/
 var safeCopy = function(x, y, msg) {
     for (var idx in y) {
         safePut(x, idx, y[idx], msg);
@@ -62,12 +62,25 @@ var safeCopy = function(x, y, msg) {
 };
 
 
+
+
 function updateOptions(a, b) {
     for (var v in b) {
         a[v] = b[v];
     }
     return a;
 }
+
+
+function setEnv(e, v) {
+    process.env[e] = v;
+}
+
+function getEnv(e) {
+    return process.env[e];
+}
+
+
 
 
 /*for pretty print*/
@@ -88,14 +101,23 @@ exports.isHidden = judge.isHidden;
 
 
 /*compare two objects*/
-exports.simpleEquals = compare.simpleEquals;
-exports.equals = compare.equals;
+exports.equals = equals;
+
+/*copy object*/
+exports.clone = clone;
 
 
 /*more */
 exports.updateOptions = updateOptions;
-exports.quiteRequire = quiteRequire;
 
+/*requires*/
+exports.quiteRequire = quiteRequire;
 exports.safeRequire = safeRequire;
+
+/*assign with warning*/
 exports.safePut = safePut;
 exports.safeCopy = safeCopy;
+
+/*environmental variable*/
+exports.setEnv = setEnv;
+exports.getEnv = getEnv;

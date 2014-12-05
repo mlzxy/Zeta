@@ -3,7 +3,11 @@ var defalta = {};
 defalta.handlerOpt = ["get", "post", "put", "head", "delete", "options", "trace", "connect", "any"];
 defalta.ROOT = ".";
 
-var ROOT = ".";
+
+
+var LOAD_MARK = "GLIDING_LOAD_MARK";
+var LOADED = 'yes';
+var NOT_LOADED = 'no';
 
 
 /*=========================================*/
@@ -20,7 +24,11 @@ var removeDefault = function(opt) {
 };
 
 
-
-exports.dafalta = defalta;
+/*for default options*/
+exports.defalta = defalta;
 exports.removeDefault = removeDefault;
-exports.ROOT = ROOT;
+
+/*for load mark*/
+exports.LOAD_MARK = LOAD_MARK;
+exports.LOADED = LOADED;
+exports.NOT_LOADED = NOT_LOADED;
