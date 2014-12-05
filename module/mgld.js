@@ -2,18 +2,22 @@ var myUtil = require('../util/util.js');
 var walk = require('walk');
 var options = require('../util/options.js');
 
-
-
-
-
-var getmMap = function(path) {
+//get all modules inside certain path, return mMap {mname : module itself}
+var getmMap = function(path, dependent) {
     var mMap = {};
+
+    for (var i = 0; i < dependent.length; i++) {
+        var md = myUtil.quiteRequire(dependent[i]);
+        if (md !== undefined && md.name !== undefined)
+            myUtil.safePut(mMap, md.name, md, "module:" + md.name);
+    }
+
     var ff = function(root, stat, next) {
         var filename = root + '/' + stat.name;
         if (!myUtil.isHidden(filename) && filename.endsWith(".js")) {
             var md = myUtil.quiteRequire(filename);
             if (md !== undefined && md.name !== undefined)
-                mMap[md.name] = md;
+                myUtil.safePut(mMap, md.name, md, "module:" + md.name);
         }
         next();
     };
@@ -26,40 +30,58 @@ var getmMap = function(path) {
     return mMap;
 };
 
-/*start up functions!
-mMap {mname : module itself}
- */
+//merge except the config, and init, merge m2 into m1
+var except = {
+    config: 1,
+    init: 1,
+    save: 1
+};
+var mergeModule = function(m1, m2) {
+    for (var v in m2) {
+        if (!except[v]) {
+            m1[v] = m2[v];
+        }
+    }
+    var s1 = m1.save,
+        s2 = m2.save;
+    for (var u in s2) {
+        myUtil.safeCopy(s1[u], s2[u], s2[u].name);
+    }
+    return m1;
+};
+
+
+
+
+
+
+
+
+
 var load = function(mMap, newOpt) { //need add require('npm module')
     if (mMap === undefined) {
-        mMap = getmMap(this.config("ROOT"));
+        mMap = getmMap(this.config("ROOT"), this.dependent);
     }
+    if (newOpt !== undefined) {
+        this.config.options = myUtil.updateOptions(this.config.options, options.removeDefault(newOpt));
+    }
+
     var deps = this.dependent;
-    var oldOpt = this.config.options;
-    if (newOpt === undefined)
-        newOpt = oldOpt;
-    else {
-        newOpt = myUtil.updateOptions(oldOpt, options.removeDefault(newOpt));
-    }
     for (var i = 0; i < deps.length; i++) {
-        var md = mMap[deps[i]].load(mMap, newOpt);
+        if (mMap[deps[i]] === undefined) {
+            var msg = "the Dependent:" + deps[i] + " of module:" + this.name + " could not be loaded, so sorry for you :(";
+            myUtil.error(msg);
+            throw new Error(msg);
+        }
+    }
+
+    for (var j = 0; j < deps.length; i++) {
+        var md = mMap[deps[i]].load(mMap, this.config.options);
         md = md.init();
-        this.merge(md);
+        mergeModule(this, md);
     }
     return this;
 };
-
-
-var mergeModule = function(m) {
-    var mysave = this.save,
-        hesave = m.save;
-    mysave.handler = myUtil.safeCopy(mysave.handler, hesave.handler, "handler ");
-    mysave.provider = myUtil.safeCopy(mysave.provider, hesave.provider, "provider ");
-    mysave.factory = myUtil.safeCopy(mysave.factory, hesave.factory, "factory ");
-    mysave.router = myUtil.safeCopy(mysave.router, hesave.router, "router ");
-};
-
-
-
 
 var config = function(nameObj, val) {
     if (arguments.length == 1) {
@@ -95,3 +117,12 @@ var module = function(mname, mnArr) {
 };
 
 exports.module = module;
+
+// need to translate "." into absolute path-> pwd
+// set default modules:server in options
+/*would be
+module('service',[]); // the handler stuffs
+module('teamplate',['service']); // the templating stuffs
+module('server',['teamplate','service']) // the routing stuffs
+
+*/
