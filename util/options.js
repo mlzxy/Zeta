@@ -1,14 +1,6 @@
-/*=========================================*/
-var defalta = {};
+var defalta_options = {};
 
 
-
-var LOAD_MARK = "GLIDING_LOAD_MARK";
-var LOADED = 'yes';
-var NOT_LOADED = 'no';
-
-
-/*=========================================*/
 var cp = require('./compare.js');
 
 var removeDefault = function(opt) {
@@ -23,10 +15,5 @@ var removeDefault = function(opt) {
 
 
 /*for default options*/
-exports.defalta = defalta;
+exports.defalta = defalta_options;
 exports.removeDefault = removeDefault;
-
-/*for load mark*/
-exports.LOAD_MARK = LOAD_MARK;
-exports.LOADED = LOADED;
-exports.NOT_LOADED = NOT_LOADED;

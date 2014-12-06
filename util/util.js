@@ -29,6 +29,7 @@ var quiteRequire = function(path) {
 var safeRequire = function(path) {
     try {
         var m = require(path);
+        return m;
     } catch (e) {
         print.headline("Error Occur when loading modules");
         print.error("Message: " + e.message);
@@ -42,15 +43,15 @@ var safeRequire = function(path) {
 
 
 var safePut = function(place, key, val, where) {
-    if (place === undefined)
-        place = {};
     try {
+        if (place === undefined)
+            throw new Error("You Cound not assign to a undefined " + where + "!");
         if (place[key] === undefined)
             place[key] = val;
         else
             throw new Error("Override found in the " + where + ": " + key);
     } catch (e) {
-        print.warn(e.message);
+        print.error(e.message);
     }
 };
 /*safeCopy is shallow*/

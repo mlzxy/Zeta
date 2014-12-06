@@ -19,7 +19,7 @@ var parseName = function(str) {
 
 
 
-var init_mMap = function() {
+var init_mMap = function(root) {
     var mMap = {};
     var ff = function(root, stat, next) {
         var filename = root + '/' + stat.name;
@@ -36,7 +36,7 @@ var init_mMap = function() {
             file: ff
         }
     };
-    walk.walkSync(process.cwd(), walk_options);
+    walk.walkSync(root || process.cwd(), walk_options);
     return mMap;
 };
 
@@ -47,7 +47,9 @@ var except = {
     config: 1,
     init: 1,
     save: 1,
-    load: 1
+    load: 1,
+    name: 1,
+    dependent: 1
 };
 var mergeModule = function(m1, m2) {
     for (var v in m2) {
@@ -58,7 +60,9 @@ var mergeModule = function(m1, m2) {
     var s1 = m1.save,
         s2 = m2.save;
     for (var u in s2) {
-        myUtil.safeCopy(s1[u], s2[u], s2[u].name);
+        if (s1[u] === undefined)
+            s1[u] = {};
+        myUtil.safeCopy(s1[u], s2[u], "between " + m1.name + " and " + m2.name + " "); //the safeCopy is shallow
     }
     return m1;
 };
