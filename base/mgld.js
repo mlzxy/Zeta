@@ -1,108 +1,39 @@
 var myUtil = require('../util/util.js');
-var walk = require('walk');
+var mhlp = require('./mhelper.js');
 var options = require('../util/options.js');
+var store = require('../util/store.js'); //store into node runtime env, just like create global var
 
 
-//merge except the config, and init, merge m2 into m1
-var except = {
-    config: 1,
-    init: 1,
-    save: 1,
-    load: 1
-};
-var mergeModule = function(m1, m2) {
-    for (var v in m2) {
-        if (!except[v]) {
-            m1[v] = m2[v];
-        }
-    }
-    var s1 = m1.save,
-        s2 = m2.save;
-    for (var u in s2) {
-        myUtil.safeCopy(s1[u], s2[u], s2[u].name);
-    }
-    return m1;
-};
-
-
-
-
-
-
-
-
-
-/**************************************************************************************/
-
-//get all modules inside certain path, return mMap {mname : module itself}
-var getmMap = function(dependent, opts) {
-    var mMap = {};
-    for (var i = 0; i < dependent.length; i++) {
-        myUtil.setEnv(options.mOpt, opts);
-        var md = myUtil.quiteRequire(dependent[i]);
-        if (md !== undefined && md.name !== undefined)
-            myUtil.safePut(mMap, md.name, md, "module:" + md.name);
-    }
-    var ff = function(root, stat, next) {
-        var filename = root + '/' + stat.name;
-        if (!myUtil.isHidden(filename) && filename.endsWith(".js")) {
-            myUtil.setEnv(options.mOpt, opts);
-            var md = myUtil.quiteRequire(filename);
-            if (md !== undefined && md.name !== undefined)
-                myUtil.safePut(mMap, md.name, md, "module:" + md.name);
-        }
-        next();
-    };
-    var walk_options = {
-        listeners: {
-            file: ff
-        }
-    };
-    walk.walkSync(process.cwd(), walk_options);
-    return mMap;
-};
-
-
-
-var load = function(mMap, newOpt) { //need add require('npm module')
+var load = function() {
     var masterLoad = false;
-    if (mMap === undefined) {
+    if (store.get('mMap') === undefined) {
+        store.set('mMap', mhlp.init_mMap());
         masterLoad = true;
-        mMap = getmMap(this.dependent, this.config.options); //shoud set Env options in the getmMap
-        myUtil.setEnv(options.mMap, mMap);
     }
-    if (newOpt !== undefined) {
-        this.config.options = myUtil.updateOptions(this.config.options, options.removeDefault(newOpt));
+    var mOpt = store.get('mOpt');
+    if (mOpt !== undefined) {
+        myUtil.updateOptions(this.config.options, options.removeDefault(mOpt));
     }
+    store.set('mOpt', this.config.options);
 
-    var deps = this.dependent;
-    for (var i = 0; i < deps.length; i++) {
-        if (mMap[deps[i]] === undefined) {
-            var msg = "the Dependent:" + deps[i] + " of module:" + this.name + " could not be loaded, so sorry for you :(";
-            myUtil.error(msg);
-            throw new Error(msg);
-        }
-    }
-
-    for (var j = 0; j < deps.length; i++) {
-        var md = mMap[deps[i]].load(mMap, this.config.options);
+    var deps = this.dependent,
+        mMap = store.get('mMap');
+    for (var i = 0; i < deps.length; i++) { //require it, init it, merge it
+        var fname = mMap[deps[i]];
+        if (fname === undefined) //maybe is a npm module not a file path
+            fname = deps[i];
+        var md = myUtil.safeRequire(fname);
+        store.set('mOpt', this.config.options); // it would be override
         md = md.init();
-        mergeModule(this, md);
+        mhlp.mergeModule(this, md);
     }
 
     if (masterLoad) {
-        myUtil.setEnv(options.mMap, undefined);
+        store.set('mMap', undefined);
+        store.set('mOpt', undefined);
     }
-
     return this;
 };
-
-
-/******************************************************************/
-
-
-
-
 
 
 var config = function(name, val) {
@@ -130,11 +61,8 @@ var module = function(mname, mnArr) {
     m = init(m);
     m.name = mname;
     m.dependent = mnArr;
-    var mOpt = options.mOpt,
-        mMap = options.mMap;
-    m = m.load(mOpt, mMap);
+    m = m.load();
     return m;
 };
 
 exports.module = module;
-/*现在问题是: 我要mMap, 但是mMap要我*/
