@@ -1,9 +1,9 @@
 var get = function(e) {
-    return path[e];
+    return global[e];
 };
 
 var set = function(e, v) {
-    path[e] = v;
+    global[e] = v;
 };
 
 
