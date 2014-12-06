@@ -2,33 +2,6 @@ var myUtil = require('../util/util.js');
 var walk = require('walk');
 var options = require('../util/options.js');
 
-//get all modules inside certain path, return mMap {mname : module itself}
-var getmMap = function(path, dependent) {
-    var mMap = {};
-
-    for (var i = 0; i < dependent.length; i++) {
-        var md = myUtil.quiteRequire(dependent[i]);
-        if (md !== undefined && md.name !== undefined)
-            myUtil.safePut(mMap, md.name, md, "module:" + md.name);
-    }
-
-    var ff = function(root, stat, next) {
-        var filename = root + '/' + stat.name;
-        if (!myUtil.isHidden(filename) && filename.endsWith(".js")) {
-            var md = myUtil.quiteRequire(filename);
-            if (md !== undefined && md.name !== undefined)
-                myUtil.safePut(mMap, md.name, md, "module:" + md.name);
-        }
-        next();
-    };
-    var walk_options = {
-        listeners: {
-            file: ff
-        }
-    };
-    walk.walkSync(path, walk_options);
-    return mMap;
-};
 
 //merge except the config, and init, merge m2 into m1
 var except = {
@@ -59,9 +32,44 @@ var mergeModule = function(m1, m2) {
 
 
 
+/**************************************************************************************/
+
+//get all modules inside certain path, return mMap {mname : module itself}
+var getmMap = function(dependent, opts) {
+    var mMap = {};
+    for (var i = 0; i < dependent.length; i++) {
+        myUtil.setEnv(options.mOpt, opts);
+        var md = myUtil.quiteRequire(dependent[i]);
+        if (md !== undefined && md.name !== undefined)
+            myUtil.safePut(mMap, md.name, md, "module:" + md.name);
+    }
+    var ff = function(root, stat, next) {
+        var filename = root + '/' + stat.name;
+        if (!myUtil.isHidden(filename) && filename.endsWith(".js")) {
+            myUtil.setEnv(options.mOpt, opts);
+            var md = myUtil.quiteRequire(filename);
+            if (md !== undefined && md.name !== undefined)
+                myUtil.safePut(mMap, md.name, md, "module:" + md.name);
+        }
+        next();
+    };
+    var walk_options = {
+        listeners: {
+            file: ff
+        }
+    };
+    walk.walkSync(process.cwd(), walk_options);
+    return mMap;
+};
+
+
+
 var load = function(mMap, newOpt) { //need add require('npm module')
+    var masterLoad = false;
     if (mMap === undefined) {
-        mMap = getmMap(this.config("ROOT"), this.dependent);
+        masterLoad = true;
+        mMap = getmMap(this.dependent, this.config.options); //shoud set Env options in the getmMap
+        myUtil.setEnv(options.mMap, mMap);
     }
     if (newOpt !== undefined) {
         this.config.options = myUtil.updateOptions(this.config.options, options.removeDefault(newOpt));
@@ -81,14 +89,27 @@ var load = function(mMap, newOpt) { //need add require('npm module')
         md = md.init();
         mergeModule(this, md);
     }
+
+    if (masterLoad) {
+        myUtil.setEnv(options.mMap, undefined);
+    }
+
     return this;
 };
 
-var config = function(nameObj, val) {
+
+/******************************************************************/
+
+
+
+
+
+
+var config = function(name, val) {
     if (arguments.length == 1) {
-        return this.config.options[nameObj];
+        return this.config.options[name];
     } else {
-        this.config.options[nameObj] = val;
+        this.config.options[name] = val;
     }
     return undefined;
 };
@@ -109,21 +130,11 @@ var module = function(mname, mnArr) {
     m = init(m);
     m.name = mname;
     m.dependent = mnArr;
-    if (myUtil.getEnv(options.LOAD_MARK) != options.LOADED) {
-        myUtil.setEnv(options.LOAD_MARK, options.LOADED);
-        m = m.load();
-        myUtil.setEnv(options.LOAD_MARK, options.NOT_LOADED);
-    }
+    var mOpt = options.mOpt,
+        mMap = options.mMap;
+    m = m.load(mOpt, mMap);
     return m;
 };
 
 exports.module = module;
-
-// need to translate "." into absolute path-> pwd
-// set default modules:server in options
-/*would be
-module('service',[]); // the handler stuffs
-module('teamplate',['service']); // the templating stuffs
-module('server',['teamplate','service']) // the routing stuffs
-
-*/
+/*现在问题是: 我要mMap, 但是mMap要我*/

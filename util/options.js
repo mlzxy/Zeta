@@ -1,7 +1,5 @@
 /*=========================================*/
 var defalta = {};
-defalta.handlerOpt = ["get", "post", "put", "head", "delete", "options", "trace", "connect", "any"];
-defalta.ROOT = ".";
 
 
 

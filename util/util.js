@@ -72,16 +72,6 @@ function updateOptions(a, b) {
 }
 
 
-function setEnv(e, v) {
-    process.env[e] = v;
-}
-
-function getEnv(e) {
-    return process.env[e];
-}
-
-
-
 
 /*for pretty print*/
 exports.error = print.error;
@@ -117,7 +107,3 @@ exports.safeRequire = safeRequire;
 /*assign with warning*/
 exports.safePut = safePut;
 exports.safeCopy = safeCopy;
-
-/*environmental variable*/
-exports.setEnv = setEnv;
-exports.getEnv = getEnv;
