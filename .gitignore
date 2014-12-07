@@ -1,0 +1,8 @@
+.*
+*~
+.tern*
+.#*
+node_modules/
+test/node_modules/
+*.log
+!.gitignore
