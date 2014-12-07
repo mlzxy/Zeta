@@ -1,3 +1,8 @@
+/*!
+ * glider
+ * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
+ * MIT Licensed
+ */
 function isFunction(functionToCheck) {
     var getType = {};
     return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';

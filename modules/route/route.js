@@ -1,7 +1,12 @@
-var m = require('../../base/base.js').module('built-in-router', [__dirname + "/../service/template.js"]);
+/*!
+ * glider
+ * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
+ * MIT Licensed
+ */
 var rhlp = require('./rhelper.js');
 var myUtil = require('../../util/util.js');
 var methods = rhlp.methods;
+var m = require('../../base/base.js').module('built-in-router', [__dirname + "/../service/template.js"]);
 
 
 
@@ -16,4 +21,6 @@ for (var i = 0; i < methods.length; i++) {
     };
 }
 
-m.fly = rhlp.fly;
+m.server = m.load;
+m.go = rhlp.go;
+module.exports = exports = m;

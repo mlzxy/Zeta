@@ -1,3 +1,8 @@
+/*!
+ * glider
+ * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
+ * MIT Licensed
+ */
 var m = require('../../base/base.js').module('built-in-service-template', [__dirname + '/service.js']);
 var swig = require('swig');
 var fs = require('fs');
@@ -22,5 +27,8 @@ render.renderHTML = function(string, json) {
     });
 };
 
-
 m.provider('$render', render);
+
+
+
+module.exports = exports = m;

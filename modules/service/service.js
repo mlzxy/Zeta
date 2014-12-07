@@ -1,6 +1,10 @@
+/*!
+ * glider
+ * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
+ * MIT Licensed
+ */
 var myUtil = require('../../util/util.js');
-var m = require('../../base/base.js').module('built-in-service-base', []);
-
+var m = require('../../base/base.js').module('built-in-service-base', [], 'builtin');
 
 
 m.save.handler = {};
@@ -35,3 +39,6 @@ var provider = function(pname, of) {
 m.handler = handler;
 m.provider = provider;
 m.factory = factory;
+
+
+module.exports = exports = m;

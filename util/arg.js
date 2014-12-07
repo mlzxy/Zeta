@@ -1,3 +1,8 @@
+/*!
+ * glider
+ * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
+ * MIT Licensed
+ */
 var P = /\((.|\n|\t)*\)\ *\{/;
 var getArguments = function(f) {
     var source = f.toString();

@@ -1,3 +1,8 @@
+/*!
+ * glider
+ * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
+ * MIT Licensed
+ */
 var myUtil = require('../../util/util.js');
 var util = require('util');
 var methods = ["get", "post", "put", "head", "delete", "options", "trace", "connect", "any"];
@@ -132,5 +137,5 @@ var server = function() {
 
 
 
-exports.fly = server;
+exports.go = server;
 exports.methods = methods;

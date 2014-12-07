@@ -1,3 +1,8 @@
+/*!
+ * glider
+ * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
+ * MIT Licensed
+ */
 var myUtil = require('../util/util.js');
 var fs = require("fs");
 var walk = require('walk');

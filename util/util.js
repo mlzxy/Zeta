@@ -1,5 +1,5 @@
 /*!
- * gliding2
+ * glider
  * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
  * MIT Licensed
  */
@@ -50,18 +50,30 @@ var checkErr = function(t, msg) {
 
 
 
+// var safePut = function(place, key, val, where) {
+//     try {
+//         if (place === undefined)
+//             throw new Error("You Cound not assign to a undefined " + where + "!");
+//         if (place[key] === undefined)
+//             place[key] = val;
+//         else
+//             throw new Error("Override found in " + where + ": " + key);
+//     } catch (e) {
+//         print.error(e.message);
+//     }
+// };
+
+
 var safePut = function(place, key, val, where) {
-    try {
-        if (place === undefined)
-            throw new Error("You Cound not assign to a undefined " + where + "!");
-        if (place[key] === undefined)
-            place[key] = val;
-        else
-            throw new Error("Override found in the " + where + ": " + key);
-    } catch (e) {
-        print.error(e.message);
-    }
+
+    if (place === undefined)
+        throw new Error("You Cound not assign to a undefined " + where + "!");
+    if (place[key] === undefined)
+        place[key] = val;
 };
+
+
+
 /*safeCopy is shallow*/
 var safeCopy = function(x, y, msg) {
     if (msg === undefined)

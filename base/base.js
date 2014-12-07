@@ -1,3 +1,8 @@
+/*!
+ * glider
+ * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
+ * MIT Licensed
+ */
 var myUtil = require('../util/util.js');
 var mhlp = require('./mhelper.js');
 var options = require('../util/options.js');
@@ -25,8 +30,9 @@ var load = function() {
         if (fname === undefined) //maybe is a npm module or build in modules that not locate in current working directory
             fname = deps[i];
         /*==============================*/
-        myUtil.safeRequire(fname);
-        var md = glb.get('mgld')[deps[i]];
+        var md = myUtil.safeRequire(fname);
+        if (!md.config)
+            md = glb.get('mgld')[deps[i]];
         glb.set('mOpt', this.config.options); // the previous mOpt may get overrided
         md = md.init();
         mhlp.mergeModule(this, md);
@@ -56,13 +62,13 @@ var init = function(m) {
         return this;
     };
     m.load = load;
-    m.server = load;
     m.config = config;
-    m.config.options = myUtil.clone(options.defalta);
+    m.config.options = myUtil.clone(options.defalta_options);
     return m;
 };
 
 var module = function(mname, mnArr) {
+    // debugger;
     var mgld = glb.get('mgld');
     var masterLoad = false;
     if (mgld === undefined) {
@@ -74,7 +80,7 @@ var module = function(mname, mnArr) {
     m = init(m);
     m.name = mname;
     m.dependent = mnArr;
-    if (m.dependent.length === 0) {
+    if (m.dependent.length === 0 && arguments[2] != cfg.iambuiltin) {
         m.dependent = myUtil.clone(cfg.buildin);
     }
 
