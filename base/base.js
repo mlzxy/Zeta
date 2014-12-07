@@ -84,7 +84,7 @@ var module = function(mname, mnArr) {
         m.dependent = myUtil.clone(cfg.buildin);
     }
 
-    if (!masterLoad) { //因为有options要传出, 所以master要显示load, 不能在这里自动load, 这样可以很好的解决,
+    if (!masterLoad) { //因为有options要传出, 所以master要显示load, 不能在这里自动load, 这样可以很好的解决
         m = m.load();
         mgld = glb.get('mgld');
         mgld[m.name] = m;
@@ -94,5 +94,3 @@ var module = function(mname, mnArr) {
 };
 
 exports.module = module;
-//希望load函数能接受别人传递过来的options-> 这个没难度, 那样完全灵活度
-// 难在如何开始的时候就把config传出去

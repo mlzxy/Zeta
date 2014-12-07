@@ -1,31 +1,30 @@
 {
-  "name": "glider",
-  "version": "0.0.0",
-  "description": "gliding2 ========",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/BenBBear/gliding2"
-  },
-  "author": "Xinyu Zhang",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/BenBBear/gliding2/issues"
-  },
-  "homepage": "https://github.com/BenBBear/gliding2",
-  "dependencies": {
-    "cli-color": "^0.3.2",
-    "clone": "^0.1.19",
-    "deep-equal": "^0.2.1",
-    "light-router": "^0.1.2",
-    "static-route": "^0.1.1",
-    "swig": "^1.4.2",
-    "walk": "^2.3.4"
-  }
+    "name": "gliding",
+    "version": "0.1.0",
+    "description": "Write node web app in an angularjs way",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/BenBBear/gliding"
+    },
+    "author": "Xinyu Zhang",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/BenBBear/gliding/issues"
+    },
+    "homepage": "https://github.com/BenBBear/gliding",
+    "dependencies": {
+        "cli-color": "^0.3.2",
+        "clone": "^0.1.19",
+        "deep-equal": "^0.2.1",
+        "static-route": "^0.1.1",
+        "swig": "^1.4.2",
+        "walk": "^2.3.4"
+    }
 }
