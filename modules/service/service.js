@@ -11,11 +11,17 @@ m.save.provider = {};
 
 
 var handler = function(hname, f) {
-    myUtil.safePut(this.save.factory, hname, f, "provider ");
+    if (myUtil.isFunction(f))
+        myUtil.safePut(this.save.factory, hname, f, "provider ");
+    else
+        myUtil.error("Handler " + hname + " is not a function.");
 };
 
-var factory = function(fname, of) {
-    myUtil.safePut(this.save.factory, fname, of, "provider ");
+var factory = function(fname, f) {
+    if (myUtil.isFunction(f))
+        myUtil.safePut(this.save.factory, fname, f, "factory ");
+    else
+        myUtil.error("Factory " + fname + " is not a function, it should be a factory function :)");
 };
 
 var provider = function(pname, of) {

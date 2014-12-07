@@ -56,6 +56,8 @@ var safePut = function(place, key, val, where) {
 };
 /*safeCopy is shallow*/
 var safeCopy = function(x, y, msg) {
+    if (msg === undefined)
+        msg = '';
     for (var idx in y) {
         safePut(x, idx, y[idx], msg);
     }

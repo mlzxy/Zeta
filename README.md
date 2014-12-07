@@ -1,4 +1,4 @@
-gliding2
+glider
 ========
 
 

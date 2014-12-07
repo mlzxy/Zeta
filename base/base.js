@@ -56,6 +56,7 @@ var init = function(m) {
         return this;
     };
     m.load = load;
+    m.server = load;
     m.config = config;
     m.config.options = myUtil.clone(options.defalta);
     return m;

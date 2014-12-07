@@ -1,5 +1,5 @@
 {
-  "name": "gliding2",
+  "name": "glider",
   "version": "0.0.0",
   "description": "gliding2 ========",
   "main": "index.js",
@@ -25,6 +25,7 @@
     "deep-equal": "^0.2.1",
     "light-router": "^0.1.2",
     "static-route": "^0.1.1",
+    "swig": "^1.4.2",
     "walk": "^2.3.4"
   }
 }

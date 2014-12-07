@@ -16,4 +16,4 @@ for (var i = 0; i < methods.length; i++) {
     };
 }
 
-m.server = rhlp.server;
+m.fly = rhlp.fly;
