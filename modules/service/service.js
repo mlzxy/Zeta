@@ -12,20 +12,24 @@ m.save.provider = {};
 
 var handler = function(hname, f) {
     if (myUtil.isFunction(f))
-        myUtil.safePut(this.save.factory, hname, f, "provider ");
+        f = [f];
+    else if (myUtil.isArray(f))
+        f = f;
     else
         myUtil.error("Handler " + hname + " is not a function.");
+
+    myUtil.safePut(this.save.factory, hname, f, "Handler ");
 };
 
 var factory = function(fname, f) {
     if (myUtil.isFunction(f))
-        myUtil.safePut(this.save.factory, fname, f, "factory ");
+        myUtil.safePut(this.save.factory, fname, f, "Factory ");
     else
         myUtil.error("Factory " + fname + " is not a function, it should be a factory function :)");
 };
 
 var provider = function(pname, of) {
-    myUtil.safePut(this.save.provider, pname, of, "provider ");
+    myUtil.safePut(this.save.provider, pname, of, "Provider ");
 };
 
 m.handler = handler;

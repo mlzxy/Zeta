@@ -40,6 +40,14 @@ var safeRequire = function(path) {
 };
 
 
+var checkErr = function(t, msg) {
+    if (t) {
+        print.error(msg);
+        throw new Error(msg);
+    }
+
+};
+
 
 
 var safePut = function(place, key, val, where) {
@@ -91,7 +99,7 @@ exports.isObject = judge.isObject;
 exports.isString = judge.isString;
 exports.isRegex = judge.isRegex;
 exports.isHidden = judge.isHidden;
-
+exports.isArray = Array.isArray;
 
 /*compare two objects*/
 exports.equals = equals;
@@ -106,6 +114,8 @@ exports.updateOptions = updateOptions;
 /*requires*/
 exports.quiteRequire = quiteRequire;
 exports.safeRequire = safeRequire;
+exports.checkErr = checkErr;
+
 
 /*assign with warning*/
 exports.safePut = safePut;
