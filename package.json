@@ -15,6 +15,12 @@
     },
     "author": "Xinyu Zhang",
     "license": "MIT",
+    "keywords": [
+        "web",
+        "framework",
+        "angular",
+        "router"
+    ],
     "bugs": {
         "url": "https://github.com/BenBBear/gliding/issues"
     },
@@ -23,7 +29,7 @@
         "cli-color": "^0.3.2",
         "clone": "^0.1.19",
         "deep-equal": "^0.2.1",
-        "static-route": "^0.1.1",
+        "mime": "^1.2.11",
         "swig": "^1.4.2",
         "walk": "^2.3.4"
     }

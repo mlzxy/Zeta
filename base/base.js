@@ -13,7 +13,7 @@ var cfg = require('../util/config.js');
 var load = function() {
     var masterLoad = false;
     if (glb.get('mMap') === undefined) {
-        glb.set('mMap', mhlp.init_mMap(this.config.options.root));
+        glb.set('mMap', mhlp.init_mMap(this.config('root')));
         masterLoad = true;
     }
     var mOpt = glb.get('mOpt');
