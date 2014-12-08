@@ -4,6 +4,7 @@
 .#*
 node_modules/
 test/node_modules/
+coverage/
 *.log
 !.gitignore
 !.travis.yml

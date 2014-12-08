@@ -15,25 +15,26 @@ m.save.provider = {};
 
 
 var handler = function(hname, f) {
-    if (myUtil.isFunction(f) || myUtil.isString(f))
-        f = [f];
-    else if (myUtil.isArray(f))
-        f = f;
-    else
-        myUtil.error("Handler " + hname + " is not a function.");
-
-    myUtil.safePut(this.save.factory, hname, f, "Handler ");
+    if (f === undefined)
+        return this.save.handler[hname];
+    myUtil.checkErr(!myUtil.isFunction(f), "Handler " + hname + " is not a function :(");
+    myUtil.safePut(this.save.handler, hname, f, "Handler ");
+    return true;
 };
 
 var factory = function(fname, f) {
-    if (myUtil.isFunction(f))
-        myUtil.safePut(this.save.factory, fname, f, "Factory ");
-    else
-        myUtil.error("Factory " + fname + " is not a function, it should be a factory function :)");
+    if (f === undefined)
+        return this.save.factory[fname];
+    myUtil.checkErr(!myUtil.isFunction(f), "Factory " + fname + " is not a function, it should be a factory function :)");
+    myUtil.safePut(this.save.factory, fname, f, "Factory ");
+    return true;
 };
 
-var provider = function(pname, of) {
-    myUtil.safePut(this.save.provider, pname, of, "Provider ");
+var provider = function(pname, f) {
+    if (f === undefined)
+        return this.save.provider[pname];
+    myUtil.safePut(this.save.provider, pname, f, "Provider ");
+    return true;
 };
 
 m.handler = handler;

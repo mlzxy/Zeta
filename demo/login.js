@@ -7,11 +7,11 @@ m.handler('login', function($scope) {
 });
 
 
-m.handler('loginForm', function($scope, $form, userFactory) {
+m.handler('loginForm', function($scope, $form, db, $cookie) {
     $form.parse($scope.req, function(err, fields, files) { //if you define this function outside, may archive better performance
-        if (fields.user == userFactory.getuser())
-            $scope.go('welcome');
-        else
-            $scope.res.end('wrong username');
+        db.put(fields.user);
+        //set cookie
+
+        $scope.res.end('login success!');
     });
 });

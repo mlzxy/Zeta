@@ -3,7 +3,8 @@ var m = require('../').module('demo', ['demo-login']),
 
 m.config('root', __dirname);
 m.config('public', __dirname + '/public');
-m.config('fakeuser', 'Xinyu');
+m.config('dburl', 'http://meow.meow');
+
 m.server();
 
 
@@ -11,21 +12,23 @@ m.server();
 
 
 
-m.handler('loginCheck', function($scope, $form, userFactory) {
-    $form.parse($scope.req, function(err, fields, files) { //this one should be cookie, not form parse
-        if (fields.user == userFactory.getuser()) {
-            $scope.go('next');
-        } else {
-            $scope.go('login');
-        }
-    });
+
+var usercheck = function($scope, exist) {
+    if (exist)
+        $scope.go('next');
+    else
+        $scope.go('login');
+};
+
+m.handler('loginCheck', function($scope, $cookie, db) {
+    db.getuser($cookie.get('user'), usercheck);
 });
 
 
-m.handler('welcome', function($scope, $render, userFactory) {
+m.handler('welcome', function($scope, $render, $sayhi, $cookie) {
     $scope.res.end($render('/index.html', {
-        name: userFactory.getuser(),
-        msg: userFactory.getmsg()
+        name: $cookie.get('user'),
+        msg: $sayhi()
     }));
 });
 
@@ -33,7 +36,7 @@ m.handler('welcome', function($scope, $render, userFactory) {
 
 m.get('/', "login");
 m.post('/login', "loginForm");
-m.get('/personal', ["loginCheck", "welcome"]);
+m.get('/user', ["loginCheck", "welcome"]);
 
 
 
