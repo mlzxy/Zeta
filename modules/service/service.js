@@ -15,7 +15,7 @@ m.save.provider = {};
 
 
 var handler = function(hname, f) {
-    if (myUtil.isFunction(f))
+    if (myUtil.isFunction(f) || myUtil.isString(f))
         f = [f];
     else if (myUtil.isArray(f))
         f = f;

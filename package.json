@@ -1,36 +1,43 @@
 {
-    "name": "gliding",
-    "version": "0.1.0",
-    "description": "Write node web app in an angularjs way",
-    "main": "index.js",
-    "directories": {
-        "test": "test"
-    },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/BenBBear/gliding"
-    },
-    "author": "Xinyu Zhang",
-    "license": "MIT",
-    "keywords": [
-        "web",
-        "framework",
-        "angular",
-        "router"
-    ],
-    "bugs": {
-        "url": "https://github.com/BenBBear/gliding/issues"
-    },
-    "homepage": "https://github.com/BenBBear/gliding",
-    "dependencies": {
-        "cli-color": "^0.3.2",
-        "clone": "^0.1.19",
-        "deep-equal": "^0.2.1",
-        "mime": "^1.2.11",
-        "swig": "^1.4.2",
-        "walk": "^2.3.4"
-    }
+  "name": "gliding",
+  "version": "0.1.0",
+  "description": "Write node web app in an angularjs way",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha "
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BenBBear/gliding"
+  },
+  "author": "Xinyu Zhang",
+  "license": "MIT",
+  "keywords": [
+    "web",
+    "framework",
+    "angular",
+    "router"
+  ],
+  "bugs": {
+    "url": "https://github.com/BenBBear/gliding/issues"
+  },
+  "homepage": "https://github.com/BenBBear/gliding",
+  "dependencies": {
+    "cli-color": "^0.3.2",
+    "clone": "^0.1.19",
+    "coveralls": "^2.11.2",
+    "deep-equal": "^0.2.1",
+    "mime": "^1.2.11",
+    "mocha-lcov-reporter": "0.0.1",
+    "swig": "^1.4.2",
+    "walk": "^2.3.4"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.0.1",
+    "supertest": "^0.15.0"
+  }
 }

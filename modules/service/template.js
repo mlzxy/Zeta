@@ -9,8 +9,10 @@ var fs = require('fs');
 
 
 var cache = {};
+var root = m.config('public') || "public";
 var render = function(fpath, json) {
     var tpl;
+    fpath = root + fpath;
     if (tpl !== undefined) {
         tpl = cache[fpath];
     } else {
