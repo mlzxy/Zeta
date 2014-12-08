@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha "
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
   "dependencies": {
     "cli-color": "^0.3.2",
     "clone": "^0.1.19",
+    "cookie": "^0.1.2",
     "coveralls": "^2.11.2",
     "deep-equal": "^0.2.1",
     "mime": "^1.2.11",
