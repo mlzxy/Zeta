@@ -1,6 +1,6 @@
 /*!
  * gliding
- * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
+ * Copyright(c) 2014-2015 Xinyu Zhang bevis@mail.ustc.edu.cn
  * MIT Licensed
  */
 var m = require('../../base/base.js').module('built-in-service-more', ['built-in-service-base']);

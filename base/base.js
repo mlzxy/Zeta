@@ -99,7 +99,7 @@ var module = function(mname, mnArr) {
     m = init(m);
     m.name = mname;
     m.dependent = mnArr;
-    if (m.dependent.length === 0 && cfg.isBuiltin(m)) {
+    if (m.dependent.length === 0 && !cfg.isBuiltin(m)) {
         m.dependent = myUtil.clone(cfg.builtin);
     }
     if (!masterLoad) { //since you still need to config, so the master load should be executed manually when finish configuration.
