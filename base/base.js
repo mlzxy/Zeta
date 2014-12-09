@@ -8,13 +8,14 @@ var mhlp = require('./mhelper.js');
 var options = require('../util/options.js');
 var glb = require('../util/global.js');
 var cfg = require('../util/config.js');
-
+var print = require('../util/print.js');
 
 var load = function() {
     var masterLoad = false;
     if (glb.get('mMap') === undefined) {
         glb.set('mMap', mhlp.init_mMap(this.config('root')));
         masterLoad = true;
+        print.loading(this);
     }
     var mOpt = glb.get('mOpt');
 
@@ -33,7 +34,7 @@ var load = function() {
         var fname = mMap[deps[i]];
         if (fname === undefined) //maybe is a npm module or build in modules that not locate in current working directory
             fname = deps[i];
-        /*==============================*/
+
         var md = myUtil.safeRequire(fname); //then the question is why safeRequire return when we have circular dependency, it should go in infinity
         if (!md.config) // if config exist, then should be a builtin mod
             md = glb.get('mgld')[deps[i]]; //if not builtin, then we could get it from global cache
@@ -52,6 +53,9 @@ var load = function() {
         glb.set('mOpt', undefined);
         glb.set('mgld', undefined);
         glb.set('ngld', undefined);
+        cfg.endload = new Date();
+        print.loaded(this);
+        print.finish(this, cfg.endload - cfg.startload);
     }
     return this;
 };
@@ -86,6 +90,7 @@ var module = function(mname, mnArr) {
         glb.set('mgld', mgld);
         glb.set('ngld', {});
         masterLoad = true;
+        cfg.startload = new Date();
     }
     var m = {};
     m = init(m);
@@ -100,7 +105,10 @@ var module = function(mname, mnArr) {
         ngld[m.name] = m;
         glb.set('ngld', ngld);
         /*the ngld here is to log module loading order*/
+        print.loading(m);
         m = m.load();
+        print.loaded(m);
+
         mgld = glb.get('mgld');
         mgld[m.name] = m;
         glb.set('mgld', mgld);

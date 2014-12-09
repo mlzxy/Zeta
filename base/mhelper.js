@@ -92,6 +92,7 @@ var circle = function(name, arr) {
         deps = [];
 
     if (arr.indexOf(name) !== -1) { //circular
+        console.log('');
         var msg = "Circular dependency found in your modules!";
         myUtil.headline(msg);
         printCircle(arr.indexOf(name), arr);

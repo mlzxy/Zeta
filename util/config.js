@@ -5,5 +5,8 @@
  */
 var builtin = __dirname + '/../modules/route/route.js'; //should be file path
 
+
 exports.iambuiltin = 'builtin';
 exports.builtin = builtin;
+exports.startload = undefined;
+exports.endload = undefined;
