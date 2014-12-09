@@ -31,6 +31,7 @@ var safeRequire = function(path) {
         var m = require(path);
         return m;
     } catch (e) {
+        print.hzline();
         print.headline("Error Occur when loading modules");
         print.error("Message: " + e.message);
         print.headline("Stack traceback");

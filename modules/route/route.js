@@ -37,40 +37,7 @@ for (var i = 0; i < methods.length; i++) {
 
 
 
-var root = m.config('public') || "public";
-var static_server = function(request, response) {
-    var pathname = url.parse(request.url).pathname;
-    var realPath = root + pathname;
-    path.exists(realPath, function(exists) {
-        if (!exists) {
-            response.writeHead(404, {
-                'Content-Type': 'text/plain'
-            });
 
-            response.write("This request URL " + pathname + " was not found on this server.");
-            response.end();
-        } else {
-            fs.readFile(realPath, "binary", function(err, file) {
-                if (err) {
-                    response.writeHead(500, {
-                        'Content-Type': 'text/plain'
-                    });
-
-                    response.end(err);
-                } else {
-                    var contentType = mime.lookup(realPath);
-                    response.writeHead(200, {
-                        'Content-Type': contentType
-                    });
-                    response.write(file, "binary");
-                    response.end();
-                }
-            });
-        }
-    });
-};
-m.handler('static', static_server);
-m.server = m.load;
 m.go = rhlp.go;
 
 

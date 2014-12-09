@@ -22,9 +22,15 @@ var notice = function(s) {
     console.log(clc.blue(s));
 };
 
+var hzline = function() {
+    console.log('\n');
+    console.log(clc.bgBlue('\n'));
+    console.log('\n');
+};
 
 
 exports.error = error;
 exports.warn = warn;
 exports.notice = notice;
 exports.headline = headline;
+exports.hzline = hzline;

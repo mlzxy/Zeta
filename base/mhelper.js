@@ -6,7 +6,8 @@
 var myUtil = require('../util/util.js');
 var fs = require("fs");
 var walk = require('walk');
-
+var glb = require('../util/global.js');
+var cfg = require('../util/config.js');
 
 var P = /module\((\n|\ )*(\'|\")([^'"])*(\'|\")\,{0,1}(\n|\ )*\[{0,1}/;
 
@@ -72,5 +73,43 @@ var mergeModule = function(m1, m2) {
     return m1;
 };
 
+
+var printCircle = function(idx, arr) {
+    myUtil.headline("It is detected in the module:" + arr[idx]);
+    for (var i = idx; i < arr.length; i++) {
+        myUtil.error("Module " + arr[i] + " depends on " + JSON.stringify(glb.get('ngld')[arr[i]].dependent));
+    }
+};
+
+
+var circle = function(name, arr) {
+    var m = glb.get('ngld')[name];
+    var deps = m.dependent;
+
+    if (deps.length == 1 && deps[0] == cfg.buildin)
+        deps = [];
+
+    if (arr.indexOf(name) !== -1) { //circular
+        var msg = "Circular dependency found in your modules!";
+        myUtil.error(msg);
+        printCircle(arr.indexOf(name), arr);
+        throw new Error(msg);
+    }
+    var narr; //continue to check
+    for (var i = 0; i < deps.length; i++) {
+        narr = arr.slice();
+        narr.push(name);
+        circle(deps[i], narr);
+    }
+};
+
+
+
+
+
+
+
+
 exports.init_mMap = init_mMap;
 exports.mergeModule = mergeModule;
+exports.circle = circle;
