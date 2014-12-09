@@ -7,19 +7,20 @@ var m = require('../../base/base.js').module('built-in-service-more', ['built-in
 var formidable = require('formidable');
 var swig = require('swig');
 var ck = require('cookie');
+var mime = require('mime');
 var fs = require('fs');
 
 
 /*template*/
 var cache = {};
-var root = m.config('public') || "public";
+var public = m.config('public') || "public";
 var render = function(fpath, json) {
     var tpl;
-    fpath = root + fpath;
+    var lfpath = public + fpath;
     if (tpl !== undefined) {
         tpl = cache[fpath];
     } else {
-        tpl = swig.compileFile(fs.readFileSync(fpath));
+        tpl = swig.compileFile(fs.readFileSync(lfpath));
         cache[fpath] = tpl;
     }
     return tpl(json);
@@ -63,7 +64,7 @@ m.factory('$cookie', cookie);
 /*static server*/
 var static_server = function(request, response) {
     var pathname = url.parse(request.url).pathname;
-    var realPath = root + pathname;
+    var realPath = public + pathname;
     path.exists(realPath, function(exists) {
         if (!exists) {
             response.writeHead(404, {
