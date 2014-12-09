@@ -22,11 +22,11 @@ var error = function(s) {
 };
 
 var warn = function(s) {
-    console.log('[' + clc.yellow('warn') + ']  ' + s);
+    console.log('[' + clc.yellowBright('warning') + '] ' + clc.magentaBright(s));
 };
 
 var notice = function(s) {
-    console.log('[' + clc.blue('notice') + ']  ' + s);
+    console.log('[' + clc.blue('notice') + ']  ' + clc.whiteBright(s));
 };
 
 var hzline = function() {

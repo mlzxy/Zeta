@@ -40,9 +40,14 @@ var load = function() {
         myUtil.safeRequire(fname);
         var md = glb.get('mgld')[deps[i]];
         glb.set('mOpt', this.config.options);
-        if (md === undefined) {
-            print.error("Error Occur, load module:" + deps[i] + " failed");
-            print.detail("Maybe there has some circular dependencies in the modules you used, so in this case please do not config the " + options.circleCheck + " to be false! \n");
+        if (md === undefined && !this.config(options.circleCheck)) {
+            if (i == deps.length - 1 && i === 0) {
+                deps.push(cfg.builtin);
+            }
+            print.warn("Maybe there has some circular dependencies in the modules you used, in this case, config " + options.circleCheck + " to be true and you could see the problem.\n");
+            print.detail("In here, we assume it's ok, skip the problem and try to continue.");
+            continue;
+
         }
         md = md.init();
         mhlp.mergeModule(this, md);
@@ -100,7 +105,7 @@ var module = function(mname, mnArr) {
     m.name = mname;
     m.dependent = mnArr;
     if (m.dependent.length === 0 && !cfg.isBuiltin(m)) {
-        m.dependent = myUtil.clone(cfg.builtin);
+        m.dependent = [cfg.builtin];
     }
     if (!masterLoad) { //since you still need to config, so the master load should be executed manually when finish configuration.
         var ngld = glb.get('ngld');

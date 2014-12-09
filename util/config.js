@@ -13,7 +13,7 @@ mBuiltin['built-in-router'] = __dirname + '/' + '../modules/route/route.js';
 
 
 
-exports.builtin = ["built-in-router"];
+exports.builtin = "built-in-router";
 exports.isBuiltin = function(m) {
     return mBuiltin[m.name] !== undefined;
 };
