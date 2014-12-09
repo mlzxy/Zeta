@@ -75,15 +75,17 @@ var mergeModule = function(m1, m2) {
 
 
 var printCircle = function(idx, arr) {
-    myUtil.headline("It is detected in the module:" + arr[idx]);
+    myUtil.error("It is detected in the module:" + arr[idx]);
     for (var i = idx; i < arr.length; i++) {
-        myUtil.error("Module " + arr[i] + " depends on " + JSON.stringify(glb.get('ngld')[arr[i]].dependent));
+        myUtil.warn("Module " + arr[i] + " depends on " + JSON.stringify(glb.get('ngld')[arr[i]].dependent));
     }
+    console.log('\n');
 };
 
 
 var circle = function(name, arr) {
     var m = glb.get('ngld')[name];
+    if (m === undefined) return;
     var deps = m.dependent;
 
     if (deps.length == 1 && deps[0] == cfg.buildin)
@@ -91,7 +93,7 @@ var circle = function(name, arr) {
 
     if (arr.indexOf(name) !== -1) { //circular
         var msg = "Circular dependency found in your modules!";
-        myUtil.error(msg);
+        myUtil.headline(msg);
         printCircle(arr.indexOf(name), arr);
         throw new Error(msg);
     }

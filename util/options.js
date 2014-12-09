@@ -3,22 +3,27 @@
  * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
  * MIT Licensed
  */
-var defalta_options = {};
+var defalta = {};
+defalta.checkCircular = true;
+defalta.root = process.cwd();
+defalta.public = "public";
+
 
 
 var equals = require('deep-equal');
 
 var removeDefault = function(opt) {
+    var nopt = {};
     for (var v in opt) {
-        if (equals(opt[v], defalta_options[v]))
-            opt[v] = undefined;
-        else
+        if (equals(opt[v], defalta[v]))
             continue;
+        else
+            nopt[v] = opt[v];
     }
-    return opt;
+    return nopt;
 };
 
 
 /*for default options*/
-exports.defalta_options = defalta_options;
+exports.defalta = defalta;
 exports.removeDefault = removeDefault;

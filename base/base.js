@@ -17,10 +17,14 @@ var load = function() {
         masterLoad = true;
     }
     var mOpt = glb.get('mOpt');
+
     if (mOpt !== undefined) {
         myUtil.updateOptions(this.config.options, options.removeDefault(mOpt));
     }
     glb.set('mOpt', this.config.options);
+    if (this.config('checkCircular'))
+        mhlp.circle(this.name, []); // check circular
+
 
     var deps = this.dependent,
         mMap = glb.get('mMap');
@@ -34,9 +38,8 @@ var load = function() {
         if (!md.config) // if config exist, then should be a builtin mod
             md = glb.get('mgld')[deps[i]]; //if not builtin, then we could get it from global cache
         glb.set('mOpt', this.config.options); // the previous mOpt may get overrided
-        if (md === undefined) { //means circular founded, because nodejs prevent cycle loads, and based on the load order, we would get a undefined in here
-            mhlp.circle(this.name, []);
-        }
+        if (md === undefined)
+            throw new Error("Error Occur, load module:" + deps[i] + " failed, maybe there has some circular dependencies in the modules you used, so in this case please do not config the checkCircular to be false! \n");
         md = md.init();
         mhlp.mergeModule(this, md);
     }
@@ -71,7 +74,7 @@ var init = function(m) {
     m.load = load;
     m.server = load;
     m.config = config;
-    m.config.options = myUtil.clone(options.defalta_options);
+    m.config.options = myUtil.clone(options.defalta);
     return m;
 };
 
