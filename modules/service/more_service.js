@@ -4,6 +4,7 @@
  * MIT Licensed
  */
 var m = require('../../base/base.js').module('built-in-service-more', ['built-in-service-base']);
+var formidable = require('formidable');
 var swig = require('swig');
 var ck = require('cookie');
 var fs = require('fs');
@@ -92,3 +93,12 @@ var static_server = function(request, response) {
     });
 };
 m.handler('static', static_server);
+
+
+
+
+/*for parsing form*/
+m.factory('$form', function() {
+    var form = new formidable.IncomingForm();
+    return form;
+});
