@@ -31,8 +31,7 @@ var safeRequire = function(path) {
         var m = require(path);
         return m;
     } catch (e) {
-        print.headline("Error Occur when loading modules");
-        print.error("Message: " + e.message);
+        // print.error(e.message);
         print.headline("Stack traceback");
         console.log(e.stack);
         process.exit();
@@ -66,10 +65,14 @@ var checkErr = function(t, msg) {
 
 var safePut = function(place, key, val, where) {
 
-    if (place === undefined)
+    if (place === undefined) {
+        var msg = "You Cound not assign to a undefined " + where + "!";
+        print.error(msg);
         throw new Error("You Cound not assign to a undefined " + where + "!");
+    }
     if (place[key] === undefined)
         place[key] = val;
+
 };
 
 
@@ -87,7 +90,7 @@ var safeCopy = function(x, y, msg) {
 
 
 
-function updateOptions(a, b) {
+function updateObj(a, b) {
     for (var v in b) {
         a[v] = b[v];
     }
@@ -95,12 +98,6 @@ function updateOptions(a, b) {
 }
 
 
-
-/*for pretty print*/
-exports.error = print.error;
-exports.warn = print.warn;
-exports.notice = print.notice;
-exports.headline = print.headline;
 
 /*for get arguments*/
 exports.argOf = getArg.getArguments;
@@ -121,7 +118,7 @@ exports.clone = clone;
 
 
 /*more */
-exports.updateOptions = updateOptions;
+exports.updateObj = updateObj;
 
 /*requires*/
 exports.quiteRequire = quiteRequire;

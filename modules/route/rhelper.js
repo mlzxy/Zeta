@@ -3,7 +3,9 @@
  * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
  * MIT Licensed
  */
+var url = require('url');
 var myUtil = require('../../util/util.js');
+var print = require('../../util/print.js');
 var util = require('util');
 var methods = ["get", "post", "put", "head", "delete", "options", "trace", "connect", "any"];
 var lrt = require('./light-route/');
@@ -12,6 +14,10 @@ var notNeedScope = 1;
 
 
 var server = function() {
+
+    print.loading('start to prepare your server.');
+    if (this.config('debug'))
+        print.notice('You have turned on the debug option.');
 
     /*===================for shortname=========================*/
     var handler, router, factory, provider;
@@ -109,23 +115,47 @@ var server = function() {
         var t = mkarg(this, next);
         t.f(t.arg);
     };
+    var go_debug = function(name) {
+        var next = (next == "next") ? this.dchain[0] : next;
+        if (myUtil.isString(next))
+            print.goNext(next);
+        else
+            print.goNext('next');
+        var t = mkarg(this, next);
+        t.f(t.arg);
+    };
 
     for (var mth in router) {
         var st = router[method];
         for (var pth in st) {
-            lrt[mth](pth,
-                function(req, res) {
-                    var $scope = {};
-                    $scope.req = req;
-                    $scope.res = res;
-                    $scope.params = req.params;
-                    $scope.go = go;
-                    $scope.dchain = st[pth].slice(1);
-                    $scope.go(st[pth][0]);
+            var fordebug = function(req, res) {
+                print.request({
+                    ip: req.connection.remoteAddress,
+                    path: url.parse(req.url).pathname,
+                    method: mth
                 });
+                var $scope = {};
+                $scope.req = req;
+                $scope.res = res;
+                $scope.params = req.params;
+                $scope.go = go;
+                $scope.dchain = st[pth].slice(1);
+                $scope.go_debug(st[pth][0]);
+            };
+            var forproduct = function(req, res) {
+                var $scope = {};
+                $scope.req = req;
+                $scope.res = res;
+                $scope.params = req.params;
+                $scope.go = go;
+                $scope.dchain = st[pth].slice(1);
+                $scope.go(st[pth][0]);
+            };
+            lrt[mth](pth, this.config("debug") ? fordebug : forproduct);
         }
     }
     //////////////////////////
+    print.ok("your server is ready.");
     return lrt;
 };
 

@@ -4,7 +4,7 @@
  * MIT Licensed
  */
 var myUtil = require('../../util/util.js');
-var m = require('../../base/base.js').module('built-in-service-base', [], 'builtin');
+var m = require('../../base/base.js').module('built-in-service-base', []);
 
 
 m.save.handler = {};
@@ -40,6 +40,3 @@ var provider = function(pname, f) {
 m.handler = handler;
 m.provider = provider;
 m.factory = factory;
-
-
-module.exports = exports = m;

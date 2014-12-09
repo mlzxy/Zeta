@@ -4,6 +4,7 @@
  * MIT Licensed
  */
 var myUtil = require('../util/util.js');
+var print = require('../util/print.js');
 var fs = require("fs");
 var walk = require('walk');
 var glb = require('../util/global.js');
@@ -43,6 +44,7 @@ var init_mMap = function(root) {
         }
     };
     walk.walkSync(root || process.cwd(), walk_options);
+    mMap = myUtil.updateObj(mMap, cfg.mBuiltin);
     return mMap;
 };
 
@@ -75,9 +77,9 @@ var mergeModule = function(m1, m2) {
 
 
 var printCircle = function(idx, arr) {
-    myUtil.error("It is detected in the module:" + arr[idx]);
+    print.detail("It is detected in the module:" + arr[idx]);
     for (var i = idx; i < arr.length; i++) {
-        myUtil.warn("Module " + arr[i] + " depends on " + JSON.stringify(glb.get('ngld')[arr[i]].dependent));
+        print.detail("Module " + arr[i] + " depends on " + JSON.stringify(glb.get('ngld')[arr[i]].dependent));
     }
     console.log('\n');
 };
@@ -92,9 +94,8 @@ var circle = function(name, arr) {
         deps = [];
 
     if (arr.indexOf(name) !== -1) { //circular
-        console.log('');
         var msg = "Circular dependency found in your modules!";
-        myUtil.headline(msg);
+        print.error(msg);
         printCircle(arr.indexOf(name), arr);
         throw new Error(msg);
     }

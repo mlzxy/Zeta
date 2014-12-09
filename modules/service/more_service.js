@@ -3,7 +3,7 @@
  * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
  * MIT Licensed
  */
-var m = require('../../base/base.js').module('built-in-service-more', [__dirname + '/service.js']);
+var m = require('../../base/base.js').module('built-in-service-more', ['built-in-service-base']);
 var swig = require('swig');
 var ck = require('cookie');
 var fs = require('fs');
@@ -92,7 +92,3 @@ var static_server = function(request, response) {
     });
 };
 m.handler('static', static_server);
-
-
-
-module.exports = exports = m;

@@ -1,5 +1,5 @@
 /*!
- * glider
+ * gliding
  * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
  * MIT Licensed
  */
@@ -11,7 +11,8 @@ var rhlp = require('./rhelper.js');
 var myUtil = require('../../util/util.js');
 var methods = rhlp.methods;
 
-var m = require('../../base/base.js').module('built-in-router', [__dirname + "/../service/more_service.js"]);
+var m = require('../../base/base.js').module('built-in-router', ['built-in-service-more']);
+m.config('builtin', true); //for testing option spread
 
 
 
@@ -39,9 +40,3 @@ for (var i = 0; i < methods.length; i++) {
 
 
 m.go = rhlp.go;
-
-
-
-
-/*============must have for builtin modules==============*/
-module.exports = exports = m;

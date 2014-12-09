@@ -4,10 +4,17 @@
  * MIT Licensed
  */
 var defalta = {};
-defalta.checkCircular = true;
+
+
+
+
+
+
+
+defalta.circleCheck = true;
 defalta.root = process.cwd();
 defalta.public = "public";
-
+defalta.debug = true;
 
 
 var equals = require('deep-equal');
@@ -27,3 +34,4 @@ var removeDefault = function(opt) {
 /*for default options*/
 exports.defalta = defalta;
 exports.removeDefault = removeDefault;
+exports.circleCheck = 'circleCheck';

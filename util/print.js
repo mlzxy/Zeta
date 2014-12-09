@@ -1,25 +1,32 @@
 /*!
- * glider
- * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
+ * gliding
+ * Copyright(c) 2014-2015 Xinyu Zhang bevis@mail.ustc.edu.cn
  * MIT Licensed
  */
+
 var clc = require('cli-color');
+var cfg = require('./config.js');
 
 
 var headline = function(s) {
-    console.log(clc.blackBright.bgCyanBright.bold(s));
+    console.log('[' + clc.red(s) + ']');
+};
+
+
+var detail = function(s) {
+    console.log('[' + clc.cyan('detail') + ']  ' + clc.yellowBright(s));
 };
 
 var error = function(s) {
-    console.log(clc.red.bold(s));
+    console.log('[' + clc.red('error') + ']   ' + clc.magenta(s));
 };
 
 var warn = function(s) {
-    console.log(clc.yellow(s));
+    console.log('[' + clc.yellow('warn') + ']  ' + s);
 };
 
 var notice = function(s) {
-    console.log(clc.blue(s));
+    console.log('[' + clc.blue('notice') + ']  ' + s);
 };
 
 var hzline = function() {
@@ -52,6 +59,19 @@ var loading = function(m) {
 };
 
 
+var goNext = function(name) {
+    console.log('[' + clc.cyan('handler') + ']' + mtab(2) + "go to " + clc.bold.blue(name));
+};
+
+var ok = function(msg) {
+    console.log("[" + clc.green("ok") + "] " + msg);
+};
+
+var preq = clc.yellow;
+var request = function(obj) {
+    console.log("[" + clc.green('request') + "] " + "from ip: " + preq(obj.ip) + ", method: " + preq(obj.method) + ", on path:" + preq(obj.path));
+};
+
 
 
 exports.error = error;
@@ -63,3 +83,4 @@ exports.mtab = mtab;
 exports.finish = finish;
 exports.loaded = loaded;
 exports.loading = loading;
+exports.detail = detail;
