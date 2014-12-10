@@ -85,12 +85,31 @@ var request = function(obj) {
 };
 
 
-var option = function(x, opt) {
-    console.log('[' + clc.blue('notice') + ']  You have turned ' + clc.blue(x) + " the " + clc.blue(opt) + " option.");
+var options = function(optset) {
+    for (var v in optset) {
+        switch (optset[v]) {
+
+            case true:
+                sopt('on', v);
+                break;
+            case null:
+            case undefined:
+            case false:
+                sopt('off', v);
+                break;
+            default:
+                sopt(JSON.stringify(optset[v]), v);
+                break;
+        }
+    }
+};
+
+var sopt = function(x, opt) {
+    console.log('[' + clc.blue('notice') + ']  You have turned' + " the " + clc.blue(opt) + " option " + clc.blueBright(x) + ".");
 };
 
 
-
+exports.ok = ok;
 exports.error = error;
 exports.warn = warn;
 exports.notice = notice;
@@ -102,4 +121,4 @@ exports.loaded = loaded;
 exports.loading = loading;
 exports.detail = detail;
 exports.mainOk = mainOk;
-exports.option = option;
+exports.options = options;

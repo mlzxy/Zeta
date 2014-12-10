@@ -3,7 +3,7 @@
  * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
  * MIT Licensed
  */
-var P = /\((.|\n|\t)*\)\ *\{/;
+var P = /\(([a-zA-Z]|\$|\s|\,)*\)(\s|\n)*\{{1}/;
 var getArguments = function(f) {
     var source = f.toString();
     var argStr = source.match(P);

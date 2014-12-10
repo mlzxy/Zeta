@@ -3,6 +3,7 @@
  * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
  * MIT Licensed
  */
+
 String.prototype.startsWith = function(str) {
     return this.indexOf(str) === 0;
 };

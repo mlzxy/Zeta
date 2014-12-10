@@ -44,7 +44,7 @@ for (var i = 0; i < methods.length; i++) {
         myUtil.safePut(m.save.router[method], path,
             f, "handler for " + method);
     };
-    m[methods[i]] = m[methods[i]].bind('method', methods[i]);
+    m[methods[i]] = m[methods[i]].bind(undefined, methods[i]);
 }
 
 m.go = rhlp.go;

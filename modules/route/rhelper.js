@@ -17,8 +17,7 @@ var server = function() {
 
     print.mainOk(this);
     print.loading('start to prepare your server.');
-    if (this.config('debug'))
-        print.option('on', 'debug');
+    print.options(this.config());
 
     /*===================for shortname=========================*/
     var handler, router, factory, provider;
@@ -112,58 +111,60 @@ var server = function() {
             arg: args.unshift($scope)
         };
     };
-    var go = function(name) {
-        var next = (next == "next") ? this.dchain[0] : next;
-        var t = mkarg(this, next);
-        t.f(t.arg);
-    };
-    var go_debug = function(name) {
-        var next = (next == "next") ? this.dchain[0] : next;
-        if (myUtil.isString(next))
-            print.goNext(next);
-        else
-            print.goNext('next');
-        var t = mkarg(this, next);
-        t.f(t.arg);
-    };
+    /*===============================================*/
+    var go = this.config('debug') ?
+        function(name) {
+            var next = (next == "next") ? this.dchain[0] : next;
+            this.dchain.unshift();
+            if (myUtil.isString(next))
+                print.goNext(next);
+            else
+                print.goNext('next');
+            var t = mkarg(this, next);
+            t.f(t.arg);
+        } : function(name) {
+            var next = (next == "next") ? this.dchain[0] : next;
+            this.dchain.unshift();
+            var t = mkarg(this, next);
+            t.f.apply(this, t.arg);
+        };
+    /*===============================================*/
 
-    for (var mth in router) {
-        var st = router[method];
-        for (var pth in st) {
-            var fordebug = function(req, res) {
-                print.request({
-                    ip: req.connection.remoteAddress,
-                    path: url.parse(req.url).pathname,
-                    method: mth
-                });
+    for (var mth in router) { //router
+        var st = router[method]; //post, get -> different hashmap of handler chain
+        for (var pth in st) { //path1,path2 -> hander chain
+            var foo = function(fstate, hchain, req, res) {
                 var $scope = {};
                 $scope.req = req;
                 $scope.res = res;
                 $scope.params = req.params;
                 $scope.go = go;
-                $scope.dchain = st[pth].slice(1);
-                $scope.go_debug(st[pth][0]);
+                $scope.dchain = hchain.slice();
+                $scope.go(fstate);
             };
-            var forproduct = function(req, res) {
-                var $scope = {};
-                $scope.req = req;
-                $scope.res = res;
-                $scope.params = req.params;
-                $scope.go = go;
-                $scope.dchain = st[pth].slice(1);
-                $scope.go(st[pth][0]);
-            };
-            lrt[mth](pth, this.config("debug") ? fordebug : forproduct);
+            foo = foo.bind(undefined, st[pth][0], st[pth]); //also need to bind foo
+            lrt[mth](pth, foo);
         }
     }
+    // if (this.config('debug')){
+    //     var net = require('net');
+    //     net.Server.prototype.listen
+
+    // }
     //////////////////////////
     print.ok("your server is ready.");
     return lrt;
 };
 
-
-
-
+// var net = require('net');
+/*net.Server.prototype.listen*/
+/*should set the event on in the prototype*/
+// print.request({
+//                   ip: req.connection.remoteAddress,
+//                   path: url.parse(req.url).pathname,
+//                   method: mth
+//               });
+// need to set event for debug
 
 
 

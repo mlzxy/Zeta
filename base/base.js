@@ -56,12 +56,20 @@ var load = function() {
 
 
 var config = function(name, val) {
-    if (arguments.length == 1) {
-        return this.config.options[name];
-    } else {
-        this.config.options[name] = val;
+    var rt;
+    switch (arguments.length) {
+        case 1:
+            rt = this.config.options[name];
+            break;
+        case 2:
+            this.config.options[name] = val;
+            break;
+        case 0:
+            rt = this.config.options;
+            break;
+        default:
     }
-    return undefined;
+    return rt;
 };
 
 var init = function(m) {
