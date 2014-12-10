@@ -1,4 +1,4 @@
-var m = require('../').module('demo-login', ['demo-db']);
+var m = require('../../').module('demo-login', ['demo-factory']);
 
 
 

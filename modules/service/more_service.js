@@ -9,7 +9,7 @@ var swig = require('swig');
 var ck = require('cookie');
 var mime = require('mime');
 var fs = require('fs');
-
+var url = require('url');
 
 /*template*/
 var cache = {};
@@ -62,7 +62,9 @@ m.factory('$cookie', cookie);
 
 
 /*static server*/
-var static_server = function(request, response) {
+var static_server = function($scope) {
+    var request = $scope.req,
+        response = $scope.res;
     var pathname = url.parse(request.url).pathname;
     var realPath = public + pathname;
     path.exists(realPath, function(exists) {

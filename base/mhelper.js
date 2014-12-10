@@ -7,7 +7,6 @@ var myUtil = require('../util/util.js');
 var print = require('../util/print.js');
 var fs = require("fs");
 var walk = require('walk');
-var glb = require('../util/global.js');
 var cfg = require('../util/config.js');
 
 var P = /module\((\n|\ )*(\'|\")([^'"])*(\'|\")\,{0,1}(\n|\ )*\[{0,1}/;
@@ -79,14 +78,14 @@ var mergeModule = function(m1, m2) {
 var printCircle = function(idx, arr) {
     print.detail("It is detected in the module:" + arr[idx]);
     for (var i = idx; i < arr.length; i++) {
-        print.detail("Module " + arr[i] + " depends on " + JSON.stringify(glb.get('ngld')[arr[i]].dependent));
+        print.detail("Module " + arr[i] + " depends on " + JSON.stringify(global.ngld[arr[i]].dependent));
     }
     console.log('\n');
 };
 
 
 var circle = function(name, arr) {
-    var m = glb.get('ngld')[name];
+    var m = global.ngld[name];
     if (m === undefined) return;
     var deps = m.dependent;
 

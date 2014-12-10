@@ -15,9 +15,10 @@ var notNeedScope = 1;
 
 var server = function() {
 
+    print.mainOk(this);
     print.loading('start to prepare your server.');
     if (this.config('debug'))
-        print.notice('You have turned on the debug option.');
+        print.option('on', 'debug');
 
     /*===================for shortname=========================*/
     var handler, router, factory, provider;
@@ -75,6 +76,7 @@ var server = function() {
         var hdl = getF[v];
         var a = myUtil.argOf(hdl);
         var firstArg = a.shift();
+        debugger;
         myUtil.checkErr(firstArg != '$scope', 'Found handler: ' + v + ' that do not take $scope as its first argument');
         f2argH[v] = getArg(v, a, 'Handler');
     }

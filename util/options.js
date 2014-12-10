@@ -15,6 +15,7 @@ defalta.circleCheck = true;
 defalta.root = process.cwd();
 defalta.public = "public";
 defalta.debug = true;
+defalta.serviceCache = false;
 
 
 var equals = require('deep-equal');
@@ -35,3 +36,4 @@ var removeDefault = function(opt) {
 exports.defalta = defalta;
 exports.removeDefault = removeDefault;
 exports.circleCheck = 'circleCheck';
+exports.serviceCache = 'serviceCache';

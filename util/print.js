@@ -6,6 +6,7 @@
 
 var clc = require('cli-color');
 var cfg = require('./config.js');
+var myUtil = require('./util.js');
 
 
 var headline = function(s) {
@@ -45,17 +46,28 @@ var mtab = function(n) {
 
 var finish = function(m, ti) {
     var tistr = String(ti);
-    var msg = "The Main Module: " + clc.red(m.name) + " gets loaded successfully in " + clc.green(tistr) + " ms.";
+    var msg = "The Main Module: " + clc.red(m.name) + " , all dependencies get loaded successfully in " + clc.green(tistr) + " ms.";
+    console.log("[" + clc.green("ok") + "] " + msg);
+    console.log('');
+    console.log("[" + clc.yellow("loading") + "] Now start to load the components inside the Main Module: " + clc.red(m.name));
+};
+
+var mainOk = function(m) {
+    var msg = "The Main Module: " + clc.red(m.name) + " , gets loaded successfully.";
     console.log("[" + clc.green("ok") + "] " + msg);
     console.log('');
 };
+
 
 var loaded = function(m) {
     console.log("[" + clc.green("loaded") + "]  Module: " + clc.blue(m.name));
 };
 
 var loading = function(m) {
-    console.log("[" + clc.yellow("loading") + "] Module: " + clc.blue(m.name) + ", who depends on " + clc.blue(JSON.stringify(m.dependent)));
+    if (myUtil.isString(m))
+        console.log("[" + clc.yellow("loading") + "] " + m);
+    else
+        console.log("[" + clc.yellow("loading") + "] Module: " + clc.blue(m.name) + ", who depends on " + clc.blue(JSON.stringify(m.dependent)));
 };
 
 
@@ -73,6 +85,11 @@ var request = function(obj) {
 };
 
 
+var option = function(x, opt) {
+    console.log('[' + clc.blue('notice') + ']  You have turned ' + clc.blue(x) + " the " + clc.blue(opt) + " option.");
+};
+
+
 
 exports.error = error;
 exports.warn = warn;
@@ -84,3 +101,5 @@ exports.finish = finish;
 exports.loaded = loaded;
 exports.loading = loading;
 exports.detail = detail;
+exports.mainOk = mainOk;
+exports.option = option;

@@ -1,4 +1,4 @@
-var m = require('../../').module('demo-provider', []);
+var m = require('../../../').module('demo-provider', []);
 
 var cache = {};
 var db = {};

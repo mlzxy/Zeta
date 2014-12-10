@@ -1,4 +1,4 @@
-var m = require('../../').module('demo-factory', ['demo-provider']);
+var m = require('../../../').module('demo-factory', ['demo-provider']);
 var formidable = require('formidable');
 
 

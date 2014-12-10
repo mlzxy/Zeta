@@ -6,48 +6,37 @@
 var myUtil = require('../util/util.js');
 var mhlp = require('./mhelper.js');
 var options = require('../util/options.js');
-var glb = require('../util/global.js');
 var cfg = require('../util/config.js');
 var print = require('../util/print.js');
 var startload, endload;
 
-
 var load = function() {
     var masterLoad = false;
-    if (glb.get('mMap') === undefined) {
-        glb.set('mMap', mhlp.init_mMap(this.config('root')));
-        masterLoad = true;
+    if (global.mMap === undefined) {
         print.loading(this);
+        global.mMap = mhlp.init_mMap(this.config('root'));
+        masterLoad = true;
+        global.mOpt = this.config.options;
     }
-    var mOpt = glb.get('mOpt');
-
-    if (mOpt !== undefined) {
-        myUtil.updateObj(this.config.options, options.removeDefault(mOpt));
-    }
-    glb.set('mOpt', this.config.options);
+    var mOpt = global.mOpt;
+    myUtil.updateObj(this.config.options, mOpt);
     if (this.config(options.circleCheck))
-        mhlp.circle(this.name, []); // check circular
-
+        mhlp.circle(this.name, []);
 
     var deps = this.dependent,
-        mMap = glb.get('mMap');
-
+        mMap = global.mMap;
     for (var i = 0; i < deps.length; i++) {
-        var fname = mMap[deps[i]];
-        if (fname === undefined) //maybe is a npm module or build in modules that not locate in current working directory
-            fname = deps[i];
+        var fname = mMap[deps[i]] || deps[i]; //maybe is a npm module or build in modules that not locate in current working directory
 
         myUtil.safeRequire(fname);
-        var md = glb.get('mgld')[deps[i]];
-        glb.set('mOpt', this.config.options);
-        if (md === undefined && !this.config(options.circleCheck)) {
-            if (i == deps.length - 1 && i === 0) {
+        var md = global.mgld[deps[i]];
+        if (md === undefined && !this.config(options.circleCheck)) { //means circular, because of nodejs require mechanism
+            if (deps.length === 1 && i === 0) { //only one dependence and it's also circular
                 deps.push(cfg.builtin);
             }
             print.warn("Maybe there has some circular dependencies in the modules you used, in this case, config " + options.circleCheck + " to be true and you could see the problem.\n");
             print.detail("In here, we assume it's ok, skip the problem and try to continue.");
             continue;
-
         }
         md = md.init();
         mhlp.mergeModule(this, md);
@@ -55,12 +44,9 @@ var load = function() {
 
     if (masterLoad) {
         this.loadinfo = {};
-        this.loadinfo.mMap = glb.get('mMap');
-        this.loadinfo.mgld = glb.get('mgld'); //save information
-        glb.set('mMap', undefined);
-        glb.set('mOpt', undefined);
-        glb.set('mgld', undefined);
-        glb.set('ngld', undefined);
+        this.loadinfo.mMap = global.mMap;
+        this.loadinfo.mgld = global.mgld; //save information
+        global.mMap = global.mOpt = global.mgld = global.ngld = undefined;
         endload = new Date();
         print.loaded(this);
         print.finish(this, endload - startload);
@@ -91,12 +77,12 @@ var init = function(m) {
 };
 
 var module = function(mname, mnArr) {
-    var mgld = glb.get('mgld');
+    var mgld = global.mgld;
     var masterLoad = false;
     if (mgld === undefined) {
         mgld = {};
-        glb.set('mgld', mgld);
-        glb.set('ngld', {});
+        global.mgld = mgld;
+        global.ngld = {};
         masterLoad = true;
         startload = new Date();
     }
@@ -107,18 +93,17 @@ var module = function(mname, mnArr) {
     if (m.dependent.length === 0 && !cfg.isBuiltin(m)) {
         m.dependent = [cfg.builtin];
     }
-    if (!masterLoad) { //since you still need to config, so the master load should be executed manually when finish configuration.
-        var ngld = glb.get('ngld');
+    if (!masterLoad) { //since you still need to config, so the master load should be executed manually when finish configuration. eg: m.server() //server === load
+        var ngld = global.ngld;
         ngld[m.name] = m;
-        glb.set('ngld', ngld);
+        global.ngld = ngld;
         /*the ngld here is to log module loading order*/
         print.loading(m);
         m = m.load();
         print.loaded(m);
-
-        mgld = glb.get('mgld');
+        mgld = global.mgld;
         mgld[m.name] = m;
-        glb.set('mgld', mgld);
+        global.mgld = mgld;
     }
     return m;
 };

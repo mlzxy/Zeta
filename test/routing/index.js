@@ -1,11 +1,13 @@
-var m = require('../').module('demo', ['demo-login']),
+var m = require('../../').module('demo', ['demo-login']),
     http = require('http');
 
 m.config('root', __dirname);
 m.config('public', __dirname + '/public');
-m.config('dburl', 'http://meow.meow');
+m.config('dburl', 'http://localhost:dbport?paremeters');
 m.server();
 /*==================================================*/
+debugger;
+
 m.handler('loginCheck', function($scope, $cookie, db) {
     $scope.user = $cookie.get('user');
     db.get($scope.user, function(exist) {
