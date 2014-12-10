@@ -1,6 +1,6 @@
 {
-  "name": "gliding",
-  "version": "0.1.0",
+  "name": "zeta",
+  "version": "0.0.0",
   "description": "Write node web app in an angularjs way",
   "main": "index.js",
   "directories": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/BenBBear/gliding"
+    "url": "https://github.com/BenBBear/zeta"
   },
   "author": "Xinyu Zhang",
   "license": "MIT",
@@ -22,9 +22,9 @@
     "router"
   ],
   "bugs": {
-    "url": "https://github.com/BenBBear/gliding/issues"
+    "url": "https://github.com/BenBBear/zeta/issues"
   },
-  "homepage": "https://github.com/BenBBear/gliding",
+  "homepage": "https://github.com/BenBBear/zeta",
   "dependencies": {
     "cli-color": "^0.3.2",
     "clone": "^0.1.19",
