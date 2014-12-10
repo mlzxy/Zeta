@@ -15,11 +15,9 @@ var fs = require('fs');
 var cache = {};
 var public = m.config('public') || "public";
 var render = function(fpath, json) {
-    var tpl;
-    var lfpath = public + fpath;
-    if (tpl !== undefined) {
-        tpl = cache[fpath];
-    } else {
+    var tpl = cache[fpath];
+    if (tpl === undefined) {
+        var lfpath = public + fpath;
         tpl = swig.compileFile(fs.readFileSync(lfpath));
         cache[fpath] = tpl;
     }
@@ -43,9 +41,11 @@ cget = function(x) {
 
 cset = function(x, y) {
     this.val[x] = y;
+    return this;
 };
 cwrite = function(res) {
     res.setHeader('Set-Cookie', this.val);
+    return this;
 };
 
 var cookie = function($scope) {
