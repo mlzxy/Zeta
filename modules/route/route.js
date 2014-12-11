@@ -23,7 +23,8 @@ m.config('builtin', true); //for testing option spread
 
 
 m.save.router = {};
-for (var k in methods) {
+
+for (var k = 0; k < methods.length; k++) {
     m.save.router[methods[k]] = {};
 }
 
@@ -57,4 +58,4 @@ net.Server.prototype.on('listening', function() {
 });
 
 
-m.go = rhlp.go;
+m.z = rhlp.z;

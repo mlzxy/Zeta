@@ -1,5 +1,5 @@
 /*!
- * gliding
+ * Zeta
  * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
  * MIT Licensed
  */
@@ -8,7 +8,7 @@ var url = require('url'),
     print = require('../../util/print.js'),
     util = require('util'),
     net = require('net'),
-    lrt = require('./light-route/');
+    lrt = require('./router');
 
 
 var methods = ["get", "post", "put", "head", "delete", "options", "trace", "connect", "any"],
@@ -38,6 +38,7 @@ var server = function() {
     for (var name in handler) {
         getF[name] = handler[name];
     }
+
     for (var method in router) {
         var store = router[method];
         for (var path in store) {
@@ -79,7 +80,7 @@ var server = function() {
         var hdl = getF[v];
         var a = myUtil.argOf(hdl);
         var firstArg = a.shift();
-        debugger;
+        // debugger;
         myUtil.checkErr(firstArg != '$scope', 'Found handler: ' + v + ' that do not take $scope as its first argument');
         f2argH[v] = getArg(v, a, 'Handler');
     }
@@ -110,24 +111,25 @@ var server = function() {
         var args = [];
         for (var i = 0; i < a.length; i++)
             args.push(a[i].isFactory ? mkFactory($scope, a[i]) : a[i]);
+        args.unshift($scope);
         return {
             f: f,
-            arg: args.unshift($scope)
+            arg: args
         };
     };
     /*===============================================*/
     var go = this.config('debug') ?
-        function(name) {
-            var next = (next == "next") ? this.dchain[this.dcIdx] : next;
+        function(next) {
+            next = (next == "next") ? this.dchain[this.dcIdx] : next;
             this.dcIdx += 1;
             if (myUtil.isString(next))
                 print.goNext(next);
             else
                 print.goNext('next');
             var t = mkarg(this, next);
-            t.f(t.arg);
-        } : function(name) {
-            var next = (next == "next") ? this.dchain[this.dcIdx] : next;
+            t.f.apply(this, t.arg);
+        } : function(next) {
+            next = (next == "next") ? this.dchain[this.dcIdx] : next;
             this.dcIdx += 1;
             var t = mkarg(this, next);
             t.f.apply(this, t.arg);
@@ -135,9 +137,10 @@ var server = function() {
     /*===============================================*/
 
     for (var mth in router) { //router
-        var st = router[method]; //post, get -> different hashmap of handler chain
+        var st = router[mth]; //post, get -> different hashmap of handler chain
         for (var pth in st) { //path1,path2 -> hander chain
             var foo = function(fstate, hchain, req, res) {
+                debugger;
                 var $scope = {};
                 $scope.req = req;
                 $scope.res = res;
@@ -164,8 +167,9 @@ var server = function() {
     }
 
     print.ok("your server is ready.");
+
     return lrt;
 };
 
-exports.go = server;
+exports.z = server;
 exports.methods = methods;

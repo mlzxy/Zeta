@@ -72,7 +72,7 @@ var loading = function(m) {
 
 
 var goNext = function(name) {
-    console.log('[' + clc.cyan('handler') + ']' + mtab(2) + "go to " + clc.bold.blue(name));
+    console.log('[' + clc.cyan('handler') + ']' + mtab(1) + "------> " + clc.bold.blue(name));
 };
 
 var ok = function(msg) {
@@ -85,6 +85,9 @@ var request = function(obj) {
 };
 
 
+var sopt = function(x, opt) {
+    console.log('[' + clc.blue('notice') + ']  You have turned' + " the " + clc.blue(opt) + " option " + clc.blueBright(x) + ".");
+};
 var options = function(optset) {
     for (var v in optset) {
         switch (optset[v]) {
@@ -104,12 +107,10 @@ var options = function(optset) {
     }
 };
 
-var sopt = function(x, opt) {
-    console.log('[' + clc.blue('notice') + ']  You have turned' + " the " + clc.blue(opt) + " option " + clc.blueBright(x) + ".");
-};
+
 
 var listen = function(obj) {
-    console.log('[' + clc.green('listening') + '] ' + 'The server is now listening on the   ' + obj.address + ':' + String(obj.port));
+    console.log('[' + clc.green('listening') + '] ' + 'The server is now listening on the ' + clc.blue(obj.address + ':' + String(obj.port)));
 };
 
 
@@ -128,3 +129,5 @@ exports.detail = detail;
 exports.mainOk = mainOk;
 exports.options = options;
 exports.listen = listen;
+exports.request = request;
+exports.goNext = goNext;

@@ -6,7 +6,6 @@ m.config('public', __dirname + '/public');
 m.config('dburl', 'http://localhost:dbport?paremeters');
 m.server();
 /*==================================================*/
-debugger;
 
 m.handler('loginCheck', function($scope, $cookie, db) {
     $scope.user = $cookie.get('user');
@@ -26,7 +25,14 @@ m.handler('welcome', function($scope, $render, $sayhi) {
 
 
 
+
+
 m.get('/', "login");
 m.post('/login', "loginForm");
 m.get('/user', ["loginCheck", "welcome"]);
-http.createServer(m.go()).listen(3000);
+
+
+var app = m.z();
+// debugger;
+
+http.createServer(app).listen(8000);

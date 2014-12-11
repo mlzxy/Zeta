@@ -15,10 +15,11 @@ var url = require('url');
 var cache = {};
 var public = m.config('public') || "public";
 var render = function(fpath, json) {
+    // debugger;
     var tpl = cache[fpath];
     if (tpl === undefined) {
         var lfpath = public + fpath;
-        tpl = swig.compileFile(fs.readFileSync(lfpath));
+        tpl = swig.compileFile(lfpath);
         cache[fpath] = tpl;
     }
     return tpl(json);
