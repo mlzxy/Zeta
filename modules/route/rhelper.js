@@ -3,14 +3,18 @@
  * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
  * MIT Licensed
  */
-var url = require('url');
-var myUtil = require('../../util/util.js');
-var print = require('../../util/print.js');
-var util = require('util');
-var methods = ["get", "post", "put", "head", "delete", "options", "trace", "connect", "any"];
-var lrt = require('./light-route/');
-var needScope = 2;
-var notNeedScope = 1;
+var url = require('url'),
+    myUtil = require('../../util/util.js'),
+    print = require('../../util/print.js'),
+    util = require('util'),
+    net = require('net'),
+    lrt = require('./light-route/');
+
+
+var methods = ["get", "post", "put", "head", "delete", "options", "trace", "connect", "any"],
+    needScope = 2,
+    notNeedScope = 1;
+
 
 
 var server = function() {
@@ -114,8 +118,8 @@ var server = function() {
     /*===============================================*/
     var go = this.config('debug') ?
         function(name) {
-            var next = (next == "next") ? this.dchain[0] : next;
-            this.dchain.unshift();
+            var next = (next == "next") ? this.dchain[this.dcIdx] : next;
+            this.dcIdx += 1;
             if (myUtil.isString(next))
                 print.goNext(next);
             else
@@ -123,8 +127,8 @@ var server = function() {
             var t = mkarg(this, next);
             t.f(t.arg);
         } : function(name) {
-            var next = (next == "next") ? this.dchain[0] : next;
-            this.dchain.unshift();
+            var next = (next == "next") ? this.dchain[this.dcIdx] : next;
+            this.dcIdx += 1;
             var t = mkarg(this, next);
             t.f.apply(this, t.arg);
         };
@@ -139,36 +143,29 @@ var server = function() {
                 $scope.res = res;
                 $scope.params = req.params;
                 $scope.go = go;
-                $scope.dchain = hchain.slice();
+                $scope.dchain = hchain;
+                $scope.dcIdx = 0;
                 $scope.go(fstate);
             };
-            foo = foo.bind(undefined, st[pth][0], st[pth]); //also need to bind foo
+            foo = foo.bind(undefined, st[pth][0], st[pth]);
             lrt[mth](pth, foo);
         }
     }
-    // if (this.config('debug')){
-    //     var net = require('net');
-    //     net.Server.prototype.listen
 
-    // }
-    //////////////////////////
+    /*==========================================================*/
+    if (this.config('debug')) {
+        net.Server.prototype.on('request', function(req, res) {
+            print.request({
+                ip: req.connection.remoteAddress,
+                path: url.parse(req.url).pathname,
+                method: req.method
+            });
+        });
+    }
+
     print.ok("your server is ready.");
     return lrt;
 };
-
-// var net = require('net');
-/*net.Server.prototype.listen*/
-/*should set the event on in the prototype*/
-// print.request({
-//                   ip: req.connection.remoteAddress,
-//                   path: url.parse(req.url).pathname,
-//                   method: mth
-//               });
-// need to set event for debug
-
-
-
-
 
 exports.go = server;
 exports.methods = methods;

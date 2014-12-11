@@ -1,5 +1,5 @@
 /*!
- * gliding
+ * zeta
  * Copyright(c) 2014-2015 Xinyu Zhang bevis@mail.ustc.edu.cn
  * MIT Licensed
  */
@@ -108,6 +108,11 @@ var sopt = function(x, opt) {
     console.log('[' + clc.blue('notice') + ']  You have turned' + " the " + clc.blue(opt) + " option " + clc.blueBright(x) + ".");
 };
 
+var listen = function(obj) {
+    console.log('[' + clc.green('listening') + '] ' + 'The server is now listening on the   ' + obj.address + ':' + String(obj.port));
+};
+
+
 
 exports.ok = ok;
 exports.error = error;
@@ -122,3 +127,4 @@ exports.loading = loading;
 exports.detail = detail;
 exports.mainOk = mainOk;
 exports.options = options;
+exports.listen = listen;

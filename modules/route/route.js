@@ -3,13 +3,17 @@
  * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
  * MIT Licensed
  */
-var url = require('url');
-var path = require('path');
-var fs = require('fs');
-var mime = require('mime');
-var rhlp = require('./rhelper.js');
-var myUtil = require('../../util/util.js');
-var clc = require('cli-color');
+var url = require('url'),
+    path = require('path'),
+    fs = require('fs'),
+    mime = require('mime'),
+    rhlp = require('./rhelper.js'),
+    myUtil = require('../../util/util.js'),
+    clc = require('cli-color'),
+    print = require('../../util/print.js'),
+    net = require('net');
+
+
 var methods = rhlp.methods;
 
 
@@ -46,5 +50,11 @@ for (var i = 0; i < methods.length; i++) {
     };
     m[methods[i]] = m[methods[i]].bind(undefined, methods[i]);
 }
+
+
+net.Server.prototype.on('listening', function() {
+    print.listen(this.address());
+});
+
 
 m.go = rhlp.go;
