@@ -39,7 +39,9 @@ var load = function() {
             continue;
         }
         md = md.init();
+        debugger;
         mhlp.mergeModule(this, md);
+
     }
 
     if (masterLoad) {

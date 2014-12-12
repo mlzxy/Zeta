@@ -15,7 +15,6 @@ var url = require('url');
 var cache = {};
 var public = m.config('public') || "public";
 var render = function(fpath, json) {
-    // debugger;
     var tpl = cache[fpath];
     if (tpl === undefined) {
         var lfpath = public + fpath;
@@ -24,7 +23,6 @@ var render = function(fpath, json) {
     }
     return tpl(json);
 };
-
 render.renderHTML = function(string, json) {
     return swig.render(string, {
         locals: json
