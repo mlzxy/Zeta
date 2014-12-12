@@ -57,22 +57,7 @@ var load = function() {
 };
 
 
-var config = function(name, val) {
-    var rt;
-    switch (arguments.length) {
-        case 1:
-            rt = this.config.options[name];
-            break;
-        case 2:
-            this.config.options[name] = val;
-            break;
-        case 0:
-            rt = this.config.options;
-            break;
-        default:
-    }
-    return rt;
-};
+
 
 var init = function(m) {
     m.save = {};
@@ -81,8 +66,23 @@ var init = function(m) {
     };
     m.load = load;
     m.server = load;
-    m.config = config;
-    m.config.options = myUtil.clone(options.defalta);
+    m.config = function(name, val) {
+        var rt;
+        switch (arguments.length) {
+            case 1:
+                rt = this.config.options[name];
+                break;
+            case 2:
+                this.config.options[name] = val;
+                break;
+            case 0:
+                rt = this.config.options;
+                break;
+            default:
+        }
+        return rt;
+    };
+    m.config.options = new options.initOptions();
     return m;
 };
 

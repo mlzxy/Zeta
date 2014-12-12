@@ -7,7 +7,13 @@ var defalta = {};
 
 
 
-
+function initOptions() {
+    this.circleCheck = true;
+    this.root = process.cwd();
+    this.public = "public";
+    this.debug = true;
+    this.serviceCache = false;
+}
 
 
 
@@ -34,6 +40,7 @@ var removeDefault = function(opt) {
 
 /*for default options*/
 exports.defalta = defalta;
+exports.initOptions = initOptions;
 exports.removeDefault = removeDefault;
 exports.circleCheck = 'circleCheck';
 exports.serviceCache = 'serviceCache';
