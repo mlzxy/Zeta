@@ -1,13 +1,12 @@
-zeta
+Zeta
 ========
 
+## Version 0.1.0 is Finished!
 
-The Previous "gliding" sucks, sincerely. I am too novice that time.   
+```shell
 
+npm install zeta
 
-So now I completely redesign it, this time I have a better and reasonable idea, will get it works! 
+```
 
-
-In progress... almost done
-
-:) 
+Next, I will work on __test & benchmarking & documentation__.  This framework gonna be the Best node web Framework.

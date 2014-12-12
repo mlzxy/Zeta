@@ -1,6 +1,6 @@
 /*!
- * glider
- * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
+ * Zeta
+ * Copyright(c) 2014-2015 Xinyu Zhang beviszhang1993@gmail.com
  * MIT Licensed
  */
 
@@ -48,19 +48,6 @@ var checkErr = function(t, msg) {
 };
 
 
-
-// var safePut = function(place, key, val, where) {
-//     try {
-//         if (place === undefined)
-//             throw new Error("You Cound not assign to a undefined " + where + "!");
-//         if (place[key] === undefined)
-//             place[key] = val;
-//         else
-//             throw new Error("Override found in " + where + ": " + key);
-//     } catch (e) {
-//         print.error(e.message);
-//     }
-// };
 
 
 var safePut = function(place, key, val, where) {

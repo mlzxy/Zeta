@@ -1,3 +1,9 @@
+/*!
+ * Zeta
+ * Copyright(c) 2014-2015 Xinyu Zhang beviszhang1993@gmail.com
+ * MIT Licensed
+ */
+
 //Route parser
 var Parser = require('./parser');
 

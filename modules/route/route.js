@@ -1,6 +1,6 @@
 /*!
- * gliding
- * Copyright(c) 2014 Xinyu Zhang bevis@mail.ustc.edu.cn
+ * Zeta
+ * Copyright(c) 2014-2015 Xinyu Zhang beviszhang1993@gmail.com
  * MIT Licensed
  */
 var url = require('url'),

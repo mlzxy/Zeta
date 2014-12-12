@@ -28,7 +28,6 @@ m.handler('welcome', function($scope, $render, $sayhi) {
 
 
 m.get('/', "login");
-m.post('/login', "loginForm");
 m.get('/user', ["loginCheck", "welcome"]);
 
 

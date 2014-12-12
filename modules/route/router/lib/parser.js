@@ -1,6 +1,8 @@
 /*!
- I borrow this one from , and do a little modification.
-*/
+ * Zeta
+ * Copyright(c) 2014-2015 Xinyu Zhang beviszhang1993@gmail.com
+ * MIT Licensed
+ */
 
 //Dependencies
 var Routes = require('./routes');

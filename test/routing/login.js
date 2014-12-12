@@ -14,3 +14,6 @@ m.handler('loginForm', function($scope, $form, db, $cookie) {
         $scope.res.end('login success!');
     });
 });
+
+
+m.post('/login', "loginForm");
