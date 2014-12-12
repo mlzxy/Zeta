@@ -45,13 +45,17 @@ cset = function(x, y) {
     return this;
 };
 cwrite = function(res) {
-    res.setHeader('Set-Cookie', this.val);
+    var s = [];
+    for (var k in this.val) {
+        s.push(ck.serialize(k, this.val[k]));
+    }
+    res.setHeader('Set-Cookie', s);
     return this;
 };
 
 var cookie = function($scope) {
     var c = {};
-    c.val = ck.parse($scope.req.headers.cookie);
+    c.val = $scope.req.headers.cookie ? ck.parse($scope.req.headers.cookie) : {};
     c.get = cget;
     c.set = cset;
     c.write = cwrite;

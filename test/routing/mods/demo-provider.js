@@ -8,7 +8,7 @@ db.get = function(x, callback) {
 
 db.connection = m.config('dburl');
 
-m.set = function(x) {
+db.set = function(x) {
     cache[x] = true;
 };
 m.provider('db', db);

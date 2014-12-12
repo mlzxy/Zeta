@@ -11,6 +11,7 @@ var url = require('url'),
     myUtil = require('../../util/util.js'),
     clc = require('cli-color'),
     print = require('../../util/print.js'),
+    http = require('http'),
     net = require('net');
 
 
@@ -55,7 +56,12 @@ for (var i = 0; i < methods.length; i++) {
 
 net.Server.prototype.on('listening', function() {
     print.listen(this.address());
+}).on('close', function() {
+    print.close('the server has been closed.');
 });
+
+
+
 
 
 m.z = rhlp.z;

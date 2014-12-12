@@ -72,7 +72,7 @@ var loading = function(m) {
 
 
 var goNext = function(name) {
-    console.log('[' + clc.cyan('handler') + ']' + mtab(1) + "------> " + clc.bold.blue(name));
+    console.log('[' + clc.cyan('handler') + ']' + mtab(1) + "   --- {" + clc.bold.blue(name) + "} ---");
 };
 
 var ok = function(msg) {
@@ -81,7 +81,7 @@ var ok = function(msg) {
 
 var preq = clc.yellow;
 var request = function(obj) {
-    console.log("[" + clc.green('request') + "] " + "from ip: " + preq(obj.ip) + ", method: " + preq(obj.method) + ", on path:" + preq(obj.path));
+    console.log("\n[" + clc.green('request') + "] " + "from ip: " + preq(obj.ip) + ", method: " + preq(obj.method) + ", on path:" + preq(obj.path));
 };
 
 
@@ -110,11 +110,28 @@ var options = function(optset) {
 
 
 var listen = function(obj) {
-    console.log('[' + clc.green('listening') + '] ' + 'The server is now listening on the ' + clc.blue(obj.address + ':' + String(obj.port)));
+    console.log('[' + clc.green('listening') + '] ' + 'The server is now listening on the ' + clc.blue(obj.address + ':' + String(obj.port)) + '\n');
 };
 
 
 
+var close = function(s) {
+    console.log('[' + clc.green('closed') + '] ' + s);
+};
+
+
+var terminate = function(serverResponse) {
+    console.log('[' + clc.red('terminated') + ']  the request has been terminated.');
+};
+
+var requestend = function(obj, t) {
+    console.log("[" + clc.green('finished') + "] " + "request finish from ip: " + preq(obj.ip) + ", method: " + preq(obj.method) + ", on path:" + preq(obj.path) + " in " + clc.green(String(t)) + " ms\n");
+};
+
+
+exports.requestend = requestend;
+exports.terminate = terminate;
+exports.close = close;
 exports.ok = ok;
 exports.error = error;
 exports.warn = warn;

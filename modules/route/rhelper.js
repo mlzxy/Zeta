@@ -8,6 +8,7 @@ var url = require('url'),
     print = require('../../util/print.js'),
     util = require('util'),
     net = require('net'),
+    http = require('http'),
     lrt = require('./router');
 
 
@@ -102,16 +103,15 @@ var server = function() {
         for (var i = 0; i < a.length; i++) {
             args.push(a[i].isFactory ? mkFactory($scope, a[i]) : a[i]);
         }
-        return fctr(args);
+        return fatr.apply(this, args);
     };
 
     var mkarg = function($scope, next) { //the next here maybe string or function
         var f = getF[next];
         var a = f2argH[next];
-        var args = [];
+        var args = [$scope];
         for (var i = 0; i < a.length; i++)
             args.push(a[i].isFactory ? mkFactory($scope, a[i]) : a[i]);
-        args.unshift($scope);
         return {
             f: f,
             arg: args
@@ -140,7 +140,7 @@ var server = function() {
         var st = router[mth]; //post, get -> different hashmap of handler chain
         for (var pth in st) { //path1,path2 -> hander chain
             var foo = function(fstate, hchain, req, res) {
-                debugger;
+                // debugger;
                 var $scope = {};
                 $scope.req = req;
                 $scope.res = res;
@@ -158,10 +158,16 @@ var server = function() {
     /*==========================================================*/
     if (this.config('debug')) {
         net.Server.prototype.on('request', function(req, res) {
-            print.request({
+            res.start = new Date();
+            res.info = {
                 ip: req.connection.remoteAddress,
                 path: url.parse(req.url).pathname,
                 method: req.method
+            };
+            print.request(res.info);
+            /*====================================*/
+            res.on('finish', function() {
+                print.requestend(this.info, new Date() - this.start);
             });
         });
     }
