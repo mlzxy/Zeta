@@ -16,7 +16,7 @@ var getArguments = function(f) {
             rs.push(arg[s]);
         }
     }
-    return rs;
+    return f.arg || rs;
 };
 
 var remove = function(str, c) {
