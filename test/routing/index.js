@@ -8,7 +8,7 @@ m.server();
 
 
 m.handler('loginCheck', function($scope, $cookie, db) {
-    $scope.user = $cookie.get('user');
+    $scope.user = $cookie.val('user');
     db.get($scope.user, function(exist) {
         if (exist)
             $scope.go('next');

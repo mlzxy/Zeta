@@ -33,19 +33,32 @@ m.provider('$render', render);
 
 
 /*cookie*/
-var cget, cset, cwrite;
-cget = function(x) {
-    return this.val[x];
-};
+var cval, cwrite;
 
-cset = function(x, y) {
-    this.val[x] = y;
+cval = function(x, y, optOrname, optVal) {
+    switch (arguments.length) {
+        case 1:
+            return this._val[x];
+        case 2:
+            this._val[x] = y;
+            break;
+        case 3:
+            this._opt[x] = optOrname;
+            this._val[x] = y;
+            break;
+        case 4:
+            this._val[x] = y;
+            this._opt[x] = this._opt[x] || {};
+            this._opt[x][optOrname] = optVal;
+    }
     return this;
 };
+
+
 cwrite = function(res) {
     var s = [];
-    for (var k in this.val) {
-        s.push(ck.serialize(k, this.val[k]));
+    for (var k in this._val) {
+        s.push(ck.serialize(k, this._val[k], this._opt[k]));
     }
     res.setHeader('Set-Cookie', s);
     return this;
@@ -53,9 +66,9 @@ cwrite = function(res) {
 
 var cookie = function($scope) {
     var c = {};
-    c.val = $scope.req.headers.cookie ? ck.parse($scope.req.headers.cookie) : {};
-    c.get = cget;
-    c.set = cset;
+    c._val = $scope.req.headers.cookie ? ck.parse($scope.req.headers.cookie) : {};
+    c._opt = {};
+    c.val = cval;
     c.write = cwrite;
     return c;
 };

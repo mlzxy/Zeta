@@ -25,16 +25,20 @@ var quiteRequire = function(path) {
 };
 
 
-
+var countThrow = 0;
 var safeRequire = function(path) {
     try {
         var m = require(path);
         return m;
     } catch (e) {
-        // print.error(e.message);
-        print.headline("Stack traceback");
-        console.log(e.stack);
-        process.exit();
+        if (countThrow === 0) {
+            countThrow += 1;
+            print.headline("Stack traceback");
+            console.log(e.stack);
+            throw e;
+        } else {
+            throw e;
+        }
     }
 };
 

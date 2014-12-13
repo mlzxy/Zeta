@@ -7,11 +7,12 @@ var chai = require('chai'),
 
 
 
-describe('Circular Dependency ', function() {
-    describe('#indexOf()', function() {
-        it('should return -1 when the value is not present', function() {
-            assert.equal(-1, [1, 2, 3].indexOf(5));
-            assert.equal(-1, [1, 2, 3].indexOf(0));
-        })
-    })
-})
+describe('Circular Dependency Found', function() {
+    it('should throw Error if you set circleCheck to be true', function() {
+        try {
+            require('./circular/m.js');
+        } catch (e) {
+            e.message.toLowerCase().should.include('circular');
+        }
+    });
+});
