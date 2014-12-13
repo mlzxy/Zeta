@@ -3,10 +3,6 @@ var chai = require('chai'),
     expect = chai.expect,
     should = chai.should();
 
-
-
-
-
 describe('Circular Dependency Found', function() {
     it('should throw Error if you set circleCheck to be true', function() {
         try {
