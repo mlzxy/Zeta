@@ -25,16 +25,22 @@ var quiteRequire = function(path) {
 };
 
 
-var countThrow = 0;
+var resetEnv = function() {
+    global.mMap = global.mOpt = global.mgld = global.ngld = undefined;
+};
+
+
+var firstErr = true;
 var safeRequire = function(path) {
     try {
         var m = require(path);
         return m;
     } catch (e) {
-        if (countThrow === 0) {
-            countThrow += 1;
+        if (firstErr) {
+            firstErr = false;
             print.headline("Stack traceback");
             console.log(e.stack);
+            resetEnv();
             throw e;
         } else {
             throw e;
@@ -115,7 +121,7 @@ exports.updateObj = updateObj;
 exports.quiteRequire = quiteRequire;
 exports.safeRequire = safeRequire;
 exports.checkErr = checkErr;
-
+exports.resetEnv = resetEnv;
 
 /*assign with warning*/
 exports.safePut = safePut;

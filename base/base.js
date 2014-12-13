@@ -50,7 +50,7 @@ var load = function() {
         mhlp.invalidate(this.name, global.mMap);
         //
         this.loadinfo.mgld = global.mgld; //save information
-        global.mMap = global.mOpt = global.mgld = global.ngld = undefined;
+        myUtil.resetEnv();
         endload = new Date();
         print.loaded(this);
         print.finish(this, endload - startload);
