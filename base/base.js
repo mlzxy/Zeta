@@ -28,7 +28,7 @@ var load = function() {
     for (var i = 0; i < deps.length; i++) {
         var fname = mMap[deps[i]] || deps[i]; //maybe is a npm module or build in modules that not locate in current working directory
 
-        myUtil.safeRequire(fname);
+        myUtil.safeRequire(fname); //only use the safeRequire here
         var md = global.mgld[deps[i]];
         if (md === undefined && !this.config(options.circleCheck)) { //means circular, because of nodejs require mechanism
             if (deps.length === 1 && i === 0) { //only one dependence and it's also circular
@@ -39,7 +39,6 @@ var load = function() {
             continue;
         }
         md = md.init();
-        debugger;
         mhlp.mergeModule(this, md);
 
     }
@@ -47,6 +46,9 @@ var load = function() {
     if (masterLoad) {
         this.loadinfo = {};
         this.loadinfo.mMap = global.mMap;
+        //now have to invalidate the cache
+        mhlp.invalidate(this.name, global.mMap);
+        //
         this.loadinfo.mgld = global.mgld; //save information
         global.mMap = global.mOpt = global.mgld = global.ngld = undefined;
         endload = new Date();

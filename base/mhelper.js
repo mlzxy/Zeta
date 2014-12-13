@@ -109,6 +109,15 @@ var circle = function(name, arr) {
 
 
 
+var invalidate = function(name, mMap) {
+    for (var n in mMap) {
+        if (n != name) {
+            var path = mMap[n];
+            delete require.cache[require.resolve(path)];
+        }
+    }
+};
+
 
 
 
@@ -116,3 +125,4 @@ var circle = function(name, arr) {
 exports.init_mMap = init_mMap;
 exports.mergeModule = mergeModule;
 exports.circle = circle;
+exports.invalidate = invalidate;
