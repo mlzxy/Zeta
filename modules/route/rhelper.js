@@ -139,15 +139,15 @@ var server = function() {
     for (var mth in router) { //router
         var st = router[mth]; //post, get -> different hashmap of handler chain
         for (var pth in st) { //path1,path2 -> hander chain
-            var foo = function(fstate, hchain, req, res) {
-                // debugger;
-                var $scope = {};
-                $scope.req = req;
-                $scope.res = res;
-                $scope.params = req.params;
-                $scope.go = go;
-                $scope.dchain = hchain;
-                $scope.dcIdx = 0;
+            var foo = function(fstate, dchain, req, res) {
+                var $scope = {
+                    req: req,
+                    res: res,
+                    params: req.params,
+                    go: go,
+                    dchain: dchain,
+                    dcIdx: 0
+                };
                 $scope.go(fstate);
             };
             foo = foo.bind(undefined, st[pth][0], st[pth]);
