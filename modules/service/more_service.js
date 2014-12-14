@@ -4,6 +4,7 @@
  * MIT Licensed
  */
 var m = require('../../base/base.js').module('built-in-service-more', ['built-in-service-base']);
+m = m.load();
 var formidable = require('formidable');
 var swig = require('swig');
 var ck = require('cookie');

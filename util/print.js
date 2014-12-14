@@ -49,7 +49,7 @@ var finish = function(m, ti) {
     var msg = "The Main Module: " + clc.red(m.name) + " , all dependencies get loaded successfully in " + clc.green(tistr) + " ms.";
     console.log("[" + clc.green("ok") + "] " + msg);
     console.log('');
-    console.log("[" + clc.yellow("loading") + "] Now start to load the components inside the Main Module: " + clc.red(m.name));
+    console.log("[" + clc.green("ok") + "] Now start to load the components inside the Main Module: " + clc.red(m.name));
 };
 
 var mainOk = function(m) {
@@ -60,14 +60,22 @@ var mainOk = function(m) {
 
 
 var loaded = function(m) {
-    console.log("[" + clc.green("loaded") + "]  Module: " + clc.blue(m.name));
+    if (myUtil.isString(m))
+        console.log("[" + clc.green("loaded") + "]  Module: " + clc.blue(m));
+    else
+        console.log("[" + clc.yellow("loaded") + "] Module: " + clc.blue(m.name));
 };
 
 var loading = function(m) {
     if (myUtil.isString(m))
         console.log("[" + clc.yellow("loading") + "] " + m);
-    else
-        console.log("[" + clc.yellow("loading") + "] Module: " + clc.blue(m.name) + ", who depends on " + clc.blue(JSON.stringify(m.dependent)));
+    else {
+        if (myUtil.equals(m.dependent, [cfg.builtin])) {
+            console.log("[" + clc.yellow("loading") + "] Module: " + clc.blue(m.name) + ", who depends on " + clc.blue(JSON.stringify([])));
+            console.log("[" + clc.green("builtin") + "] Begin to load Modules: " + clc.blue("builtin"));
+        } else
+            console.log("[" + clc.yellow("loading") + "] Module: " + clc.blue(m.name) + ", who depends on " + clc.blue(JSON.stringify(m.dependent)));
+    }
 };
 
 

@@ -1,1 +1,1 @@
-var m = require('../../').module('m3',[]);
+var m = require('../../').module('m3', []);

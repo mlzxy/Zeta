@@ -4,7 +4,7 @@ var m = require('../../').module('demo', ['demo-login']),
 m.config('root', __dirname);
 m.config('public', __dirname + '/public');
 m.config('dburl', 'http://localhost:dbport?paremeters');
-m.server();
+m.l();
 
 
 m.handler('loginCheck', function($scope, $cookie, db) {
@@ -33,4 +33,4 @@ m.get('/user', ["loginCheck", "welcome"]);
 
 
 
-http.createServer(m.z()).listen(8000);
+http.createServer(m.s()).listen(8000);

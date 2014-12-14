@@ -177,5 +177,5 @@ var server = function() {
     return lrt;
 };
 
-exports.z = server;
+exports.server = server;
 exports.methods = methods;

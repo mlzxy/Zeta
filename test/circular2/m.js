@@ -1,5 +1,5 @@
 var m = require('../../').module('test-circular', ['m1']);
 m.config('root', __dirname);
 m.config('circleCheck', false);
-m.server();
+m.load();
 exports.result = 'ok';

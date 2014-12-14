@@ -20,7 +20,7 @@ var methods = rhlp.methods;
 
 var m = require('../../base/base.js').module('built-in-router', ['built-in-service-more']);
 m.config('builtin', true); //for testing option spread
-
+m.load();
 
 
 m.save.router = {};
@@ -29,9 +29,9 @@ for (var k = 0; k < methods.length; k++) {
     m.save.router[methods[k]] = {};
 }
 
+
 var eacolor = clc.yellowBright;
 var e = clc.magenta;
-
 for (var i = 0; i < methods.length; i++) {
     m.save.router[methods[i]] = {};
     m[methods[i]] = function(method, path, f) {
@@ -64,4 +64,5 @@ net.Server.prototype.on('listening', function() {
 
 
 
-m.z = rhlp.z;
+m.server = rhlp.server;
+m.s = m.server;
