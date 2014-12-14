@@ -1,4 +1,4 @@
-- unify the dependent module code and master module code
-- change createServer().listen, don't use `prototype.on`
-- add factory cache
+- unify the dependent module code and master module code [x]
+- change createServer().listen, don't use `prototype.on` [x]
+- add factory cache  
 

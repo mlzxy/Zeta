@@ -35,7 +35,6 @@ m.provider('$render', render);
 
 /*cookie*/
 var cval, cwrite;
-
 cval = function(x, y, optOrname, optVal) {
     switch (arguments.length) {
         case 1:
@@ -54,8 +53,6 @@ cval = function(x, y, optOrname, optVal) {
     }
     return this;
 };
-
-
 cwrite = function(res) {
     var s = [];
     for (var k in this._val) {

@@ -54,11 +54,20 @@ for (var i = 0; i < methods.length; i++) {
 }
 
 
-net.Server.prototype.on('listening', function() {
+
+
+
+var listen_org = net.Server.prototype.listen;
+var listen_new = function() {
+    this._listen.apply(this, arguments);
     print.listen(this.address());
-}).on('close', function() {
-    print.close('the server has been closed.');
-});
+    this.on('close', function() {
+        print.close('the server has been closed.');
+    });
+};
+net.Server.prototype._listen = listen_org;
+net.Server.prototype.listen = listen_new;
+
 
 
 
