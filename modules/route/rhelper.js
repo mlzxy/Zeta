@@ -97,7 +97,7 @@ var server = function() {
 
 
     /*=============================functions below would be called in the real request============================*/
-    var mkFactory = function($scope, fatr) { //fatr is a function, which needed to be inject arguments.
+    var mkFactoryNoCache = function($scope, fatr) { //fatr is a function, which needed to be inject arguments.
         var a = f2argF[fatr];
         var args = fatr.isFactory == needScope ? [$scope] : [];
         for (var i = 0; i < a.length; i++) {
@@ -105,6 +105,12 @@ var server = function() {
         }
         return fatr.apply(this, args);
     };
+
+    var mkFactoryCache = function($scope, fatr) {
+        return $scope.dchain[fatr] || ($scope.dchain[fatr] = mkFactoryNoCache($scope, fatr));
+    };
+
+    var mkFactory = this.config('serviceCache') ? mkFactoryCache : mkFactoryNoCache;
 
     var mkarg = function($scope, next) { //the next here maybe string or function
         var f = getF[next];
@@ -145,7 +151,7 @@ var server = function() {
                     res: res,
                     params: req.params,
                     go: go,
-                    dchain: dchain,
+                    dchain: dchain, //cache the factory in here
                     dcIdx: 0
                 };
                 $scope.go(fstate);

@@ -2,8 +2,7 @@ var m = require('../../../').module('demo-provider', []);
 var cache = {};
 var db = {};
 db.get = function(x, callback) {
-    callback = callback.bind(undefined, cache[x]);
-    process.nextTick(callback);
+    callback(cache[x]);
 };
 
 db.connection = m.config('dburl');
