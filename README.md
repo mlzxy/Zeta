@@ -1,7 +1,7 @@
 Zeta
 ========
 
-## Version 0.1.0 is Finished!
+## Version 0.2.0 is Finished!
 
 ```shell
 
