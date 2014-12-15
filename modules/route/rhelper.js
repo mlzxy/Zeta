@@ -12,7 +12,7 @@ var url = require('url'),
     lrt = require('./router');
 
 
-var methods = ["get", "post", "put", "head", "delete", "options", "trace", "connect", "any"],
+var methods = ["get", "post", "put", "head", "delete", "options", "trace", "connect"],
     needScope = 2,
     notNeedScope = 1;
 
@@ -22,7 +22,7 @@ var server = function() {
 
     print.mainOk(this);
     print.loading('start to prepare your server.');
-    print.options(this.config());
+    print.options(this.c.options);
 
     /*===================for shortname=========================*/
     var handler, router, factory, provider;
@@ -41,15 +41,26 @@ var server = function() {
     }
 
     for (var method in router) {
-        var store = router[method];
-        for (var path in store) {
-            var ch = store[path];
-            for (var i = 0; i < ch.length; i++) {
-                if (myUtil.isFunction(ch[i])) {
-                    getF[ch[i]] = ch[i];
+        if (method != "any") {
+            var store = router[method];
+            for (var path in store) {
+                var ch = store[path];
+                for (var i = 0; i < ch.length; i++) {
+                    if (myUtil.isFunction(ch[i])) {
+                        getF[ch[i]] = ch[i];
+                    } else {
+                        myUtil.checkErr(getF[ch[i]] === undefined,
+                            'The handler ' + ch[i] + ' have not been registered :[');
+                    }
+                }
+            }
+        } else {
+            if (router.any !== undefined) {
+                if (myUtil.isFunction(router.any)) {
+                    getF[router.any] = router.any;
                 } else {
-                    myUtil.checkErr(getF[ch[i]] === undefined,
-                        'The handler ' + ch[i] + ' have not been registered :[');
+                    myUtil.checkErr(getF[router.any] === undefined,
+                        'The handler ' + router.any + ' have not been registered :[');
                 }
             }
         }
@@ -97,7 +108,7 @@ var server = function() {
 
 
     /*=============================functions below would be called in the real request============================*/
-    var mkFactory = function($scope, fatr) { //fatr is a function, which needed to be inject arguments.
+    var mkFactoryNoCache = function($scope, fatr) { //fatr is a function, which needed to be inject arguments.
         var a = f2argF[fatr];
         var args = fatr.isFactory == needScope ? [$scope] : [];
         for (var i = 0; i < a.length; i++) {
@@ -105,6 +116,12 @@ var server = function() {
         }
         return fatr.apply(this, args);
     };
+
+    var mkFactoryCache = function($scope, fatr) {
+        return $scope.dchain[fatr] || ($scope.dchain[fatr] = mkFactoryNoCache($scope, fatr));
+    };
+
+    var mkFactory = this.config('serviceCache') ? mkFactoryCache : mkFactoryNoCache;
 
     var mkarg = function($scope, next) { //the next here maybe string or function
         var f = getF[next];
@@ -137,21 +154,41 @@ var server = function() {
     /*===============================================*/
 
     for (var mth in router) { //router
-        var st = router[mth]; //post, get -> different hashmap of handler chain
-        for (var pth in st) { //path1,path2 -> hander chain
-            var foo = function(fstate, hchain, req, res) {
-                // debugger;
-                var $scope = {};
-                $scope.req = req;
-                $scope.res = res;
-                $scope.params = req.params;
-                $scope.go = go;
-                $scope.dchain = hchain;
-                $scope.dcIdx = 0;
-                $scope.go(fstate);
-            };
-            foo = foo.bind(undefined, st[pth][0], st[pth]);
-            lrt[mth](pth, foo);
+        // debugger;
+        if (mth != "any") {
+            var st = router[mth]; //post, get -> different hashmap of handler chain
+            for (var pth in st) { //path1,path2 -> hander chain
+                var foo = function(fstate, dchain, req, res) {
+                    var $scope = {
+                        req: req,
+                        res: res,
+                        params: req.params,
+                        go: go,
+                        dchain: dchain, //cache the factory in here
+                        dcIdx: 0
+                    };
+                    $scope.go(fstate);
+                };
+                foo = foo.bind(undefined, st[pth][0], st[pth]);
+                lrt[mth](pth, foo);
+            }
+        } else {
+            if (router.any !== undefined) {
+                var bar = function(fstate, dchain, req, res) {
+                    // debugger;
+                    var $scope = {
+                        req: req,
+                        res: res,
+                        params: req.params,
+                        go: go,
+                        dchain: dchain, //cache the factory in here
+                        dcIdx: 0
+                    };
+                    $scope.go(fstate);
+                };
+                bar = bar.bind(undefined, router.any[0], router.any);
+                lrt.any(bar);
+            }
         }
     }
 
@@ -177,5 +214,5 @@ var server = function() {
     return lrt;
 };
 
-exports.z = server;
+exports.server = server;
 exports.methods = methods;

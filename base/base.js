@@ -11,9 +11,9 @@ var print = require('../util/print.js');
 var startload, endload;
 
 var load = function() {
+    print.loading(this);
     var masterLoad = false;
     if (global.mMap === undefined) {
-        print.loading(this);
         global.mMap = mhlp.init_mMap(this.config('root'));
         masterLoad = true;
         global.mOpt = this.config.options;
@@ -25,6 +25,7 @@ var load = function() {
 
     var deps = this.dependent,
         mMap = global.mMap;
+
     for (var i = 0; i < deps.length; i++) {
         var fname = mMap[deps[i]] || deps[i]; //maybe is a npm module or build in modules that not locate in current working directory
 
@@ -40,7 +41,7 @@ var load = function() {
         }
         md = md.init();
         mhlp.mergeModule(this, md);
-
+        print.loaded(deps[i]);
     }
 
     if (masterLoad) {
@@ -48,12 +49,13 @@ var load = function() {
         this.loadinfo.mMap = global.mMap;
         //now have to invalidate the cache
         mhlp.invalidate(this.name, global.mMap);
-        //
         this.loadinfo.mgld = global.mgld; //save information
         myUtil.resetEnv();
         endload = new Date();
-        print.loaded(this);
+        // print.loaded(this);
         print.finish(this, endload - startload);
+    } else {
+        global.mgld[this.name] = this;
     }
     return this;
 };
@@ -66,8 +68,9 @@ var init = function(m) {
     m.init = function() {
         return this;
     };
+    m.i = m.init;
     m.load = load;
-    m.server = load;
+    m.l = load;
     m.config = function(name, val) {
         var rt;
         switch (arguments.length) {
@@ -76,47 +79,34 @@ var init = function(m) {
                 break;
             case 2:
                 this.config.options[name] = val;
-                break;
-            case 0:
-                rt = this.config.options;
+                rt = this;
                 break;
             default:
+                rt = this;
         }
         return rt;
     };
+    m.c = m.config;
     m.config.options = new options.initOptions();
+
     return m;
 };
 
 var module = function(mname, mnArr) {
-    var mgld = global.mgld;
-    var masterLoad = false;
-    if (mgld === undefined) {
-        mgld = {};
-        global.mgld = mgld;
+    if (global.mgld === undefined) {
+        global.mgld = {};
         global.ngld = {};
-        masterLoad = true;
         startload = new Date();
     }
     var m = {};
     m = init(m);
     m.name = mname;
     m.dependent = mnArr;
+    global.ngld[m.name] = m;
     if (m.dependent.length === 0 && !cfg.isBuiltin(m)) {
         m.dependent = [cfg.builtin];
     }
-    if (!masterLoad) { //since you still need to config, so the master load should be executed manually when finish configuration. eg: m.server() //server === load
-        var ngld = global.ngld;
-        ngld[m.name] = m;
-        global.ngld = ngld;
-        /*the ngld here is to log module loading order*/
-        print.loading(m);
-        m = m.load();
-        print.loaded(m);
-        mgld = global.mgld;
-        mgld[m.name] = m;
-        global.mgld = mgld;
-    }
+    /*the ngld here is to log module loading order*/
     return m;
 };
 

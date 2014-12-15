@@ -1,5 +1,5 @@
 var m = require('../../').module('demo-login', ['demo-factory']);
-
+m.l();
 
 
 m.handler('login', function($scope, $render) {

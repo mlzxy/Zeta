@@ -1,6 +1,6 @@
 var m = require('../../').module('demo', ['demo-login']),
     http = require('http');
-
+m.config('serviceCache', true);
 m.config('root', __dirname);
 m.config('public', __dirname + '/public');
 m.config('dburl', 'http://localhost:dbport?paremeters');
@@ -16,9 +16,9 @@ m.handler('loginCheck', function($scope, $cookie, db) {
             $scope.go('login');
     });
 });
-m.handler('welcome', function($scope, $render, $sayhi) {
+m.handler('welcome', function($scope, $render, $cookie, $sayhi) {
     $scope.res.end($render('/index.html', {
-        name: $scope.user,
+        name: $cookie.val('user'),
         msg: $sayhi()
     }));
 });

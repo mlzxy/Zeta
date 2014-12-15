@@ -1,9 +1,10 @@
 var m = require('../../../').module('demo-provider', []);
-
+m.l();
 var cache = {};
 var db = {};
 db.get = function(x, callback) {
-    callback(cache[x]);
+    callback = callback.bind(undefined, cache[x]);
+    process.nextTick(callback);
 };
 
 db.connection = m.config('dburl');

@@ -1,6 +1,6 @@
 var m = require('../../../').module('demo-factory', ['demo-provider']);
 var formidable = require('formidable');
-
+m.l();
 
 
 

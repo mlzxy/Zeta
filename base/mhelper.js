@@ -37,14 +37,20 @@ var init_mMap = function(root) {
         }
         next();
     };
-    var walk_options = {
-        listeners: {
-            file: ff
-        }
-    };
-    walk.walkSync(root || process.cwd(), walk_options);
-    mMap = myUtil.updateObj(mMap, cfg.mBuiltin);
-    return mMap;
+    if (root !== undefined) {
+        var walk_options = {
+            listeners: {
+                file: ff
+            }
+        };
+        walk.walkSync(root || process.cwd(), walk_options);
+        mMap = myUtil.updateObj(mMap, cfg.mBuiltin);
+        return mMap;
+    } else {
+        return cfg.mBuiltin;
+    }
+
+
 };
 
 

@@ -4,9 +4,11 @@
  * MIT Licensed
  */
 var m = require('../../base/base.js').module('built-in-service-more', ['built-in-service-base']);
+m = m.load();
 var formidable = require('formidable');
 var swig = require('swig');
 var ck = require('cookie');
+var path = require('path');
 var mime = require('mime');
 var fs = require('fs');
 var url = require('url');
@@ -34,7 +36,6 @@ m.provider('$render', render);
 
 /*cookie*/
 var cval, cwrite;
-
 cval = function(x, y, optOrname, optVal) {
     switch (arguments.length) {
         case 1:
@@ -53,8 +54,6 @@ cval = function(x, y, optOrname, optVal) {
     }
     return this;
 };
-
-
 cwrite = function(res) {
     var s = [];
     for (var k in this._val) {
@@ -83,7 +82,7 @@ var static_server = function($scope) {
         response = $scope.res;
     var pathname = url.parse(request.url).pathname;
     var realPath = public + pathname;
-    path.exists(realPath, function(exists) {
+    fs.exists(realPath, function(exists) {
         if (!exists) {
             response.writeHead(404, {
                 'Content-Type': 'text/plain'
@@ -94,11 +93,18 @@ var static_server = function($scope) {
         } else {
             fs.readFile(realPath, "binary", function(err, file) {
                 if (err) {
-                    response.writeHead(500, {
-                        'Content-Type': 'text/plain'
-                    });
-
-                    response.end(err);
+                    if (err.code == "EISDIR") {
+                        response.writeHead(404, {
+                            'Content-Type': 'text/plain'
+                        });
+                        response.write("This request URL " + pathname + " was not found on this server.");
+                        response.end();
+                    } else {
+                        response.writeHead(500, {
+                            'Content-Type': 'text/plain'
+                        });
+                        response.end(JSON.stringify(err));
+                    }
                 } else {
                     var contentType = mime.lookup(realPath);
                     response.writeHead(200, {
@@ -112,7 +118,6 @@ var static_server = function($scope) {
     });
 };
 m.handler('static', static_server);
-
 
 
 
