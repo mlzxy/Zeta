@@ -47,7 +47,7 @@ for (var i = 0; i < methods.length; i++) {
         for (var ki = 0; ki < f.length; ki++)
             myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
                 errMsg2a + eacolor(path) + errMsg2b + eacolor(JSON.stringify(f[ki])));
-        myUtil.safePut(m.save.router[method], path, //here we could use m instead of this, because the this.save.router.method are all the same across modules,
+        myUtil.safePut(m.save.router[method], path, //here we could use m instead of this, because the this.save are all the same across modules,
             f, "handler for " + method); // see more in mhelper.js mergeMoudule: how moudles merged
     };
     m[methods[i]] = m[methods[i]].bind(undefined, methods[i]);
@@ -67,7 +67,7 @@ m.any = function(f) {
     for (var ki = 0; ki < f.length; ki++)
         myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
             errMsg2a + eacolor(path) + errMsg2b + eacolor(JSON.stringify(f[ki])));
-    this.save.router.any = f;
+    m.save.router.any = f;
 };
 
 

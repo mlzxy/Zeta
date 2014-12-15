@@ -13,15 +13,10 @@ function initOptions() {
     this.public = "public";
     this.debug = true;
     this.serviceCache = false;
+    this.loadinfo = false;
 }
 
 
-
-defalta.circleCheck = true;
-defalta.root = process.cwd();
-defalta.public = "public";
-defalta.debug = true;
-defalta.serviceCache = false;
 
 
 var equals = require('deep-equal');
@@ -39,7 +34,6 @@ var removeDefault = function(opt) {
 
 
 /*for default options*/
-exports.defalta = defalta;
 exports.initOptions = initOptions;
 exports.removeDefault = removeDefault;
 exports.circleCheck = 'circleCheck';

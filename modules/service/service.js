@@ -7,6 +7,7 @@ var myUtil = require('../../util/util.js');
 var m = require('../../base/base.js').module('built-in-service-base', []);
 m = m.load();
 
+m.save = {};
 m.save.handler = {};
 m.save.factory = {};
 m.save.provider = {};
