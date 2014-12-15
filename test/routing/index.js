@@ -31,6 +31,6 @@ m.get('/', "login");
 m.get('/user', ["loginCheck", "welcome"]);
 
 
+http.createServer(m.s()).listen(8000);
 
-
-exports.app = m.z();
+// exports.app = m.s();

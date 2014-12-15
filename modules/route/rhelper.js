@@ -12,7 +12,7 @@ var url = require('url'),
     lrt = require('./router');
 
 
-var methods = ["get", "post", "put", "head", "delete", "options", "trace", "connect", "any"],
+var methods = ["get", "post", "put", "head", "delete", "options", "trace", "connect"],
     needScope = 2,
     notNeedScope = 1;
 
@@ -22,7 +22,7 @@ var server = function() {
 
     print.mainOk(this);
     print.loading('start to prepare your server.');
-    print.options(this.config());
+    print.options(this.c.options);
 
     /*===================for shortname=========================*/
     var handler, router, factory, provider;
@@ -41,15 +41,26 @@ var server = function() {
     }
 
     for (var method in router) {
-        var store = router[method];
-        for (var path in store) {
-            var ch = store[path];
-            for (var i = 0; i < ch.length; i++) {
-                if (myUtil.isFunction(ch[i])) {
-                    getF[ch[i]] = ch[i];
+        if (method != "any") {
+            var store = router[method];
+            for (var path in store) {
+                var ch = store[path];
+                for (var i = 0; i < ch.length; i++) {
+                    if (myUtil.isFunction(ch[i])) {
+                        getF[ch[i]] = ch[i];
+                    } else {
+                        myUtil.checkErr(getF[ch[i]] === undefined,
+                            'The handler ' + ch[i] + ' have not been registered :[');
+                    }
+                }
+            }
+        } else {
+            if (router.any !== undefined) {
+                if (myUtil.isFunction(router.any)) {
+                    getF[router.any] = router.any;
                 } else {
-                    myUtil.checkErr(getF[ch[i]] === undefined,
-                        'The handler ' + ch[i] + ' have not been registered :[');
+                    myUtil.checkErr(getF[router.any] === undefined,
+                        'The handler ' + router.any + ' have not been registered :[');
                 }
             }
         }
@@ -143,21 +154,41 @@ var server = function() {
     /*===============================================*/
 
     for (var mth in router) { //router
-        var st = router[mth]; //post, get -> different hashmap of handler chain
-        for (var pth in st) { //path1,path2 -> hander chain
-            var foo = function(fstate, dchain, req, res) {
-                var $scope = {
-                    req: req,
-                    res: res,
-                    params: req.params,
-                    go: go,
-                    dchain: dchain, //cache the factory in here
-                    dcIdx: 0
+        // debugger;
+        if (mth != "any") {
+            var st = router[mth]; //post, get -> different hashmap of handler chain
+            for (var pth in st) { //path1,path2 -> hander chain
+                var foo = function(fstate, dchain, req, res) {
+                    var $scope = {
+                        req: req,
+                        res: res,
+                        params: req.params,
+                        go: go,
+                        dchain: dchain, //cache the factory in here
+                        dcIdx: 0
+                    };
+                    $scope.go(fstate);
                 };
-                $scope.go(fstate);
-            };
-            foo = foo.bind(undefined, st[pth][0], st[pth]);
-            lrt[mth](pth, foo);
+                foo = foo.bind(undefined, st[pth][0], st[pth]);
+                lrt[mth](pth, foo);
+            }
+        } else {
+            if (router.any !== undefined) {
+                var bar = function(fstate, dchain, req, res) {
+                    // debugger;
+                    var $scope = {
+                        req: req,
+                        res: res,
+                        params: req.params,
+                        go: go,
+                        dchain: dchain, //cache the factory in here
+                        dcIdx: 0
+                    };
+                    $scope.go(fstate);
+                };
+                bar = bar.bind(undefined, router.any[0], router.any);
+                lrt.any(bar);
+            }
         }
     }
 

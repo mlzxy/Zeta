@@ -1,5 +1,5 @@
 var m = require('../../../').module('demo-provider', []);
-
+m.l();
 var cache = {};
 var db = {};
 db.get = function(x, callback) {

@@ -105,7 +105,6 @@ var module = function(mname, mnArr) {
     global.ngld[m.name] = m;
     if (m.dependent.length === 0 && !cfg.isBuiltin(m)) {
         m.dependent = [cfg.builtin];
-        m.load();
     }
     /*the ngld here is to log module loading order*/
     return m;
