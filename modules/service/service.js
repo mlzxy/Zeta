@@ -19,7 +19,7 @@ var handler = function(hname, f) {
         return this.save.handler[hname];
     myUtil.checkErr(!myUtil.isFunction(f), "Handler " + hname + " is not a function :(");
     myUtil.safePut(this.save.handler, hname, f, "Handler ");
-    return true;
+    return this;
 };
 
 var factory = function(fname, f) {
@@ -27,16 +27,16 @@ var factory = function(fname, f) {
         return this.save.factory[fname];
     myUtil.checkErr(!myUtil.isFunction(f), "Factory " + fname + " is not a function, it should be a factory function :)");
     myUtil.safePut(this.save.factory, fname, f, "Factory ");
-    return true;
+    return this;
 };
 
 var provider = function(pname, f) {
     if (f === undefined)
         return this.save.provider[pname];
     myUtil.safePut(this.save.provider, pname, f, "Provider ");
-    return true;
+    return this;
 };
 
-m.handler = handler;
-m.provider = provider;
-m.factory = factory;
+m.h = m.handler = handler;
+m.p = m.provider = provider;
+m.f = m.factory = factory;

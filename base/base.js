@@ -68,6 +68,7 @@ var init = function(m) {
     m.init = function() {
         return this;
     };
+    m.i = m.init;
     m.load = load;
     m.l = load;
     m.config = function(name, val) {
@@ -78,16 +79,16 @@ var init = function(m) {
                 break;
             case 2:
                 this.config.options[name] = val;
-                break;
-            case 0:
-                rt = this.config.options;
+                rt = this;
                 break;
             default:
+                rt = this;
         }
         return rt;
     };
-    m.config.options = new options.initOptions();
     m.c = m.config;
+    m.config.options = new options.initOptions();
+
     return m;
 };
 

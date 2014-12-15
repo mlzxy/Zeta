@@ -73,5 +73,4 @@ net.Server.prototype.listen = listen_new;
 
 
 
-m.server = rhlp.server;
-m.s = m.server;
+m.s = m.server = rhlp.server;
