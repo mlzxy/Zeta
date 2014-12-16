@@ -45,12 +45,13 @@ var load = function() {
     }
 
     if (masterLoad) {
-        this.loadinfo = {};
-        this.loadinfo.mMap = global.mMap;
-        //now have to invalidate the cache
-        mhlp.invalidate(this.name, global.mMap);
-        this.loadinfo.mgld = global.mgld; //save information
-        myUtil.resetEnv();
+        if (this.config('loadinfo')) {
+            this.loadinfo = {};
+            this.loadinfo.mMap = global.mMap;
+            this.loadinfo.mgld = global.mgld; //save information
+        }
+        //now have to invalidate the cache and reset environment
+        mhlp.resetEnv(this.name);
         endload = new Date();
         // print.loaded(this);
         print.finish(this, endload - startload);
@@ -60,11 +61,7 @@ var load = function() {
     return this;
 };
 
-
-
-
 var init = function(m) {
-    m.save = {};
     m.init = function() {
         return this;
     };
@@ -88,7 +85,6 @@ var init = function(m) {
     };
     m.c = m.config;
     m.config.options = new options.initOptions();
-
     return m;
 };
 

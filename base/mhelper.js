@@ -58,9 +58,11 @@ var init_mMap = function(root) {
 
 var except = {
     config: 1,
+    c: 1,
     init: 1,
-    save: 1,
+    i: 1,
     load: 1,
+    l: 1,
     name: 1,
     dependent: 1
 };
@@ -69,13 +71,6 @@ var mergeModule = function(m1, m2) {
         if (!except[v]) {
             m1[v] = m2[v];
         }
-    }
-    var s1 = m1.save,
-        s2 = m2.save;
-    for (var u in s2) {
-        if (s1[u] === undefined)
-            s1[u] = {};
-        myUtil.safeCopy(s1[u], s2[u], "between " + m1.name + " and " + m2.name + " "); //the safeCopy is shallow
     }
     return m1;
 };
@@ -115,13 +110,15 @@ var circle = function(name, arr) {
 
 
 
-var invalidate = function(name, mMap) {
+var resetEnv = function(name) {
+    var mMap = global.mMap;
     for (var n in mMap) {
         if (n != name) {
             var path = mMap[n];
             delete require.cache[require.resolve(path)];
         }
     }
+    myUtil.resetEnv();
 };
 
 
@@ -131,4 +128,4 @@ var invalidate = function(name, mMap) {
 exports.init_mMap = init_mMap;
 exports.mergeModule = mergeModule;
 exports.circle = circle;
-exports.invalidate = invalidate;
+exports.resetEnv = resetEnv;
