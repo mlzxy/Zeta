@@ -15,8 +15,7 @@ m.handler('loginCheck', function($scope, $cookie, db) {
         else
             $scope.go('login');
     });
-});
-m.h('welcome', function($scope, $render, $sayhi) {
+}).h('welcome', function($scope, $render, $sayhi) {
     $scope.res.end($render('/index.html', {
         name: $scope.user,
         msg: $sayhi()
@@ -26,11 +25,9 @@ m.h('welcome', function($scope, $render, $sayhi) {
 
 
 
-m.eget(/.*/, function($scope) {});
 
 
-m.get('/', "login");
-m.get('/user', ["loginCheck", "welcome"]);
+m.get('/', "login").get('/user', ["loginCheck", "welcome"]);
 
 
 http.createServer(m.s()).listen(8000);

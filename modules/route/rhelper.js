@@ -137,17 +137,12 @@ var server = function() {
     /*===============================================*/
     var go = this.config('debug') ?
         function(next) {
-            next = (next == "next") ? this.dchain[this.dcIdx] : next;
-            this.dcIdx += 1;
-            if (myUtil.isString(next))
-                print.goNext(next);
-            else
-                print.goNext('next');
+            next = (next == "next") ? this.dchain[this.dcIdx++] : next;
+            print.goNext(next);
             var t = mkarg(this, next);
             t.f.apply(this, t.arg);
         } : function(next) {
-            next = (next == "next") ? this.dchain[this.dcIdx] : next;
-            this.dcIdx += 1;
+            next = (next == "next") ? this.dchain[this.dcIdx++] : next;
             var t = mkarg(this, next);
             t.f.apply(this, t.arg);
         };

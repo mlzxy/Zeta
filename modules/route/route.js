@@ -16,61 +16,174 @@ var url = require('url'),
 
 
 var methods = rhlp.methods;
-
-
+var errMsg1a = "You should register a router with a handler or a chain of handlers for path: ";
+var errMsg2a = "In the handler chain you register for path:";
 var m = require('../../base/base.js').module('built-in-router', ['built-in-service-more']);
-m.config('builtin', true); //for testing option spread
 m.load();
 
-
 m.save.router = {};
-
 for (var k = 0; k < methods.length; k++) {
     m.save.router[methods[k]] = {};
 }
 
-/*========================================================================*/
-var eacolor = clc.yellowBright;
-var e = clc.magenta;
-for (var i = 0; i < methods.length; i++) {
-    m.save.router[methods[i]] = {};
-    m[methods[i]] = function(method, path, f) {
-        var errMsg1a = "You should register a router with a handler or a chain of handlers for path: ";
-        var errMsg1b = e(" method: ") + eacolor(method);
-        var errMsg2a = "In the handler chain you register for path:";
-        var errMsg2b = e(" method:") + eacolor(method) + e(" there is non-function & non-string element:");
-        /*========================*/
-        myUtil.checkErr(!(myUtil.isFunction(f) || myUtil.isArray(f) || myUtil.isString(f)),
-            errMsg1a + eacolor(path) + errMsg1b);
-        if (myUtil.isFunction(f) || myUtil.isString(f))
-            f = [f];
-        for (var ki = 0; ki < f.length; ki++)
-            myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
-                errMsg2a + eacolor(path) + errMsg2b + eacolor(JSON.stringify(f[ki])));
-        myUtil.safePut(m.save.router[method], path, //here we could use m instead of this, because the this.save are all the same across modules,
-            f, "handler for " + method); // see more in mhelper.js mergeMoudule: how moudles merged
-    };
-    m[methods[i]] = m[methods[i]].bind(undefined, methods[i]);
-}
 
-/*========================================================================*/
+/*=====================tedious job========================*/
 
-m.any = function(f) {
-    var errMsg1a = "You should register a router with a handler or a chain of handlers for path: ";
-    var errMsg1b = e(" method: ") + eacolor("any");
-    var errMsg2a = "In the handler chain you register for path:";
-    var errMsg2b = e(" method:") + eacolor("any") + e(" there is non-function & non-string element:");
+m[methods[0]] = function(path, f) {
+    var method = methods[0];
+    var errMsg1b = clc.magenta(" method: ") + clc.yellowBright(method);
+    var errMsg2b = clc.magenta(" method:") + clc.yellowBright(method) + clc.magenta(" there is non-function & non-string element:");
     myUtil.checkErr(!(myUtil.isFunction(f) || myUtil.isArray(f) || myUtil.isString(f)),
-        errMsg1a + eacolor(path) + errMsg1b);
+        errMsg1a + clc.yellowBright(path) + errMsg1b);
     if (myUtil.isFunction(f) || myUtil.isString(f))
         f = [f];
     for (var ki = 0; ki < f.length; ki++)
         myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
-            errMsg2a + eacolor(path) + errMsg2b + eacolor(JSON.stringify(f[ki])));
-    m.save.router.any = f;
+            errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
+
+    myUtil.safePut(this.save.router[method], path,
+        f, "handler for " + method);
+    return this;
+};
+
+m[methods[1]] = function(path, f) {
+    var method = methods[1];
+    var errMsg1b = clc.magenta(" method: ") + clc.yellowBright(method);
+    var errMsg2b = clc.magenta(" method:") + clc.yellowBright(method) + clc.magenta(" there is non-function & non-string element:");
+    myUtil.checkErr(!(myUtil.isFunction(f) || myUtil.isArray(f) || myUtil.isString(f)),
+        errMsg1a + clc.yellowBright(path) + errMsg1b);
+    if (myUtil.isFunction(f) || myUtil.isString(f))
+        f = [f];
+    for (var ki = 0; ki < f.length; ki++)
+        myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
+            errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
+
+    myUtil.safePut(this.save.router[method], path,
+        f, "handler for " + method);
+    return this;
+};
+
+m[methods[2]] = function(path, f) {
+    var method = methods[2];
+    var errMsg1b = clc.magenta(" method: ") + clc.yellowBright(method);
+    var errMsg2b = clc.magenta(" method:") + clc.yellowBright(method) + clc.magenta(" there is non-function & non-string element:");
+    myUtil.checkErr(!(myUtil.isFunction(f) || myUtil.isArray(f) || myUtil.isString(f)),
+        errMsg1a + clc.yellowBright(path) + errMsg1b);
+    if (myUtil.isFunction(f) || myUtil.isString(f))
+        f = [f];
+    for (var ki = 0; ki < f.length; ki++)
+        myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
+            errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
+
+    myUtil.safePut(this.save.router[method], path,
+        f, "handler for " + method);
+    return this;
+};
+
+m[methods[3]] = function(path, f) {
+    var method = methods[3];
+    var errMsg1b = clc.magenta(" method: ") + clc.yellowBright(method);
+    var errMsg2b = clc.magenta(" method:") + clc.yellowBright(method) + clc.magenta(" there is non-function & non-string element:");
+    myUtil.checkErr(!(myUtil.isFunction(f) || myUtil.isArray(f) || myUtil.isString(f)),
+        errMsg1a + clc.yellowBright(path) + errMsg1b);
+    if (myUtil.isFunction(f) || myUtil.isString(f))
+        f = [f];
+    for (var ki = 0; ki < f.length; ki++)
+        myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
+            errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
+
+    myUtil.safePut(this.save.router[method], path,
+        f, "handler for " + method);
+    return this;
+};
+
+m[methods[4]] = function(path, f) {
+    var method = methods[4];
+    var errMsg1b = clc.magenta(" method: ") + clc.yellowBright(method);
+    var errMsg2b = clc.magenta(" method:") + clc.yellowBright(method) + clc.magenta(" there is non-function & non-string element:");
+    myUtil.checkErr(!(myUtil.isFunction(f) || myUtil.isArray(f) || myUtil.isString(f)),
+        errMsg1a + clc.yellowBright(path) + errMsg1b);
+    if (myUtil.isFunction(f) || myUtil.isString(f))
+        f = [f];
+    for (var ki = 0; ki < f.length; ki++)
+        myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
+            errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
+
+    myUtil.safePut(this.save.router[method], path,
+        f, "handler for " + method);
+    return this;
+};
+
+m[methods[5]] = function(path, f) {
+    var method = methods[5];
+    var errMsg1b = clc.magenta(" method: ") + clc.yellowBright(method);
+    var errMsg2b = clc.magenta(" method:") + clc.yellowBright(method) + clc.magenta(" there is non-function & non-string element:");
+    myUtil.checkErr(!(myUtil.isFunction(f) || myUtil.isArray(f) || myUtil.isString(f)),
+        errMsg1a + clc.yellowBright(path) + errMsg1b);
+    if (myUtil.isFunction(f) || myUtil.isString(f))
+        f = [f];
+    for (var ki = 0; ki < f.length; ki++)
+        myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
+            errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
+
+    myUtil.safePut(this.save.router[method], path,
+        f, "handler for " + method);
+    return this;
+};
+
+m[methods[6]] = function(path, f) {
+    var method = methods[6];
+    var errMsg1b = clc.magenta(" method: ") + clc.yellowBright(method);
+    var errMsg2b = clc.magenta(" method:") + clc.yellowBright(method) + clc.magenta(" there is non-function & non-string element:");
+    myUtil.checkErr(!(myUtil.isFunction(f) || myUtil.isArray(f) || myUtil.isString(f)),
+        errMsg1a + clc.yellowBright(path) + errMsg1b);
+    if (myUtil.isFunction(f) || myUtil.isString(f))
+        f = [f];
+    for (var ki = 0; ki < f.length; ki++)
+        myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
+            errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
+
+    myUtil.safePut(this.save.router[method], path,
+        f, "handler for " + method);
+    return this;
+};
+
+m[methods[7]] = function(path, f) {
+    var method = methods[7];
+    var errMsg1b = clc.magenta(" method: ") + clc.yellowBright(method);
+    var errMsg2b = clc.magenta(" method:") + clc.yellowBright(method) + clc.magenta(" there is non-function & non-string element:");
+    myUtil.checkErr(!(myUtil.isFunction(f) || myUtil.isArray(f) || myUtil.isString(f)),
+        errMsg1a + clc.yellowBright(path) + errMsg1b);
+    if (myUtil.isFunction(f) || myUtil.isString(f))
+        f = [f];
+    for (var ki = 0; ki < f.length; ki++)
+        myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
+            errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
+
+    myUtil.safePut(this.save.router[method], path,
+        f, "handler for " + method);
+    return this;
 };
 
 
+
+m.any = function(f) {
+    var errMsg1b = clc.magenta(" method: ") + clc.yellowBright("any");
+    var errMsg2b = clc.magenta(" method:") + clc.yellowBright("any") + clc.magenta(" there is non-function & non-string element:");
+    myUtil.checkErr(!(myUtil.isFunction(f) || myUtil.isArray(f) || myUtil.isString(f)),
+        errMsg1a + clc.yellowBright(path) + errMsg1b);
+    if (myUtil.isFunction(f) || myUtil.isString(f))
+        f = [f];
+    for (var ki = 0; ki < f.length; ki++)
+        myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
+            errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
+
+    this.save.router.any = f;
+    return this;
+};
+
+
+/*=====================tedious job========================*/
 
 
 var listen_org = net.Server.prototype.listen;
@@ -83,10 +196,4 @@ var listen_new = function() {
 };
 net.Server.prototype._listen = listen_org;
 net.Server.prototype.listen = listen_new;
-
-
-
-
-
-
 m.s = m.server = rhlp.server;
