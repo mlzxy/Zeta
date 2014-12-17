@@ -141,6 +141,13 @@ var cacheServer = function() {
 
 };
 
+var printErr = function(e) {
+    error(e.msg);
+    headline('stacktrace');
+    console.log(e.stack);
+};
+
+
 
 
 
@@ -164,3 +171,4 @@ exports.listen = listen;
 exports.request = request;
 exports.goNext = goNext;
 exports.cacheServer = cacheServer;
+exports.printErr = printErr;

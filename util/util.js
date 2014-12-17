@@ -61,32 +61,6 @@ var checkErr = function(t, msg) {
 
 
 
-var safePut = function(place, key, val, where) {
-
-    if (place === undefined) {
-        var msg = "You Cound not assign to a undefined " + where + "!";
-        print.error(msg);
-        throw new Error("You Cound not assign to a undefined " + where + "!");
-    }
-    if (place[key] === undefined)
-        place[key] = val;
-
-};
-
-
-
-/*safeCopy is shallow*/
-var safeCopy = function(x, y, msg) {
-    if (msg === undefined)
-        msg = '';
-    for (var idx in y) {
-        safePut(x, idx, y[idx], msg);
-    }
-    return x;
-};
-
-
-
 
 function updateObj(a, b) {
     for (var v in b) {
@@ -131,8 +105,3 @@ exports.quiteRequire = quiteRequire;
 exports.safeRequire = safeRequire;
 exports.checkErr = checkErr;
 exports.invalidate = invalidate;
-
-
-/*assign with warning*/
-exports.safePut = safePut;
-exports.safeCopy = safeCopy;

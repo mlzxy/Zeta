@@ -13,7 +13,7 @@ var url = require('url'),
 myUtil.invalidate(__dirname + '/router/');
 
 
-var methods = ["get", "post", "put", "head", "delete", "options", "trace", "connect"],
+var methods = require('../../util/config.js').methods,
     needScope = 2,
     notNeedScope = 1;
 
@@ -29,13 +29,16 @@ var server = function() {
     print.options(this.c.options);
 
 
-    /*===================for shortname=========================*/
-    var handler, router, factory, provider;
+    /*===================for shortname================================================================*/
+    var handler, router, factory, provider, gdomain, routerEH, handlerEH;
     handler = this.save.handler;
     router = this.save.router;
     factory = this.save.factory;
     provider = this.save.provider;
-    /*=========================================================*/
+    gdomain = this.save.domain.global; //not recommend to use !!
+    routerEH = this.save.domain.router;
+    handlerEH = this.save.domain.handlerEH;
+    /*================================BEGIN=========================================================================*/
     var getF = {}, // name: function, function:function    // only for the handler functions in handler and router
         f2argH = {}, // name: [arglist], function: arglist // the arglist for the handler
         f2argF = {}; // function: [arglist];               // arglist for the factory
@@ -192,24 +195,9 @@ var server = function() {
         }
     }
 
-    // if (this.config('debug')) {
-    //     net.Server.prototype.on('request', function(req, res) {
-    //         res.start = new Date();
-    //         res.info = {
-    //             ip: req.connection.remoteAddress,
-    //             path: url.parse(req.url).pathname,
-    //             method: req.method
-    //         };
-    //         print.request(res.info);
-    //         /*====================================*/
-    //         res.on('finish', function() {
-    //             print.requestend(this.info, new Date() - this.start);
-    //         });
-    //     });
-    // }
 
 
-    /*==========================================================*/
+    /*============================END======================================================================*/
     var server = http.createServer();
     print.ok("your server is ready.");
 
@@ -244,4 +232,3 @@ var server = function() {
 };
 
 exports.server = server;
-exports.methods = methods;

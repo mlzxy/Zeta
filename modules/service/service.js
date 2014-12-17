@@ -5,6 +5,7 @@
  */
 var myUtil = require('../../util/util.js');
 var m = require('../../base/base.js').module('built-in-service-base', []);
+var domain = require('domain');
 m = m.load();
 
 m.save = {};
@@ -19,7 +20,7 @@ var handler = function(hname, f) {
     if (f === undefined)
         return this.save.handler[hname];
     myUtil.checkErr(!myUtil.isFunction(f), "Handler " + hname + " is not a function :(");
-    myUtil.safePut(this.save.handler, hname, f, "Handler ");
+    this.save.handler[hname] = f;
     return this;
 };
 
@@ -27,14 +28,14 @@ var factory = function(fname, f) {
     if (f === undefined)
         return this.save.factory[fname];
     myUtil.checkErr(!myUtil.isFunction(f), "Factory " + fname + " is not a function, it should be a factory function :)");
-    myUtil.safePut(this.save.factory, fname, f, "Factory ");
+    this.save.factory[fname] = f;
     return this;
 };
 
 var provider = function(pname, f) {
     if (f === undefined)
         return this.save.provider[pname];
-    myUtil.safePut(this.save.provider, pname, f, "Provider ");
+    this.save.provider[pname] = f;
     return this;
 };
 

@@ -14,7 +14,9 @@ function initOptions() {
     this.debug = true;
     this.serviceCache = false;
     this.loadinfo = false;
-}
+    this.domain = true;
+    this.globalDomain = false;
+};
 
 
 
