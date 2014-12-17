@@ -25,12 +25,13 @@ var quiteRequire = function(path) {
 };
 
 
-var resetEnv = function() {
-    global.mMap = global.mOpt = global.mgld = global.ngld = undefined;
-};
+
 
 
 var firstErr = true;
+var resetEnv = function() {
+    global.mMap = global.mOpt = global.mgld = global.ngld = undefined;
+};
 var safeRequire = function(path) {
     try {
         var m = require(path);
@@ -95,6 +96,14 @@ function updateObj(a, b) {
 }
 
 
+var invalidate = function() {
+    for (var i = 0; i < arguments.length; i++)
+        delete require.cache[require.resolve(arguments[i])];
+};
+
+
+
+
 
 /*for get arguments*/
 exports.argOf = getArg.getArguments;
@@ -106,7 +115,7 @@ exports.isString = judge.isString;
 exports.isRegex = judge.isRegex;
 exports.isHidden = judge.isHidden;
 exports.isArray = Array.isArray;
-
+exports.isNumber = judge.isNumber;
 /*compare two objects*/
 exports.equals = equals;
 
@@ -121,7 +130,8 @@ exports.updateObj = updateObj;
 exports.quiteRequire = quiteRequire;
 exports.safeRequire = safeRequire;
 exports.checkErr = checkErr;
-exports.resetEnv = resetEnv;
+exports.invalidate = invalidate;
+
 
 /*assign with warning*/
 exports.safePut = safePut;

@@ -24,9 +24,13 @@ var isHidden = function(path) {
     return (/(^|.\/)\.+[^\/\.]/g).test(path) || (/~$/).test(path);
 };
 
+function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
 
 exports.isFunction = isFunction;
 exports.isObject = isObject;
 exports.isString = isString;
 exports.isRegex = isRegex;
 exports.isHidden = isHidden;
+exports.isNumber = isNumber;

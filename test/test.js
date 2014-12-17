@@ -4,6 +4,8 @@ var chai = require('chai'),
     should = chai.should();
 
 var http = require('http');
+var request = require('supertest');
+
 
 describe('Simple Case', function() {
     it('should be ok.', function() {
@@ -33,11 +35,18 @@ describe('Circular Dependency Found', function() {
 
 describe('Form Login Case', function() {
     var app;
+    var server;
     it('should not throw Error when you load routing test app',
         function() {
             app = require('./routing/');
         }
     );
 
-
+    it('should allow you to access page and submit form', function(done) {
+        request(app)
+            .get('/')
+            .end(function() {
+                done();
+            });
+    });
 });

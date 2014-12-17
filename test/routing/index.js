@@ -30,6 +30,6 @@ m.handler('loginCheck', function($scope, $cookie, db) {
 m.get('/', "login").get('/user', ["loginCheck", "welcome"]);
 
 
-http.createServer(m.s()).listen(8000);
+// m.app();
 
-// exports.app = m.s();
+module.exports = exports = m.server();

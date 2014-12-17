@@ -33,4 +33,4 @@ m.get('/user', ["loginCheck", "welcome"]);
 
 
 
-http.createServer(m.s()).listen(8000);
+m.server().listen(8000);

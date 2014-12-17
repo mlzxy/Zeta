@@ -109,7 +109,6 @@ var circle = function(name, arr) {
 
 
 
-
 var resetEnv = function(name) {
     var mMap = global.mMap;
     for (var n in mMap) {
@@ -118,7 +117,7 @@ var resetEnv = function(name) {
             delete require.cache[require.resolve(path)];
         }
     }
-    myUtil.resetEnv();
+    global.mMap = global.mOpt = global.mgld = global.ngld = undefined;
 };
 
 

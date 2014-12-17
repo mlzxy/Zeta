@@ -136,6 +136,13 @@ var requestend = function(obj, t) {
     console.log("[" + clc.green('finished') + "] " + "request finish from ip: " + preq(obj.ip) + ", method: " + preq(obj.method) + ", on path:" + preq(obj.path) + " in " + clc.green(String(t)) + " ms\n");
 };
 
+var cacheServer = function() {
+    console.log('[' + clc.green('cache') + ']   ' + 'access cached server, you could invalidate it by using ' + clc.yellowBright('m.server(true)'));
+
+};
+
+
+
 
 exports.requestend = requestend;
 exports.terminate = terminate;
@@ -156,3 +163,4 @@ exports.options = options;
 exports.listen = listen;
 exports.request = request;
 exports.goNext = goNext;
+exports.cacheServer = cacheServer;

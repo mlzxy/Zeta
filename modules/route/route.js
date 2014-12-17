@@ -183,17 +183,25 @@ m.any = function(f) {
 };
 
 
-/*=====================tedious job========================*/
+/*===================above are some tedious work========================*/
 
 
-var listen_org = net.Server.prototype.listen;
-var listen_new = function() {
-    this._listen.apply(this, arguments);
-    print.listen(this.address());
-    this.on('close', function() {
-        print.close('the server has been closed.');
-    });
-};
-net.Server.prototype._listen = listen_org;
-net.Server.prototype.listen = listen_new;
+
 m.s = m.server = rhlp.server;
+m.app = function() {
+    var port, server, t;
+    if (myUtil.isNumber(arguments[0])) {
+        port = arguments[0];
+        t = 1;
+    } else {
+        port = 8000;
+        t = 0;
+    }
+    if (!arguments[t])
+        server = this.save.server || this.server();
+    else
+        server = this.server(true);
+
+    server.listen(port);
+    return server;
+};

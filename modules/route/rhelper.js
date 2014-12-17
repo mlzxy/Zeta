@@ -10,6 +10,7 @@ var url = require('url'),
     net = require('net'),
     http = require('http'),
     lrt = require('./router');
+myUtil.invalidate(__dirname + '/router/');
 
 
 var methods = ["get", "post", "put", "head", "delete", "options", "trace", "connect"],
@@ -19,10 +20,14 @@ var methods = ["get", "post", "put", "head", "delete", "options", "trace", "conn
 
 
 var server = function() {
-
+    if (this.save.server && !arguments[0]) {
+        print.cacheServer();
+        return this.save.server;
+    }
     print.mainOk(this);
     print.loading('start to prepare your server.');
     print.options(this.c.options);
+
 
     /*===================for shortname=========================*/
     var handler, router, factory, provider;
@@ -187,9 +192,30 @@ var server = function() {
         }
     }
 
+    // if (this.config('debug')) {
+    //     net.Server.prototype.on('request', function(req, res) {
+    //         res.start = new Date();
+    //         res.info = {
+    //             ip: req.connection.remoteAddress,
+    //             path: url.parse(req.url).pathname,
+    //             method: req.method
+    //         };
+    //         print.request(res.info);
+    //         /*====================================*/
+    //         res.on('finish', function() {
+    //             print.requestend(this.info, new Date() - this.start);
+    //         });
+    //     });
+    // }
+
+
     /*==========================================================*/
+    var server = http.createServer();
+    print.ok("your server is ready.");
+
+
     if (this.config('debug')) {
-        net.Server.prototype.on('request', function(req, res) {
+        server.on('request', function(req, res) {
             res.start = new Date();
             res.info = {
                 ip: req.connection.remoteAddress,
@@ -204,9 +230,17 @@ var server = function() {
         });
     }
 
-    print.ok("your server is ready.");
+    server.on('request', lrt);
+    server.on('listening', function() {
+        print.listen(this.address());
+    });
+    server.on('close', function() {
+        print.close('the server has been closed.');
+    });
 
-    return lrt;
+
+    this.save.server = server;
+    return server;
 };
 
 exports.server = server;
