@@ -119,7 +119,7 @@ var server = function() {
     };
 
     var mkFactoryCache = function($scope, fatr) {
-        return $scope.dchain[fatr] || ($scope.dchain[fatr] = mkFactoryNoCache($scope, fatr));
+        return $scope[fatr] || ($scope[fatr] = mkFactoryNoCache($scope, fatr));
     };
 
     var mkFactory = this.config('serviceCache') ? mkFactoryCache : mkFactoryNoCache;
@@ -234,7 +234,6 @@ var server = function() {
                                 $scope.go(fstate);
                             });
                         };
-
                     f = f.bind(undefined, s[p][0], s[p], err_handler_wrapper.bind(undefined, eh));
                     p == 'any' ? lrt.any(f) : lrt[m](p, f);
                 }

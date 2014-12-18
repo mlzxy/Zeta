@@ -23,8 +23,7 @@ var guard,
     dr = m.save.domain.router, // {}
     dh = m.save.domain.handler, //[]
     gdm = m.save.domain.global,
-    stack = [],
-    hashmap = {};
+    stack = [];
 
 gdm.on('error', function(err) {
     print.warn('Global Domain catch error, means there is an exception thrown by your program, other than the http request and http response.');
@@ -41,10 +40,12 @@ dr.any = {};
 m.g = m.guard = guard =
     function(ee) {
         print.warn(msg);
-        print.warn(msg2);
+
         for (var i = 0; i < arguments.length; i++) {
             if (arguments[i] instanceof events.EventEmitter) {
                 gdm.add(arguments[i]);
+            } else {
+                print.warn(msg2);
             }
         }
         return this;
@@ -56,7 +57,6 @@ var addItem = function(method, path) {
             method: method,
             path: path
         });
-        hashmap[method] = path;
     } else {
         var hmap = m.save.router[method];
         for (var p in hmap) {
@@ -67,8 +67,7 @@ var addItem = function(method, path) {
 
 
 var w = function(f) { //f is a handler function
-    myUtil.checkErr(!myUtil.isFunction(f), 'You could not guard your server with a non-function object');
-    myUtil.checkErr(!(myUtil.equals(myUtil.argOf(f), ['$scope'])), "You guardian function must be a handler function with only $scope as its argument.");
+    myUtil.checkErr(!myUtil.isFunction(f), 'You could not guard your server with a non-function object :(');
     var hidx = dh.length;
     dh.push(f);
     for (var i = 0; i < stack.length; i++) {
@@ -76,7 +75,6 @@ var w = function(f) { //f is a handler function
         dr[e.method][e.path] = hidx; //override is possible
     }
     stack = [];
-    hashmap = {};
 };
 guard.with = guard.w = w;
 
@@ -180,7 +178,10 @@ guard[methods[7]] = function(path, f) {
     return this;
 };
 
-guard.any = function() {
+guard.any = function(f) {
+    if (f) {
+        m.any(f);
+    }
     addItem("any", "any");
     return this;
 };
