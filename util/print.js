@@ -122,7 +122,6 @@ var listen = function(obj) {
 };
 
 
-
 var close = function(s) {
     console.log('[' + clc.green('closed') + '] ' + s);
 };
@@ -139,6 +138,16 @@ var requestend = function(obj, t) {
 var cacheServer = function() {
     console.log('[' + clc.green('cache') + ']   ' + 'access cached server, you could invalidate it by using ' + clc.yellowBright('m.server(true)'));
 
+};
+
+var printErr = function(e) {
+    error(e.msg);
+    headline('stacktrace');
+    console.log(e.stack);
+};
+
+var httpErr = function(obj) {
+    console.log("[" + clc.red('error') + "] " + "Server Internal Error happened from ip: " + preq(obj.ip) + ", method: " + preq(obj.method) + ", on path:" + preq(obj.path));
 };
 
 
@@ -164,3 +173,5 @@ exports.listen = listen;
 exports.request = request;
 exports.goNext = goNext;
 exports.cacheServer = cacheServer;
+exports.printErr = printErr;
+exports.httpErr = httpErr;

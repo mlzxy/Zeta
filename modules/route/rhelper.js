@@ -9,11 +9,12 @@ var url = require('url'),
     util = require('util'),
     net = require('net'),
     http = require('http'),
-    lrt = require('./router');
+    lrt = require('./router'),
+    domain = require('domain');
 myUtil.invalidate(__dirname + '/router/');
 
 
-var methods = ["get", "post", "put", "head", "delete", "options", "trace", "connect"],
+var methods = require('../../util/config.js').methods,
     needScope = 2,
     notNeedScope = 1;
 
@@ -29,13 +30,16 @@ var server = function() {
     print.options(this.c.options);
 
 
-    /*===================for shortname=========================*/
-    var handler, router, factory, provider;
+    /*===================for shortname================================================================*/
+    var handler, router, factory, provider, gdomain, routerE, handlerE;
     handler = this.save.handler;
     router = this.save.router;
     factory = this.save.factory;
     provider = this.save.provider;
-    /*=========================================================*/
+    gdomain = this.save.domain.global; //not recommend to use !!
+    routerE = this.save.domain.router;
+    handlerE = this.save.domain.handler;
+    /*================================BEGIN=========================================================================*/
     var getF = {}, // name: function, function:function    // only for the handler functions in handler and router
         f2argH = {}, // name: [arglist], function: arglist // the arglist for the handler
         f2argF = {}; // function: [arglist];               // arglist for the factory
@@ -46,30 +50,22 @@ var server = function() {
     }
 
     for (var method in router) {
-        if (method != "any") {
-            var store = router[method];
-            for (var path in store) {
-                var ch = store[path];
-                for (var i = 0; i < ch.length; i++) {
-                    if (myUtil.isFunction(ch[i])) {
-                        getF[ch[i]] = ch[i];
-                    } else {
-                        myUtil.checkErr(getF[ch[i]] === undefined,
-                            'The handler ' + ch[i] + ' have not been registered :[');
-                    }
-                }
-            }
-        } else {
-            if (router.any !== undefined) {
-                if (myUtil.isFunction(router.any)) {
-                    getF[router.any] = router.any;
+        var store = router[method];
+        for (var path in store) {
+            var ch = store[path];
+            for (var i = 0; i < ch.length; i++) {
+                if (myUtil.isFunction(ch[i])) {
+                    getF[ch[i]] = ch[i];
                 } else {
-                    myUtil.checkErr(getF[router.any] === undefined,
-                        'The handler ' + router.any + ' have not been registered :[');
+                    myUtil.checkErr(getF[ch[i]] === undefined,
+                        'The handler ' + ch[i].toString() + ' have not been registered :[');
                 }
             }
         }
     }
+
+    for (var i2 = 0; i2 < handlerE.length; i2++)
+        getF[handlerE[i2]] = handlerE[i2];
 
 
     //f2argH & f2argF
@@ -80,8 +76,8 @@ var server = function() {
             myUtil.checkErr(arr[j] == '$scope', msg + ': ' + v + ' use $scope not as its first argument');
             pvd = provider[arr[j]];
             fat = factory[arr[j]];
-            myUtil.checkErr(pvd !== undefined && fat !== undefined, 'Same Name conflicts founded between provider and factory: ' + a[j]);
-            myUtil.checkErr(pvd === undefined && fat === undefined, 'No provider or factory: ' + a[j] + ' found. Maybe you use a wrong name');
+            myUtil.checkErr(pvd !== undefined && fat !== undefined, 'Same Name conflicts founded between provider and factory: ' + a[j].toString());
+            myUtil.checkErr(pvd === undefined && fat === undefined, 'No provider or factory: ' + a[j].toString() + ' found. Maybe you use a wrong name');
             if (pvd !== undefined) {
                 arg = pvd;
             } else {
@@ -112,6 +108,7 @@ var server = function() {
 
 
 
+
     /*=============================functions below would be called in the real request============================*/
     var mkFactoryNoCache = function($scope, fatr) { //fatr is a function, which needed to be inject arguments.
         var a = f2argF[fatr];
@@ -123,14 +120,14 @@ var server = function() {
     };
 
     var mkFactoryCache = function($scope, fatr) {
-        return $scope.dchain[fatr] || ($scope.dchain[fatr] = mkFactoryNoCache($scope, fatr));
+        return $scope[fatr] || ($scope[fatr] = mkFactoryNoCache($scope, fatr));
     };
 
     var mkFactory = this.config('serviceCache') ? mkFactoryCache : mkFactoryNoCache;
 
     var mkarg = function($scope, next) { //the next here maybe string or function
-        var f = getF[next];
-        var a = f2argH[next];
+        var f = getF[next] || err_handler_default;
+        var a = f2argH[next] || [];
         var args = [$scope];
         for (var i = 0; i < a.length; i++)
             args.push(a[i].isFactory ? mkFactory($scope, a[i]) : a[i]);
@@ -152,10 +149,8 @@ var server = function() {
             t.f.apply(this, t.arg);
         };
     /*===============================================*/
-
-    for (var mth in router) { //router
-        // debugger;
-        if (mth != "any") {
+    if (!this.config('guard')) {
+        for (var mth in router) { //router
             var st = router[mth]; //post, get -> different hashmap of handler chain
             for (var pth in st) { //path1,path2 -> hander chain
                 var foo = function(fstate, dchain, req, res) {
@@ -170,46 +165,87 @@ var server = function() {
                     $scope.go(fstate);
                 };
                 foo = foo.bind(undefined, st[pth][0], st[pth]);
-                lrt[mth](pth, foo);
-            }
-        } else {
-            if (router.any !== undefined) {
-                var bar = function(fstate, dchain, req, res) {
-                    // debugger;
-                    var $scope = {
-                        req: req,
-                        res: res,
-                        params: req.params,
-                        go: go,
-                        dchain: dchain, //cache the factory in here
-                        dcIdx: 0
-                    };
-                    $scope.go(fstate);
-                };
-                bar = bar.bind(undefined, router.any[0], router.any);
-                lrt.any(bar);
+                pth == 'any' ? lrt.any(foo) : lrt[mth](pth, foo);
             }
         }
+    } else { //
+        //if use guard for error handling, need collect more info and use different routing fun
+        /*===================error handling function =============================*/
+        var err_handler_default = function($scope) {
+            print.httpErr($scope.res.info);
+            $scope.res.end('500 Server Internal Error');
+        };
+        var err_handler_wrapper = function(eh, err) {
+            err.domain.$scope.error = err;
+            console.log('it should works!');
+            var t = mkarg(err.domain.$scope, eh);
+            t.f.apply(this, t.arg);
+        };
+        /*===================================================================================*/
+        if (this.config('globalDomain')) {
+            for (var m in router) { //router
+                var s = router[m]; //post, get -> different hashmap of handler chain
+                for (var p in s) { //path1,path2 -> hander chain
+                    var eh = handlerE[((routerE[m][p] + 1) || (routerE.any.any + 1)) - 1] || err_handler_default,
+                        f = function(fstate, dchain, onErrorfun, req, res) {
+                            var d = domain.create();
+                            d.add(req);
+                            d.add(res);
+                            d.add(gdomain);
+                            var $scope = {
+                                req: req,
+                                res: res,
+                                params: req.params,
+                                go: go,
+                                dchain: dchain, //cache the factory in here
+                                dcIdx: 0
+                            };
+                            d.$scope = $scope;
+                            d.on('error', onErrorfun);
+                            d.run(function() {
+                                gdomain.run(function() {
+                                    $scope.go(fstate);
+                                });
+                            });
+                        };
+                    f = f.bind(undefined, s[p][0], s[p], err_handler_wrapper.bind(undefined, eh));
+                    p == 'any' ? lrt.any(f) : lrt[m](p, f);
+                }
+            }
+        } else {
+            for (var m in router) { //router
+                var s = router[m]; //post, get -> different hashmap of handler chain
+                for (var p in s) { //path1,path2 -> hander chain
+                    var eh = handlerE[((routerE[m][p] + 1) || (routerE.any.any + 1)) - 1] || err_handler_default,
+                        f = function(fstate, dchain, e, req, res) {
+                            var d = domain.create();
+                            d.add(req);
+                            d.add(res);
+                            var $scope = {
+                                req: req,
+                                res: res,
+                                params: req.params,
+                                go: go,
+                                dchain: dchain, //cache the factory in here
+                                dcIdx: 0
+                            };
+                            d.$scope = $scope;
+                            d.on('error', e);
+                            d.run(function() {
+                                $scope.go(fstate);
+                            });
+                        };
+                    f = f.bind(undefined, s[p][0], s[p], err_handler_wrapper.bind(undefined, eh));
+                    p == 'any' ? lrt.any(f) : lrt[m](p, f);
+                }
+            }
+
+        }
+
     }
 
-    // if (this.config('debug')) {
-    //     net.Server.prototype.on('request', function(req, res) {
-    //         res.start = new Date();
-    //         res.info = {
-    //             ip: req.connection.remoteAddress,
-    //             path: url.parse(req.url).pathname,
-    //             method: req.method
-    //         };
-    //         print.request(res.info);
-    //         /*====================================*/
-    //         res.on('finish', function() {
-    //             print.requestend(this.info, new Date() - this.start);
-    //         });
-    //     });
-    // }
 
-
-    /*==========================================================*/
+    /*============================END======================================================================*/
     var server = http.createServer();
     print.ok("your server is ready.");
 
@@ -244,4 +280,3 @@ var server = function() {
 };
 
 exports.server = server;
-exports.methods = methods;

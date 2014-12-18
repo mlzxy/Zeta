@@ -12,10 +12,11 @@ var url = require('url'),
     clc = require('cli-color'),
     print = require('../../util/print.js'),
     http = require('http'),
-    net = require('net');
+    net = require('net'),
+    cfg = require('../../util/config.js');
 
 
-var methods = rhlp.methods;
+var methods = cfg.methods;
 var errMsg1a = "You should register a router with a handler or a chain of handlers for path: ";
 var errMsg2a = "In the handler chain you register for path:";
 var m = require('../../base/base.js').module('built-in-router', ['built-in-service-more']);
@@ -25,7 +26,7 @@ m.save.router = {};
 for (var k = 0; k < methods.length; k++) {
     m.save.router[methods[k]] = {};
 }
-
+m.save.router.any = {};
 
 /*=====================tedious job========================*/
 
@@ -41,8 +42,7 @@ m[methods[0]] = function(path, f) {
         myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
             errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
 
-    myUtil.safePut(this.save.router[method], path,
-        f, "handler for " + method);
+    this.save.router[method][path] = f;
     return this;
 };
 
@@ -58,8 +58,7 @@ m[methods[1]] = function(path, f) {
         myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
             errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
 
-    myUtil.safePut(this.save.router[method], path,
-        f, "handler for " + method);
+    this.save.router[method][path] = f;
     return this;
 };
 
@@ -75,8 +74,7 @@ m[methods[2]] = function(path, f) {
         myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
             errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
 
-    myUtil.safePut(this.save.router[method], path,
-        f, "handler for " + method);
+    this.save.router[method][path] = f;
     return this;
 };
 
@@ -92,8 +90,7 @@ m[methods[3]] = function(path, f) {
         myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
             errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
 
-    myUtil.safePut(this.save.router[method], path,
-        f, "handler for " + method);
+    this.save.router[method][path] = f;
     return this;
 };
 
@@ -109,8 +106,7 @@ m[methods[4]] = function(path, f) {
         myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
             errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
 
-    myUtil.safePut(this.save.router[method], path,
-        f, "handler for " + method);
+    this.save.router[method][path] = f;
     return this;
 };
 
@@ -125,9 +121,7 @@ m[methods[5]] = function(path, f) {
     for (var ki = 0; ki < f.length; ki++)
         myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
             errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
-
-    myUtil.safePut(this.save.router[method], path,
-        f, "handler for " + method);
+    this.save.router[method][path] = f;
     return this;
 };
 
@@ -142,9 +136,7 @@ m[methods[6]] = function(path, f) {
     for (var ki = 0; ki < f.length; ki++)
         myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
             errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
-
-    myUtil.safePut(this.save.router[method], path,
-        f, "handler for " + method);
+    this.save.router[method][path] = f;
     return this;
 };
 
@@ -159,9 +151,7 @@ m[methods[7]] = function(path, f) {
     for (var ki = 0; ki < f.length; ki++)
         myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
             errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
-
-    myUtil.safePut(this.save.router[method], path,
-        f, "handler for " + method);
+    this.save.router[method][path] = f;
     return this;
 };
 
@@ -177,14 +167,19 @@ m.any = function(f) {
     for (var ki = 0; ki < f.length; ki++)
         myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
             errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
-
-    this.save.router.any = f;
+    this.save.router.any.any = f;
     return this;
 };
 
 
 /*===================above are some tedious work========================*/
 
+
+
+
+
+
+/*=================================================================================*/
 
 
 m.s = m.server = rhlp.server;
