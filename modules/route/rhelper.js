@@ -108,6 +108,7 @@ var server = function() {
 
 
 
+
     /*=============================functions below would be called in the real request============================*/
     var mkFactoryNoCache = function($scope, fatr) { //fatr is a function, which needed to be inject arguments.
         var a = f2argF[fatr];
@@ -125,8 +126,8 @@ var server = function() {
     var mkFactory = this.config('serviceCache') ? mkFactoryCache : mkFactoryNoCache;
 
     var mkarg = function($scope, next) { //the next here maybe string or function
-        var f = getF[next];
-        var a = f2argH[next];
+        var f = getF[next] || err_handler_default;
+        var a = f2argH[next] || [];
         var args = [$scope];
         for (var i = 0; i < a.length; i++)
             args.push(a[i].isFactory ? mkFactory($scope, a[i]) : a[i]);
@@ -167,17 +168,17 @@ var server = function() {
                 pth == 'any' ? lrt.any(foo) : lrt[mth](pth, foo);
             }
         }
-
     } else { //
         //if use guard for error handling, need collect more info and use different routing fun
-
+        /*===================error handling function =============================*/
         var err_handler_default = function($scope) {
             print.httpErr($scope.res.info);
             $scope.res.end('500 Server Internal Error');
         };
         var err_handler_wrapper = function(eh, err) {
-            err.$scope.error = err;
-            var t = mkarg(err.$scope, eh);
+            err.domain.$scope.error = err;
+            console.log('it should works!');
+            var t = mkarg(err.domain.$scope, eh);
             t.f.apply(this, t.arg);
         };
         /*===================================================================================*/
@@ -185,7 +186,7 @@ var server = function() {
             for (var m in router) { //router
                 var s = router[m]; //post, get -> different hashmap of handler chain
                 for (var p in s) { //path1,path2 -> hander chain
-                    var eh = handlerE[routerE[m][p] || routerE.any.any] || err_handler_default,
+                    var eh = handlerE[((routerE[m][p] + 1) || (routerE.any.any + 1)) - 1] || err_handler_default,
                         f = function(fstate, dchain, onErrorfun, req, res) {
                             var d = domain.create();
                             d.add(req);
@@ -215,8 +216,8 @@ var server = function() {
             for (var m in router) { //router
                 var s = router[m]; //post, get -> different hashmap of handler chain
                 for (var p in s) { //path1,path2 -> hander chain
-                    var eh = handlerE[routerE[m][p] || routerE.any.any] || err_handler_default,
-                        f = function(fstate, dchain, onErrorfun, req, res) {
+                    var eh = handlerE[((routerE[m][p] + 1) || (routerE.any.any + 1)) - 1] || err_handler_default,
+                        f = function(fstate, dchain, e, req, res) {
                             var d = domain.create();
                             d.add(req);
                             d.add(res);
@@ -229,7 +230,7 @@ var server = function() {
                                 dcIdx: 0
                             };
                             d.$scope = $scope;
-                            d.on('error', onErrorfun);
+                            d.on('error', e);
                             d.run(function() {
                                 $scope.go(fstate);
                             });

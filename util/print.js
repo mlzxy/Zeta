@@ -147,7 +147,7 @@ var printErr = function(e) {
 };
 
 var httpErr = function(obj) {
-    console.log("[" + clc.red('error') + "] " + "request & respond error from ip: " + preq(obj.ip) + ", method: " + preq(obj.method) + ", on path:" + preq(obj.path));
+    console.log("[" + clc.red('error') + "] " + "Server Internal Error happened from ip: " + preq(obj.ip) + ", method: " + preq(obj.method) + ", on path:" + preq(obj.path));
 };
 
 

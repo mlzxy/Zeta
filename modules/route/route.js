@@ -23,8 +23,6 @@ var m = require('../../base/base.js').module('built-in-router', ['built-in-servi
 m.load();
 
 m.save.router = {};
-
-var dr = m.save.domain.router;
 for (var k = 0; k < methods.length; k++) {
     m.save.router[methods[k]] = {};
 }
