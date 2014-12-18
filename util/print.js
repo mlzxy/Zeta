@@ -122,7 +122,6 @@ var listen = function(obj) {
 };
 
 
-
 var close = function(s) {
     console.log('[' + clc.green('closed') + '] ' + s);
 };
@@ -147,6 +146,9 @@ var printErr = function(e) {
     console.log(e.stack);
 };
 
+var httpErr = function(obj) {
+    console.log("[" + clc.red('error') + "] " + "request & respond error from ip: " + preq(obj.ip) + ", method: " + preq(obj.method) + ", on path:" + preq(obj.path));
+};
 
 
 
@@ -172,3 +174,4 @@ exports.request = request;
 exports.goNext = goNext;
 exports.cacheServer = cacheServer;
 exports.printErr = printErr;
+exports.httpErr = httpErr;

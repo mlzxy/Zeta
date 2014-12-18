@@ -28,7 +28,7 @@ var dr = m.save.domain.router;
 for (var k = 0; k < methods.length; k++) {
     m.save.router[methods[k]] = {};
 }
-
+m.save.router.any = {};
 
 /*=====================tedious job========================*/
 
@@ -169,7 +169,7 @@ m.any = function(f) {
     for (var ki = 0; ki < f.length; ki++)
         myUtil.checkErr(!(myUtil.isFunction(f[ki]) || myUtil.isString(f[ki])),
             errMsg2a + clc.yellowBright(path) + errMsg2b + clc.yellowBright(JSON.stringify(f[ki])));
-    this.save.router.any = f;
+    this.save.router.any.any = f;
     return this;
 };
 
