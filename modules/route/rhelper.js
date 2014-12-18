@@ -239,9 +239,7 @@ var server = function() {
                     p == 'any' ? lrt.any(f) : lrt[m](p, f);
                 }
             }
-
         }
-
     }
 
 

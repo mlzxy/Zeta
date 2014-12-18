@@ -33,4 +33,4 @@ m.get('/user', ["loginCheck", "welcome"]);
 
 
 
-m.server().listen(8000);
+m.app();

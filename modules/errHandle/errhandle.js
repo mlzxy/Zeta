@@ -9,7 +9,7 @@ m.load();
 
 
 var msg = 'In fact, use one single global domain for your global EventEmitter instances for exception handling would not work properly, ' +
-    'that\'s because of the very hardness of async exception handling together with nodejs events mechanism, ' +
+    'that\'s because of the very hardness of async exception handling from with nodejs events mechanism, ' +
     'see more in our documentation and http://nodejs.org/api/domain.html';
 var msg2 = 'Moreover, if you insist on doing this, you could only add EventEmitter Instances into the global domain, otherwise would be skipped';
 /*=============== error handling =======================*/
