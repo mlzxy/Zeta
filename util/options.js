@@ -12,9 +12,9 @@ function initOptions() {
     this.root = process.cwd();
     this.public = "public";
     this.debug = true;
-    this.serviceCache = false;
+    this.serviceCache = true;
     this.loadinfo = false;
-    this.guard = true;
+    this.guard = false;
     this.globalDomain = false;
 };
 

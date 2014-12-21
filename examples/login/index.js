@@ -1,5 +1,4 @@
-var m = require('../../').module('demo', ['demo-login']),
-    http = require('http');
+var m = require('../../').module('demo', ['demo-login']);
 
 m.config('root', __dirname);
 m.config('public', __dirname + '/public');
@@ -29,6 +28,8 @@ m.handler('welcome', function($scope, $render, $sayhi) {
 
 m.get('/', "login");
 m.get('/user', ["loginCheck", "welcome"]);
+
+
 
 
 

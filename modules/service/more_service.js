@@ -6,6 +6,7 @@
 var m = require('../../base/base.js').module('built-in-service-more', ['built-in-service-base']);
 m = m.load();
 var formidable = require('formidable');
+var emt = require('events').EventEmitter;
 var swig = require('swig');
 var ck = require('cookie');
 var path = require('path');
@@ -77,28 +78,81 @@ m.factory('$cookie', cookie);
 
 
 /*static server*/
+var indexFile = ['.htm', '.html', '.md']; //should add namespace for config
+var processFun = {};
+var idxEE = new emt();
+idxEE.on('notFound', function(realPath, pathname, response) {
+    response.writeHead(404, {
+        'Content-Type': 'text/plain'
+    });
+    response.write("This request URL " + pathname + " was not found on this server.");
+    response.end();
+});
+
+
+for (var i = 0; i < indexFile.length; i++) {
+    var f = function(eidx, realPath, pathname, response) {
+        var filename = realPath + 'index' + indexFile[eidx];
+        fs.exists(filename, function(exists) {
+            if (exists) {
+                fs.readFile(filename, "binary", function(err, file) {
+                    if (err) {
+                        response.writeHead(500, {
+                            'Content-Type': 'text/plain'
+                        });
+                        response.end(JSON.stringify(err));
+
+                    } else {
+                        var pfun = processFun[indexFile[eidx]] || function(x) {
+                            return x;
+                        };
+                        // var contentType = mime.lookup(realPath);
+                        response.writeHead(200, {
+                            'Content-Type': 'text/html'
+                        });
+                        response.write(pfun(file), "binary");
+                        response.end();
+                    }
+                });
+            } else {
+                if (eidx < indexFile.length - 1)
+                    idxEE.emit(eidx + 1, realPath, pathname, response);
+                else
+                    idxEE.emit('notFound', realPath, pathname, response);
+            }
+        });
+    };
+    idxEE.on(i, f.bind(undefined, i));
+}
+var sendIndex = function(realPath, pathname, response) {
+    idxEE.emit(0, realPath, pathname, response);
+};
+
 var static_server = function($scope) {
     var request = $scope.req,
         response = $scope.res;
     var pathname = url.parse(request.url).pathname;
     var realPath = public + pathname;
+    sendFile(realPath, pathname, response);
+
+};
+var sendFile = function(realPath, pathname, response) {
     fs.exists(realPath, function(exists) {
         if (!exists) {
             response.writeHead(404, {
                 'Content-Type': 'text/plain'
             });
-
             response.write("This request URL " + pathname + " was not found on this server.");
             response.end();
         } else {
             fs.readFile(realPath, "binary", function(err, file) {
                 if (err) {
                     if (err.code == "EISDIR") {
-                        response.writeHead(404, {
-                            'Content-Type': 'text/plain'
-                        });
-                        response.write("This request URL " + pathname + " was not found on this server.");
-                        response.end();
+                        debugger;
+                        if (realPath.endsWith('/'))
+                            sendIndex(realPath, pathname, response);
+                        else
+                            sendIndex(realPath + '/', pathname, response);
                     } else {
                         response.writeHead(500, {
                             'Content-Type': 'text/plain'
