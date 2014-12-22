@@ -60,8 +60,6 @@ var checkErr = function(t, msg) {
 
 
 
-
-
 function updateObj(a, b) {
     for (var v in b) {
         a[v] = b[v];
@@ -76,6 +74,27 @@ var invalidate = function() {
 };
 
 
+var getAttr = function(dict, keyArray, idx) {
+    if (idx === undefined)
+        idx = 0;
+    if (!judge.isObject(dict))
+        return dict;
+    else if (idx == keyArray.length - 1)
+        return dict[keyArray[idx]];
+    else
+        return getAttr(dict[keyArray[idx]], keyArray, idx + 1);
+};
+
+
+var setAttr = function(dict, keyArray, val) {
+    if (judge.isObject(dict))
+        for (var i = 0; i < keyArray.length - 1; i++) {
+            if (dict[keyArray[i]] === undefined)
+                dict[keyArray[i]] = {};
+            dict = dict[keyArray[i]];
+        }
+    dict[keyArray[keyArray.length - 1]] = val;
+};
 
 
 
@@ -88,7 +107,7 @@ exports.isObject = judge.isObject;
 exports.isString = judge.isString;
 exports.isRegex = judge.isRegex;
 exports.isHidden = judge.isHidden;
-exports.isArray = Array.isArray;
+exports.isArray = judge.isArray;
 exports.isNumber = judge.isNumber;
 /*compare two objects*/
 exports.equals = equals;
@@ -105,3 +124,8 @@ exports.quiteRequire = quiteRequire;
 exports.safeRequire = safeRequire;
 exports.checkErr = checkErr;
 exports.invalidate = invalidate;
+
+
+/*set get Attr*/
+exports.setAttr = setAttr;
+exports.getAttr = getAttr;

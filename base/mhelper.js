@@ -123,8 +123,20 @@ var resetEnv = function(name) {
 
 
 
+function updateOptions(a, b) {
+    for (var v in b) {
+        if (myUtil.isObject(b[v])) {
+            a[v] = a[v] || {};
+            updateOptions(a[v], b[v]);
+        } else
+            a[v] = b[v];
+    }
+    return a;
+}
+
 
 exports.init_mMap = init_mMap;
 exports.mergeModule = mergeModule;
 exports.circle = circle;
 exports.resetEnv = resetEnv;
+exports.updateOptions = updateOptions;
