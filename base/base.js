@@ -19,7 +19,7 @@ var load = function() {
         global.mOpt = this.config.options;
     }
     var mOpt = global.mOpt;
-    myUtil.updateObj(this.config.options, mOpt);
+    mhlp.updateOptions(this.config.options, mOpt);
     if (this.config(options.circleCheck))
         mhlp.circle(this.name, []);
 
@@ -70,6 +70,7 @@ var init = function(m) {
     m.l = load;
     m.config = function(name, val) {
         var rt;
+        this.config._nspstack = [];
         switch (arguments.length) {
             case 1:
                 rt = this.config.options[name];
@@ -85,6 +86,29 @@ var init = function(m) {
     };
     m.c = m.config;
     m.config.options = new options.initOptions();
+    m.config._nspstack = [];
+
+    m.config.of = function(space) {
+        this._nspstack.push(space);
+        return this;
+    };
+    m.config.val = function(name, val) {
+        var rt;
+        var attrStack = name !== undefined ? this._nspstack.slice().push(name) : undefined;
+        switch (arguments.length) {
+            case 1:
+                rt = myUtil.getAttr(this.options, attrStack);
+                break;
+            case 2:
+                rt = myUtil.setAttr(this.options, attrStack, val);
+                rt = this;
+                break;
+            default:
+                rt = this;
+        }
+        return rt;
+    };
+
     return m;
 };
 
