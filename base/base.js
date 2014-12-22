@@ -94,7 +94,8 @@ var init = function(m) {
     };
     m.config.val = function(name, val) {
         var rt;
-        var attrStack = name !== undefined ? this._nspstack.slice().push(name) : undefined;
+        var attrStack =  this._nspstack.slice();
+        attrStack.push(name);
         switch (arguments.length) {
             case 1:
                 rt = myUtil.getAttr(this.options, attrStack);
