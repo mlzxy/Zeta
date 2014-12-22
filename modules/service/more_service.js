@@ -176,7 +176,7 @@ m.handler('static', static_server);
 
 
 /*for parsing form*/
-m.factory('$form', function() {
+m.factory('$form', function($scope) {
     var form = new formidable.IncomingForm();
     return form;
 });

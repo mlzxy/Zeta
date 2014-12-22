@@ -1,0 +1,513 @@
+[[33mloading[39m] Module: [34mdemo[39m, who depends on [34m[][39m
+[[32mbuiltin[39m] Begin to load Modules: [34mbuiltin[39m
+[[33mloading[39m] Module: [34mbuilt-in-error-handle[39m, who depends on [34m["built-in-router"][39m
+[[33mloading[39m] Module: [34mbuilt-in-router[39m, who depends on [34m["built-in-service-more"][39m
+[[33mloading[39m] Module: [34mbuilt-in-service-more[39m, who depends on [34m["built-in-service-base"][39m
+[[33mloading[39m] Module: [34mbuilt-in-service-base[39m, who depends on [34m[][39m
+[[32mloaded[39m]  Module: [34mbuilt-in-service-base[39m
+[[32mloaded[39m]  Module: [34mbuilt-in-service-more[39m
+[[32mloaded[39m]  Module: [34mbuilt-in-router[39m
+[[32mloaded[39m]  Module: [34mbuilt-in-error-handle[39m
+[[32mok[39m] The Main Module: [31mdemo[39m , all dependencies get loaded successfully in [32m1476[39m ms.
+
+[[32mok[39m] Now start to load the components inside the Main Module: [31mdemo[39m
+
+[0m[0m
+[0m  singleHandler[0m
+[[32mok[39m] The Main Module: [31mdemo[39m , gets loaded successfully.
+
+[[33mloading[39m] start to prepare your server.
+[[34mnotice[39m]  You have turned the [34mcircleCheck[39m option [94mon[39m.
+[[34mnotice[39m]  You have turned the [34mroot[39m option [94m"/Users/suemi/Workspace/Zeta"[39m.
+[[34mnotice[39m]  You have turned the [34mpublic[39m option [94m"public"[39m.
+[[34mnotice[39m]  You have turned the [34mdebug[39m option [94mon[39m.
+[[34mnotice[39m]  You have turned the [34mserviceCache[39m option [94mon[39m.
+[[34mnotice[39m]  You have turned the [34mloadinfo[39m option [94moff[39m.
+[[34mnotice[39m]  You have turned the [34mguard[39m option [94moff[39m.
+[[34mnotice[39m]  You have turned the [34mglobalDomain[39m option [94moff[39m.
+[[32mok[39m] your server is ready.
+  [32m  ✓[0m[90m should get hello [0m
+[[32mlistening[39m] The server is now listening on the [34m0.0.0.0:54189[39m
+
+
+[[32mrequest[39m] from ip: [33m127.0.0.1[39m, method: [33mGET[39m, on path:[33m/test[39m
+[[36mhandler[39m]	   --- {[1m[34mh1[39m[22m} ---
+[[32mfinished[39m] request finish from ip: [33m127.0.0.1[39m, method: [33mGET[39m, on path:[33m/test[39m in [32m3[39m ms
+
+[[32mclosed[39m] the server has been closed.
+[[32mok[39m] The Main Module: [31mdemo[39m , gets loaded successfully.
+
+[[33mloading[39m] start to prepare your server.
+[[34mnotice[39m]  You have turned the [34mcircleCheck[39m option [94mon[39m.
+[[34mnotice[39m]  You have turned the [34mroot[39m option [94m"/Users/suemi/Workspace/Zeta"[39m.
+[[34mnotice[39m]  You have turned the [34mpublic[39m option [94m"public"[39m.
+[[34mnotice[39m]  You have turned the [34mdebug[39m option [94mon[39m.
+[[34mnotice[39m]  You have turned the [34mserviceCache[39m option [94mon[39m.
+[[34mnotice[39m]  You have turned the [34mloadinfo[39m option [94moff[39m.
+[[34mnotice[39m]  You have turned the [34mguard[39m option [94moff[39m.
+[[34mnotice[39m]  You have turned the [34mglobalDomain[39m option [94moff[39m.
+[[32mok[39m] your server is ready.
+[[32mlistening[39m] The server is now listening on the [34m0.0.0.0:54191[39m
+
+
+[[32mrequest[39m] from ip: [33m127.0.0.1[39m, method: [33mGET[39m, on path:[33m/test[39m
+[[36mhandler[39m]	   --- {[1m[34mh1[39m[22m} ---
+[[32mfinished[39m] request finish from ip: [33m127.0.0.1[39m, method: [33mGET[39m, on path:[33m/test[39m in [32m1[39m ms
+
+[[32mclosed[39m] the server has been closed.
+  [32m  ✓[0m[90m should cover the previous one [0m
+[[32mok[39m] The Main Module: [31mdemo[39m , gets loaded successfully.
+
+[[33mloading[39m] start to prepare your server.
+[[34mnotice[39m]  You have turned the [34mcircleCheck[39m option [94mon[39m.
+[[34mnotice[39m]  You have turned the [34mroot[39m option [94m"/Users/suemi/Workspace/Zeta"[39m.
+[[34mnotice[39m]  You have turned the [34mpublic[39m option [94m"public"[39m.
+[[34mnotice[39m]  You have turned the [34mdebug[39m option [94mon[39m.
+[[34mnotice[39m]  You have turned the [34mserviceCache[39m option [94mon[39m.
+[[34mnotice[39m]  You have turned the [34mloadinfo[39m option [94moff[39m.
+[[34mnotice[39m]  You have turned the [34mguard[39m option [94moff[39m.
+[[34mnotice[39m]  You have turned the [34mglobalDomain[39m option [94moff[39m.
+[[32mok[39m] your server is ready.
+[[32mlistening[39m] The server is now listening on the [34m0.0.0.0:54193[39m
+
+
+[[32mrequest[39m] from ip: [33m127.0.0.1[39m, method: [33mPOST[39m, on path:[33m/foo[39m
+[[36mhandler[39m]	   --- {[1m[34mh2[39m[22m} ---
+caonima
+{ _readableState: 
+   { highWaterMark: 16384,
+     buffer: [],
+     length: 0,
+     pipes: null,
+     pipesCount: 0,
+     flowing: false,
+     ended: false,
+     endEmitted: false,
+     reading: false,
+     calledRead: false,
+     sync: true,
+     needReadable: false,
+     emittedReadable: false,
+     readableListening: false,
+     objectMode: false,
+     defaultEncoding: 'utf8',
+     ranOut: false,
+     awaitDrain: 0,
+     readingMore: false,
+     decoder: null,
+     encoding: null },
+  readable: true,
+  domain: null,
+  _events: {},
+  _maxListeners: 10,
+  socket: 
+   { _connecting: false,
+     _handle: 
+      { fd: 14,
+        writeQueueSize: 0,
+        owner: [Circular],
+        onread: [Function: onread],
+        reading: true },
+     _readableState: 
+      { highWaterMark: 16384,
+        buffer: [],
+        length: 0,
+        pipes: null,
+        pipesCount: 0,
+        flowing: false,
+        ended: false,
+        endEmitted: false,
+        reading: true,
+        calledRead: true,
+        sync: false,
+        needReadable: true,
+        emittedReadable: false,
+        readableListening: false,
+        objectMode: false,
+        defaultEncoding: 'utf8',
+        ranOut: false,
+        awaitDrain: 0,
+        readingMore: false,
+        decoder: null,
+        encoding: null },
+     readable: true,
+     domain: null,
+     _events: 
+      { end: [Object],
+        finish: [Function: onSocketFinish],
+        _socketEnd: [Function: onSocketEnd],
+        drain: [Object],
+        timeout: [Function],
+        error: [Function],
+        close: [Object] },
+     _maxListeners: 10,
+     _writableState: 
+      { highWaterMark: 16384,
+        objectMode: false,
+        needDrain: false,
+        ending: false,
+        ended: false,
+        finished: false,
+        decodeStrings: false,
+        defaultEncoding: 'utf8',
+        length: 0,
+        writing: false,
+        sync: true,
+        bufferProcessing: false,
+        onwrite: [Function],
+        writecb: null,
+        writelen: 0,
+        buffer: [],
+        errorEmitted: false },
+     writable: true,
+     allowHalfOpen: true,
+     onend: [Function],
+     destroyed: false,
+     bytesRead: 165,
+     _bytesDispatched: 0,
+     _pendingData: null,
+     _pendingEncoding: '',
+     server: 
+      { domain: null,
+        _events: [Object],
+        _maxListeners: 10,
+        _connections: 1,
+        connections: [Getter/Setter],
+        _handle: [Object],
+        _usingSlaves: false,
+        _slaves: [],
+        allowHalfOpen: true,
+        httpAllowHalfOpen: false,
+        timeout: 120000,
+        _connectionKey: '4:0.0.0.0:0' },
+     _idleTimeout: 120000,
+     _idleNext: 
+      { [Function: utcDate]
+        _onTimeout: [Function],
+        _idleTimeout: 835,
+        _idleNext: [Object],
+        _idlePrev: [Circular],
+        _idleStart: 1419238471166,
+        _monotonicStartTime: 71915428 },
+     _idlePrev: { _idleNext: [Circular], _idlePrev: [Object] },
+     _idleStart: 1419238471176,
+     _monotonicStartTime: 71915438,
+     parser: 
+      { _headers: [],
+        _url: '',
+        onHeaders: [Function: parserOnHeaders],
+        onHeadersComplete: [Function: parserOnHeadersComplete],
+        onBody: [Function: parserOnBody],
+        onMessageComplete: [Function: parserOnMessageComplete],
+        socket: [Circular],
+        incoming: [Circular],
+        maxHeaderPairs: 2000,
+        onIncoming: [Function] },
+     ondata: [Function],
+     _paused: false,
+     _httpMessage: 
+      { domain: null,
+        _events: [Object],
+        _maxListeners: 10,
+        output: [],
+        outputEncodings: [],
+        writable: true,
+        _last: false,
+        chunkedEncoding: false,
+        shouldKeepAlive: false,
+        useChunkedEncodingByDefault: true,
+        sendDate: true,
+        _headerSent: false,
+        _header: '',
+        _hasBody: true,
+        _trailer: '',
+        finished: false,
+        _hangupClose: false,
+        socket: [Circular],
+        connection: [Circular],
+        start: Mon Dec 22 2014 16:54:31 GMT+0800 (CST),
+        info: [Object] },
+     _peername: { address: '127.0.0.1', family: 'IPv4', port: 54194 } },
+  connection: 
+   { _connecting: false,
+     _handle: 
+      { fd: 14,
+        writeQueueSize: 0,
+        owner: [Circular],
+        onread: [Function: onread],
+        reading: true },
+     _readableState: 
+      { highWaterMark: 16384,
+        buffer: [],
+        length: 0,
+        pipes: null,
+        pipesCount: 0,
+        flowing: false,
+        ended: false,
+        endEmitted: false,
+        reading: true,
+        calledRead: true,
+        sync: false,
+        needReadable: true,
+        emittedReadable: false,
+        readableListening: false,
+        objectMode: false,
+        defaultEncoding: 'utf8',
+        ranOut: false,
+        awaitDrain: 0,
+        readingMore: false,
+        decoder: null,
+        encoding: null },
+     readable: true,
+     domain: null,
+     _events: 
+      { end: [Object],
+        finish: [Function: onSocketFinish],
+        _socketEnd: [Function: onSocketEnd],
+        drain: [Object],
+        timeout: [Function],
+        error: [Function],
+        close: [Object] },
+     _maxListeners: 10,
+     _writableState: 
+      { highWaterMark: 16384,
+        objectMode: false,
+        needDrain: false,
+        ending: false,
+        ended: false,
+        finished: false,
+        decodeStrings: false,
+        defaultEncoding: 'utf8',
+        length: 0,
+        writing: false,
+        sync: true,
+        bufferProcessing: false,
+        onwrite: [Function],
+        writecb: null,
+        writelen: 0,
+        buffer: [],
+        errorEmitted: false },
+     writable: true,
+     allowHalfOpen: true,
+     onend: [Function],
+     destroyed: false,
+     bytesRead: 165,
+     _bytesDispatched: 0,
+     _pendingData: null,
+     _pendingEncoding: '',
+     server: 
+      { domain: null,
+        _events: [Object],
+        _maxListeners: 10,
+        _connections: 1,
+        connections: [Getter/Setter],
+        _handle: [Object],
+        _usingSlaves: false,
+        _slaves: [],
+        allowHalfOpen: true,
+        httpAllowHalfOpen: false,
+        timeout: 120000,
+        _connectionKey: '4:0.0.0.0:0' },
+     _idleTimeout: 120000,
+     _idleNext: 
+      { [Function: utcDate]
+        _onTimeout: [Function],
+        _idleTimeout: 835,
+        _idleNext: [Object],
+        _idlePrev: [Circular],
+        _idleStart: 1419238471166,
+        _monotonicStartTime: 71915428 },
+     _idlePrev: { _idleNext: [Circular], _idlePrev: [Object] },
+     _idleStart: 1419238471176,
+     _monotonicStartTime: 71915438,
+     parser: 
+      { _headers: [],
+        _url: '',
+        onHeaders: [Function: parserOnHeaders],
+        onHeadersComplete: [Function: parserOnHeadersComplete],
+        onBody: [Function: parserOnBody],
+        onMessageComplete: [Function: parserOnMessageComplete],
+        socket: [Circular],
+        incoming: [Circular],
+        maxHeaderPairs: 2000,
+        onIncoming: [Function] },
+     ondata: [Function],
+     _paused: false,
+     _httpMessage: 
+      { domain: null,
+        _events: [Object],
+        _maxListeners: 10,
+        output: [],
+        outputEncodings: [],
+        writable: true,
+        _last: false,
+        chunkedEncoding: false,
+        shouldKeepAlive: false,
+        useChunkedEncodingByDefault: true,
+        sendDate: true,
+        _headerSent: false,
+        _header: '',
+        _hasBody: true,
+        _trailer: '',
+        finished: false,
+        _hangupClose: false,
+        socket: [Circular],
+        connection: [Circular],
+        start: Mon Dec 22 2014 16:54:31 GMT+0800 (CST),
+        info: [Object] },
+     _peername: { address: '127.0.0.1', family: 'IPv4', port: 54194 } },
+  httpVersion: '1.1',
+  complete: false,
+  headers: 
+   { host: '127.0.0.1:54193',
+     'accept-encoding': 'gzip, deflate',
+     'user-agent': 'node-superagent/0.21.0',
+     connection: 'close',
+     'transfer-encoding': 'chunked' },
+  trailers: {},
+  _pendings: [],
+  _pendingIndex: 0,
+  url: '/foo',
+  method: 'POST',
+  statusCode: null,
+  client: 
+   { _connecting: false,
+     _handle: 
+      { fd: 14,
+        writeQueueSize: 0,
+        owner: [Circular],
+        onread: [Function: onread],
+        reading: true },
+     _readableState: 
+      { highWaterMark: 16384,
+        buffer: [],
+        length: 0,
+        pipes: null,
+        pipesCount: 0,
+        flowing: false,
+        ended: false,
+        endEmitted: false,
+        reading: true,
+        calledRead: true,
+        sync: false,
+        needReadable: true,
+        emittedReadable: false,
+        readableListening: false,
+        objectMode: false,
+        defaultEncoding: 'utf8',
+        ranOut: false,
+        awaitDrain: 0,
+        readingMore: false,
+        decoder: null,
+        encoding: null },
+     readable: true,
+     domain: null,
+     _events: 
+      { end: [Object],
+        finish: [Function: onSocketFinish],
+        _socketEnd: [Function: onSocketEnd],
+        drain: [Object],
+        timeout: [Function],
+        error: [Function],
+        close: [Object] },
+     _maxListeners: 10,
+     _writableState: 
+      { highWaterMark: 16384,
+        objectMode: false,
+        needDrain: false,
+        ending: false,
+        ended: false,
+        finished: false,
+        decodeStrings: false,
+        defaultEncoding: 'utf8',
+        length: 0,
+        writing: false,
+        sync: true,
+        bufferProcessing: false,
+        onwrite: [Function],
+        writecb: null,
+        writelen: 0,
+        buffer: [],
+        errorEmitted: false },
+     writable: true,
+     allowHalfOpen: true,
+     onend: [Function],
+     destroyed: false,
+     bytesRead: 165,
+     _bytesDispatched: 0,
+     _pendingData: null,
+     _pendingEncoding: '',
+     server: 
+      { domain: null,
+        _events: [Object],
+        _maxListeners: 10,
+        _connections: 1,
+        connections: [Getter/Setter],
+        _handle: [Object],
+        _usingSlaves: false,
+        _slaves: [],
+        allowHalfOpen: true,
+        httpAllowHalfOpen: false,
+        timeout: 120000,
+        _connectionKey: '4:0.0.0.0:0' },
+     _idleTimeout: 120000,
+     _idleNext: 
+      { [Function: utcDate]
+        _onTimeout: [Function],
+        _idleTimeout: 835,
+        _idleNext: [Object],
+        _idlePrev: [Circular],
+        _idleStart: 1419238471166,
+        _monotonicStartTime: 71915428 },
+     _idlePrev: { _idleNext: [Circular], _idlePrev: [Object] },
+     _idleStart: 1419238471176,
+     _monotonicStartTime: 71915438,
+     parser: 
+      { _headers: [],
+        _url: '',
+        onHeaders: [Function: parserOnHeaders],
+        onHeadersComplete: [Function: parserOnHeadersComplete],
+        onBody: [Function: parserOnBody],
+        onMessageComplete: [Function: parserOnMessageComplete],
+        socket: [Circular],
+        incoming: [Circular],
+        maxHeaderPairs: 2000,
+        onIncoming: [Function] },
+     ondata: [Function],
+     _paused: false,
+     _httpMessage: 
+      { domain: null,
+        _events: [Object],
+        _maxListeners: 10,
+        output: [],
+        outputEncodings: [],
+        writable: true,
+        _last: false,
+        chunkedEncoding: false,
+        shouldKeepAlive: false,
+        useChunkedEncodingByDefault: true,
+        sendDate: true,
+        _headerSent: false,
+        _header: '',
+        _hasBody: true,
+        _trailer: '',
+        finished: false,
+        _hangupClose: false,
+        socket: [Circular],
+        connection: [Circular],
+        start: Mon Dec 22 2014 16:54:31 GMT+0800 (CST),
+        info: [Object] },
+     _peername: { address: '127.0.0.1', family: 'IPv4', port: 54194 } },
+  _consuming: false,
+  _dumped: false,
+  httpVersionMajor: 1,
+  httpVersionMinor: 1,
+  upgrade: false }
+[[32mfinished[39m] request finish from ip: [33m127.0.0.1[39m, method: [33mPOST[39m, on path:[33m/foo[39m in [32m5[39m ms
+
+[[32mclosed[39m] the server has been closed.
+  [32m  ✓[0m[90m should do nothing [0m
+
+
+[92m [0m[32m 3 passing[0m[90m (29ms)[0m
+

@@ -4,21 +4,22 @@ var Zeta=require('../../'),
     assert=request('assert');
 var demo=Zeta.module('demo',[]);
 demo.load();
+
 describe('demo.post',function(){
     it('should handle the post request',function(done){
-        demo.handler('h1',function($scope){
+        demo.handler('h1',function($scope,$form){
             console.log($scope.req.body);
             $scope.res.writeHead(200,{'Content-Type':'text/plain'});
-            $scope.res.write($scope.req.body.data);
+            $scope.res.write('POST');
             $scope.res.end();
         });
-        demo.post('/foo','h1');
-        request(demo.server()).
-            post('/foo',{data:'post-request'}).
+        demo.post('/foo',['h1']);
+        request(demo.server(true)).
+            post('/foo').send({data:'post-request'}).
             expect(200).
             end(function(err,res){
                 if(err) done(err);
-                res.text.should.equal('post-request');
+                res.text.should.equal('POST');
                 done();
             });
     });
@@ -29,7 +30,8 @@ describe('demo.post',function(){
     });
     it('should decline the wrong path',function(done){
         request(demo.server()).
-            post('/test',{data:'post-request'}).
+            post('/test').
+            send({data:'post-request'}).
             expect(404,done);
     });
     it('should support dynamic routes',function(done){
