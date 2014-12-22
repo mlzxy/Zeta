@@ -36,7 +36,7 @@ describe('demo.get',function(){
         var app=Zeta.module('app',[]);
         app.load();
         app.handler('h1',function($scope){
-            console.log('caonima');
+            console.log($scope.req.params);
             $scope.res.writeHead(200,{'Content-Type':'text/plain'});
             $scope.res.write($scope.req.params);
             $scope.res.end();
