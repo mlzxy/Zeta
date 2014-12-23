@@ -64,7 +64,6 @@ describe('registProvider',function(){
             expect(200).
             end(function(err,res){
                 if(err) done(err);
-                console.log(res.text);
                 res.text.should.equal('wow');
                 done();
             });

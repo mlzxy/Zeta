@@ -31,7 +31,7 @@ describe('registFactory',function(){
                 return a+b;
             };
         });
-        demo.handler('h2',function($scope,$sayhello){
+        demo.handler('h2',function($scope,$count){
             $scope.res.writeHead(200,{'Content-Type':'text/plain'});
             $scope.res.write($count(1,2).toString());
             $scope.res.end();
@@ -46,10 +46,10 @@ describe('registFactory',function(){
                 done();
             });
     });
-    it('should get the same one for one request',function(done){
+    it('should share the same factory object in one request',function(done){
         demo.handler('h0',function($scope,$sayhi){
             $sayhi.content='wow';
-            go(next);
+            $scope.go('next');
         });
         demo.get('/jepa',['h0','h1']);
         request(demo.server(true)).
