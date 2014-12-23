@@ -5,48 +5,37 @@ var Zeta=require('../../'),
 var demo=Zeta.module('demo',[]);
 demo.load();
 describe('demo.get',function(){
-    it('should handle the delete request',function(done){
+    it('should handle the head request',function(done){
         demo.handler('h1',function($scope){
-            console.log('hhh');
             $scope.res.writeHead(200,{'Content-Type':'text/plain'});
-            $scope.res.write('DELETE');
             $scope.res.end();
         });
-        demo.delete('/foo','h1');
+        demo.head('/foo','h1');
         request(demo.server()).
-            delete('/foo').
+            head('/foo').
             expect(200).
-            end(function(err,res){
-                if(err) done(err);
-                res.text.should.include('DELETE');
-                done();
-            });
+            expect('Content-Type','text/plain',done);
     });
     it('should discard other requests',function(done){
         request(demo.server()).
-            head('/foo').
+            get('/foo').
             expect(404,done);
     });
     it('should decline the wrong path',function(done){
         request(demo.server()).
-            delete('/test').
+            head('/test').
             expect(404,done);
     });
     it('should support dynamic routes',function(done){
         demo.handler('h1',function($scope){
             console.log($scope.req.params);
-            $scope.res.writeHead(200,{'Content-Type':'text/plain'});
-            $scope.res.write($scope.req.params.foo);
+            $scope.res.writeHead(200,{'Content-Type':'text/html'});
             $scope.res.end();
         });
-        demo.delete('/users/:foo','h1');
+        demo.head('/users/:foo','h1');
         request(demo.server(true)).
-            delete('/users/test').
+            head('/users/test').
             expect(200).
-            end(function(err,res){
-                if(err) done(err);
-                res.text.should.include('test');
-                done();
-            });
+            expect('Content-Type','text/html',done);
     });
 });
