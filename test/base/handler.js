@@ -36,26 +36,5 @@ describe('singleHandler',function(done){
                 done();
             });
     });
-    it('should be called orderly by the time they were registered',function(done){
-        demo.handler('h1',function($scope){
-            $scope.count=1;
-            go(next);
-        });
-        demo.handler('h2',function($scope){
-            $scope.count=2;
-            $scope.res.writeHead(200,{'Content-Type':'text/plain'});
-            $scope.res.write($scope.count.toString());
-            $scope.res.end();
-        });
-        demo.get('/test','h2');
-        request(demo.server(true)).
-            get('/test').
-            expect(200).
-            end(function(err,res){
-                if(err) done(err);
-                res.text.should.equal('2');
-                done();
-            });
-    });
 });
 
