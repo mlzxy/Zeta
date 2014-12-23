@@ -4,7 +4,7 @@ var Zeta=require('../../'),
     assert=request('assert');
 var demo=Zeta.module('demo',[]);
 demo.load();
-describe('demo.get',function(){
+describe('demo.delete',function(){
     it('should handle the delete request',function(done){
         demo.handler('h1',function($scope){
             console.log('hhh');

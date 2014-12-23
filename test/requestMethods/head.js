@@ -4,7 +4,7 @@ var Zeta=require('../../'),
     assert=request('assert');
 var demo=Zeta.module('demo',[]);
 demo.load();
-describe('demo.get',function(){
+describe('demo.head',function(){
     it('should handle the head request',function(done){
         demo.handler('h1',function($scope){
             $scope.res.writeHead(200,{'Content-Type':'text/plain'});
