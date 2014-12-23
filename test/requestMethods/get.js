@@ -49,4 +49,25 @@ describe('demo.get',function(){
                 done();
             });
     });
+    it('should support more than one handler',function(done){
+        demo.handler('h2',function($scope){
+            $scope.content='wow';
+            $scope.go('next');
+        });
+        demo.handler('h3',function($scope){
+            console.log($scope.req.params);
+            $scope.res.writeHead(200,{'Content-Type':'text/plain'});
+            $scope.res.write($scope.content);
+            $scope.res.end();
+        });
+        demo.get('/final',['h2','h3']);
+        request(demo.server(true)).
+            get('/final').
+            expect(200).
+            end(function(err,res){
+                if(err) done(err);
+                res.text.should.include('wow');
+                done();
+            });
+    });
 });

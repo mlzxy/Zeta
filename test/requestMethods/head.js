@@ -38,4 +38,19 @@ describe('demo.get',function(){
             expect(200).
             expect('Content-Type','text/html',done);
     });
+    it('should support more than one handler',function(done){
+        demo.handler('h2',function($scope){
+            $scope.res.writeHead(200,{'Content-Type':'text/plain'});
+            $scope.go('next');
+        });
+        demo.handler('h3',function($scope){
+            $scope.res.write($scope.content);
+            $scope.res.end();
+        });
+        demo.head('/final',['h2','h3']);
+        request(demo.server(true)).
+            head('/final').
+            expect(200).
+            expect('Content-Type','text/plain',done);
+    });
 });
