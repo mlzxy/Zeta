@@ -44,6 +44,11 @@ describe('registProvider',function(){
                 done();
             });
     });
+    it('should get the provider itself',function(){
+        var tmp=demo.provider('$sayhi');
+        tmp.should.have.property('content');
+        tmp.content.should.equal('hi,world');
+    });
     it('should share the same provider between requests',function(done){
         demo.handler('h3',function($scope,$sayhi){
             $sayhi.content='wow';
@@ -68,18 +73,11 @@ describe('registProvider',function(){
                 done();
             });
     });
-    it('should cover the previous one',function(done){
+    it('should cover the previous one',function(){
         demo.provider('$sayhi',{
             content:'hi,you'
         });
-        request(demo.server(true)).
-            get('/foo').
-            expect(200).
-            end(function(err,res){
-                if(err) done(err);
-                res.text.should.equal('hi,you');
-                done();
-            });
+        demo.provider('$sayhi').content.should.equal('hi,you');
     });
 });
 

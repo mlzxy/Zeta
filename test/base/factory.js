@@ -46,6 +46,11 @@ describe('registFactory',function(){
                 done();
             });
     });
+    it('should get the factory itself',function(){
+        var tmp1=demo.factory('$sayhi')();
+        tmp1.should.have.property('content');
+        tmp1.content.should.equal('hi,world');
+    });
     it('should share the same factory object in one request',function(done){
         demo.handler('h0',function($scope,$sayhi){
             $sayhi.content='wow';
@@ -86,18 +91,12 @@ describe('registFactory',function(){
             });
 
     });
-    it('should cover the previous one',function(done){
+    it('should cover the previous one',function(){
         demo.factory('$sayhi',function(){
             return {content:'hi,you'};
         });
-        request(demo.server(true)).
-            get('/foo').
-            expect(200).
-            end(function(err,res){
-                if(err) done(err);
-                res.text.should.equal('hi,you');
-                done();
-            });
+        var tmp=demo.factory('$sayhi')();
+        tmp.content.should.equal('hi,you');
     });
 });
 
