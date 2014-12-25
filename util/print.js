@@ -99,7 +99,6 @@ var sopt = function(x, opt) {
 var options = function(optset) {
     for (var v in optset) {
         switch (optset[v]) {
-
             case true:
                 sopt('on', v);
                 break;
@@ -150,6 +149,9 @@ var httpErr = function(obj) {
     console.log("[" + clc.red('error') + "] " + "Server Internal Error happened from ip: " + preq(obj.ip) + ", method: " + preq(obj.method) + ", on path:" + preq(obj.path));
 };
 
+var loadErr = function(name) {
+    console.log("[" + clc.red('error') + "] " + "The module " + clc.red(name) + " load failed!");
+};
 
 
 
@@ -175,3 +177,4 @@ exports.goNext = goNext;
 exports.cacheServer = cacheServer;
 exports.printErr = printErr;
 exports.httpErr = httpErr;
+exports.loadErr = loadErr;

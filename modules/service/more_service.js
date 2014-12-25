@@ -78,7 +78,8 @@ m.factory('$cookie', cookie);
 
 
 /*static server*/
-var indexFile = ['.htm', '.html', '.md']; //should add namespace for config
+
+var indexFile = m.config.of('built-in').of('static-server').val('indexFile');
 var processFun = {};
 var idxEE = new emt();
 idxEE.on('notFound', function(realPath, pathname, response) {
