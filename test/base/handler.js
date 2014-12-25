@@ -5,8 +5,15 @@ var Zeta=require('../../'),
     should=require('chai').should();
 demo.load();
 
-describe('singleHandler',function(done){
-    it('should get hello',function(){
+describe('define handler',function(done){
+    it('should get handler itself',function(){
+        demo.handler('h0',function($scope){
+            return 'wow';
+        });
+        var tmp=demo.handler('h0');
+        tmp().should.equal('wow');
+    });
+    it('should define handler successfully',function(){
         demo.handler('h1',function($scope){
             $scope.res.writeHead(200,{'Content-Type':'text/plain'});
             $scope.res.write('hello,world');
@@ -20,6 +27,17 @@ describe('singleHandler',function(done){
             if(err) throw err;
             res.text.should.equal('hello,world');
         });
+    });
+    it('can use hander as h in short',function(done){
+        demo.handler('h2',function($scope){
+            $scope.res.writeHead(200,{'addon':'hello'});
+            $scope.res.end();
+        });
+        demo.get('/query','h2');
+        request(demo.server(true)).
+            get('/query').
+            expect(200).
+            expect('addon','hello',done);
     });
     it('should cover the previous one',function(done){
         demo.handler('h1',function($scope){

@@ -87,13 +87,19 @@ var getAttr = function(dict, keyArray, idx) {
 
 
 var setAttr = function(dict, keyArray, val) {
-    if (judge.isObject(dict))
+    if (judge.isObject(dict)) {
         for (var i = 0; i < keyArray.length - 1; i++) {
             if (dict[keyArray[i]] === undefined)
                 dict[keyArray[i]] = {};
-            dict = dict[keyArray[i]];
+            /*=========================================*/
+            if (judge.isObject(dict[keyArray[i]])) {
+                dict = dict[keyArray[i]];
+            } else {
+                break;
+            }
         }
-    dict[keyArray[keyArray.length - 1]] = val;
+        dict[keyArray[keyArray.length - 1]] = val;
+    }
 };
 
 
