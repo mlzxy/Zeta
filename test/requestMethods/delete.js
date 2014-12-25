@@ -4,45 +4,44 @@ var Zeta=require('../../'),
     assert=request('assert');
 var demo=Zeta.module('demo',[]);
 demo.load();
-
-describe('demo.post',function(){
-    it('should handle the post request',function(done){
-        demo.handler('h1',function($scope,$form){
-            console.log($scope.req.body);
+describe('demo.delete',function(){
+    it('should handle the delete request',function(done){
+        demo.handler('h1',function($scope){
+            console.log('hhh');
             $scope.res.writeHead(200,{'Content-Type':'text/plain'});
-            $scope.res.write('POST');
+            $scope.res.write('DELETE');
             $scope.res.end();
         });
-        demo.post('/foo',['h1']);
-        request(demo.server(true)).
-            post('/foo').send({data:'post-request'}).
+        demo.delete('/foo','h1');
+        request(demo.server()).
+            delete('/foo').
             expect(200).
             end(function(err,res){
                 if(err) done(err);
-                res.text.should.equal('POST');
+                res.text.should.include('DELETE');
                 done();
             });
     });
     it('should discard other requests',function(done){
         request(demo.server()).
-            get('/foo').
+            head('/foo').
             expect(404,done);
     });
     it('should decline the wrong path',function(done){
         request(demo.server()).
-            post('/test').
-            send({data:'post-request'}).
+            delete('/test').
             expect(404,done);
     });
     it('should support dynamic routes',function(done){
         demo.handler('h1',function($scope){
+            console.log($scope.req.params);
             $scope.res.writeHead(200,{'Content-Type':'text/plain'});
             $scope.res.write($scope.req.params.foo);
             $scope.res.end();
         });
-        demo.post('/users/:foo','h1');
+        demo.delete('/users/:foo','h1');
         request(demo.server(true)).
-            post('/users/test').
+            delete('/users/test').
             expect(200).
             end(function(err,res){
                 if(err) done(err);
@@ -61,9 +60,9 @@ describe('demo.post',function(){
             $scope.res.write($scope.content);
             $scope.res.end();
         });
-        demo.post('/final',['h2','h3']);
+        demo.delete('/final',['h2','h3']);
         request(demo.server(true)).
-            post('/final').
+            delete('/final').
             expect(200).
             end(function(err,res){
                 if(err) done(err);

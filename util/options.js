@@ -16,7 +16,10 @@ function initOptions() {
     this.loadinfo = false;
     this.guard = false;
     this.globalDomain = false;
-};
+    this['built-in'] = {};
+    this['built-in']['static-server'] = {};
+    this['built-in']['static-server'].indexFile = ['.html', '.htm', '.md'];
+}
 
 
 

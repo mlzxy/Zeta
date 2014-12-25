@@ -78,7 +78,8 @@ m.factory('$cookie', cookie);
 
 
 /*static server*/
-var indexFile = ['.htm', '.html', '.md']; //should add namespace for config
+
+var indexFile = m.config.of('built-in').of('static-server').val('indexFile');
 var processFun = {};
 var idxEE = new emt();
 idxEE.on('notFound', function(realPath, pathname, response) {
@@ -176,7 +177,7 @@ m.handler('static', static_server);
 
 
 /*for parsing form*/
-m.factory('$form', function() {
+m.factory('$form', function($scope) {
     var form = new formidable.IncomingForm();
     return form;
 });

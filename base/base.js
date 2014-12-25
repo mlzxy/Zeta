@@ -31,13 +31,17 @@ var load = function() {
 
         myUtil.safeRequire(fname); //only use the safeRequire here
         var md = global.mgld[deps[i]];
-        if (md === undefined && !this.config(options.circleCheck)) { //means circular, because of nodejs require mechanism
-            if (deps.length === 1 && i === 0) { //only one dependence and it's also circular
-                deps.push(cfg.builtin);
+        if (md === undefined) { //means circular, because of nodejs require mechanism
+            if (!this.config(options.circleCheck)) {
+                if (deps.length === 1 && i === 0) { //only one dependence and it's also circular
+                    deps.push(cfg.builtin);
+                }
+                print.warn("Maybe there has some circular dependencies in the modules you used, in this case, config " + options.circleCheck + " to be true and you could see the problem.\n");
+                print.detail("In here, we assume it's ok, skip the problem and try to continue.");
+                continue;
             }
-            print.warn("Maybe there has some circular dependencies in the modules you used, in this case, config " + options.circleCheck + " to be true and you could see the problem.\n");
-            print.detail("In here, we assume it's ok, skip the problem and try to continue.");
-            continue;
+            print.loadErr(deps[i]);
+            throw new Error('The module: ' + deps[i] + ' could not be loaded.');
         }
         md = md.init();
         mhlp.mergeModule(this, md);
@@ -70,8 +74,10 @@ var init = function(m) {
     m.l = load;
     m.config = function(name, val) {
         var rt;
-        this.config._nspstack = [];
         switch (arguments.length) {
+            case 0:
+                rt = this.config.options;
+                break;
             case 1:
                 rt = this.config.options[name];
                 break;
@@ -86,22 +92,32 @@ var init = function(m) {
     };
     m.c = m.config;
     m.config.options = new options.initOptions();
-    m.config._nspstack = [];
+
 
     m.config.of = function(space) {
+        this.of._nspstack = [space];
+        return this.of;
+    };
+    m.config.of.options = m.config.options;
+    m.config.of._nspstack = [];
+
+    m.config.of.of = function(space) {
         this._nspstack.push(space);
         return this;
     };
-    m.config.val = function(name, val) {
+    m.config.of.val = function(name, val) {
         var rt;
-        var attrStack =  this._nspstack.slice();
+        var attrStack = this._nspstack.slice();
         attrStack.push(name);
         switch (arguments.length) {
+            case 0:
+                rt = myUtil.getAttr(this.options, this._nspstack);
+                break;
             case 1:
                 rt = myUtil.getAttr(this.options, attrStack);
                 break;
             case 2:
-                rt = myUtil.setAttr(this.options, attrStack, val);
+                myUtil.setAttr(this.options, attrStack, val);
                 rt = this;
                 break;
             default:
