@@ -8,7 +8,8 @@
 var Parser = require('./parser');
 
 //Route table
-var Routes = require('./routes');
+var Routes = Parser.Table;
+
 
 //Return a 404 http code
 var notFound = function defaultNotFound(req, res) {
@@ -18,7 +19,7 @@ var notFound = function defaultNotFound(req, res) {
 
 //Route finder, if nothing is matched nothing is done
 //@return void
-function Router(req, res) {
+var Router = function(req, res) {
     //Select the a routing table based on the request method
     var table = Routes[req.method];
 

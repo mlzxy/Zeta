@@ -3,15 +3,15 @@
  * Copyright(c) 2014-2015 Xinyu Zhang beviszhang1993@gmail.com
  * MIT Licensed
  */
+
 var url = require('url'),
     myUtil = require('../../util/util.js'),
     print = require('../../util/print.js'),
     util = require('util'),
     net = require('net'),
     http = require('http'),
-    lrt = require('./router'),
     domain = require('domain');
-myUtil.invalidate(__dirname + '/router/');
+
 
 
 var methods = require('../../util/config.js').methods,
@@ -21,6 +21,8 @@ var methods = require('../../util/config.js').methods,
 
 
 var server = function() {
+    var lrt = require('./router');
+    myUtil.invalidate(__dirname + '/router/index.js');
     if (this.save.server && !arguments[0]) {
         print.cacheServer();
         return this.save.server;
