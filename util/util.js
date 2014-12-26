@@ -13,7 +13,6 @@ var clone = require('clone');
 
 
 
-
 var quiteRequire = function(path) {
 
     try {
@@ -130,7 +129,7 @@ exports.quiteRequire = quiteRequire;
 exports.safeRequire = safeRequire;
 exports.checkErr = checkErr;
 exports.invalidate = invalidate;
-
+exports.resetEnv = resetEnv;
 
 /*set get Attr*/
 exports.setAttr = setAttr;

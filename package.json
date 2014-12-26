@@ -1,52 +1,54 @@
 {
-  "name": "zeta",
-  "version": "0.2.0",
-  "description": "Write node web app in an angular and unexpress way",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "mocha"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/BenBBear/Zeta"
-  },
-  "author": {
-    "name": "Xinyu Zhang",
-    "email": "beviszhang1993@gmail.com"
-  },
-  "license": "MIT",
-  "keywords": [
-    "web",
-    "http",
-    "module",
-    "zeta",
-    "framework",
-    "angular",
-    "router"
-  ],
-  "bugs": {
-    "url": "https://github.com/BenBBear/Zeta/issues"
-  },
-  "homepage": "https://github.com/BenBBear/Zeta",
-  "dependencies": {
-    "cli-color": "^0.3.2",
-    "clone": "^0.1.19",
-    "cookie": "^0.1.2",
-    "deep-equal": "^0.2.1",
-    "formidable": "^1.0.16",
-    "mime": "^1.2.11",
-    "swig": "^1.4.2",
-    "walk": "^2.3.4"
-  },
-  "devDependencies": {
-    "chai": "^1.10.0",
-    "coveralls": "^2.11.2",
-    "mocha": "^2.0.1",
-    "mocha-lcov-reporter": "0.0.1",
-    "mute": "^1.0.0",
-    "supertest": "^0.15.0"
-  }
+    "name": "zeta",
+    "version": "0.2.0",
+    "description": "Write node web app in an angular and unexpress way",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "gulp test "
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/BenBBear/Zeta"
+    },
+    "author": {
+        "name": "Xinyu Zhang",
+        "email": "beviszhang1993@gmail.com"
+    },
+    "license": "MIT",
+    "keywords": [
+        "web",
+        "http",
+        "module",
+        "zeta",
+        "framework",
+        "angular",
+        "router"
+    ],
+    "bugs": {
+        "url": "https://github.com/BenBBear/Zeta/issues"
+    },
+    "homepage": "https://github.com/BenBBear/Zeta",
+    "dependencies": {
+        "cli-color": "*",
+        "clone": "^0.2.0",
+        "cookie": "*",
+        "deep-equal": "*",
+        "formidable": "*",
+        "mime": "*",
+        "swig": "*",
+        "walk": "*"
+    },
+    "devDependencies": {
+        "chai": "*",
+        "coveralls": "*",
+        "gulp": "^3.8.10",
+        "gulp-istanbul": "^0.5.0",
+        "gulp-mocha": "^2.0.0",
+        "mocha": "*",
+        "mocha-lcov-reporter": "*",
+        "supertest": "*"
+    }
 }
