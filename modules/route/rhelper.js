@@ -21,12 +21,12 @@ var methods = require('../../util/config.js').methods,
 
 
 var server = function() {
-    var lrt = require('./router');
-    myUtil.invalidate(__dirname + '/router/index.js');
     if (this.save.server && !arguments[0]) {
         print.cacheServer();
         return this.save.server;
     }
+    var lrt = require('./router');
+    myUtil.invalidate(__dirname + '/router/index.js');
     print.mainOk(this);
     print.loading('start to prepare your server.');
     print.options(this.c.options);

@@ -118,11 +118,18 @@ var init = function(m) {
                 break;
             case 2:
                 myUtil.setAttr(this.options, attrStack, val);
+                var opt = this.options;
+                for (var i = 0; i < this._nspstack.length; i++) {
+                    opt[this._nspstack[i]]._isNamespace = true;
+                    opt = opt[this._nspstack[i]];
+                }
                 rt = this;
                 break;
             default:
                 rt = this;
         }
+
+
         return rt;
     };
 

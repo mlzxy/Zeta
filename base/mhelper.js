@@ -125,7 +125,7 @@ var resetEnv = function(name) {
 
 function updateOptions(a, b) {
     for (var v in b) {
-        if (myUtil.isObject(b[v])) {
+        if (myUtil.isObject(b[v]) && b[v]._isNamespace) {
             a[v] = a[v] || {};
             updateOptions(a[v], b[v]);
         } else
