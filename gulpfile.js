@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
-var testsrc = ['./test/base/*.js', './test/base/Module/testModule.js'];
+var testsrc = ['./test/base/*.js',
+    './test/base/Module/testModule.js',
+    './test/requestMethods/*.js'];
 
 
 // gulp.task('test', [ // 'testBase',
@@ -10,7 +12,7 @@ var testsrc = ['./test/base/*.js', './test/base/Module/testModule.js'];
 // ]);
 
 
-gulp.task('req.method.test',function(){
-    gulp.src('./test/requestMethods/*.js').
+gulp.task('test',function(){
+    gulp.src(testsrc).
         pipe(mocha());
 });
