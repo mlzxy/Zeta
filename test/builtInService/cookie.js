@@ -125,7 +125,7 @@ describe('$cookie',function(){
         });
     });
     describe('.val(key,value,opt)',function(){
-        it('should add options for cookie',function(done){
+        it('should init options for cookie',function(done){
             demo.h('h0',function($scope,$cookie){
                 $cookie.val('user','bevis',{
                     'maxAge':'10000',
@@ -139,6 +139,28 @@ describe('$cookie',function(){
                 get('/user').
                 expect(200).
                 expect('set-cookie','user=bevis; Max-Age=10000; Path=/user',done);
+        });
+        it('should not merge options',function(done){
+            demo.h('h0',function($scope,$cookie){
+                $cookie.val('user','bevis',{
+                    'maxAge':'10000',
+                    'path':'/user'
+                });
+                $cookie.val('user','bevis',{
+                    'maxAge':10000
+                });
+                $cookie.write($scope.res);
+                $scope.res.writeHead(200,{'Content-Type':'text/plain'});
+                $scope.res.end();
+            });
+            request(demo.server(true)).
+                get('/user').
+                expect(200).
+                end(function(err,res){
+                if(err) done(err);
+                res.headers['set-cookie'][0].should.not.include('Path');
+                done();
+            });
         });
     });
     describe('.val(key,vakue,opt,opt_val)',function(){
