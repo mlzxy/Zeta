@@ -39,6 +39,26 @@ describe('define handler',function(done){
             expect(200).
             expect('addon','hello',done);
     });
+    it('should use provider and factory successfully',function(done){
+        demo.provider('$num',{
+            value:0
+        });
+        demo.factory('$plus',function(){
+            return function(val){
+                return ++val;
+            };
+        });
+        demo.handler('h0',function($scope,$num,$plus){
+            var cou=$plus($num.value);
+            $scope.res.writeHead(200,{'Content-Type':'text/plain'});
+            $scope.res.write(cou.toString());
+            $scope.res.end();
+        });
+        demo.get('/','h0');
+        request(demo.server(true)).
+            get('/').
+            expect('1',done);
+    });
     it('should cover the previous one',function(done){
         demo.handler('h1',function($scope){
             $scope.res.writeHead(200,{'Content-Type':'text/plain'});
