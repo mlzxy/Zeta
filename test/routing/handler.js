@@ -39,6 +39,24 @@ describe('define handler',function(done){
             expect(200).
             expect('addon','hello',done);
     });
+    it('should has $scope as its first arg',function(done){
+        demo.handler('h0',function($wel,$scope){
+            $scope.res.writeHead(200,{'Content-Type':'text/plain'});
+            $scope.res.write('wow');
+            $scope.res.end();
+        });
+        demo.get('/','h0');
+        try{
+            request(demo.server(true)).
+                get('/').
+                expect('wow',done);
+        }
+        catch(err){
+            console.log(err);
+            err.message.should.equal('Found handler: h0 that do not take $scope as its first argument');
+            done();
+        }
+    });
     it('should use provider and factory successfully',function(done){
         demo.provider('$num',{
             value:0

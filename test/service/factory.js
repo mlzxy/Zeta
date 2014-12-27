@@ -125,6 +125,29 @@ describe('demo.factory with service cache',function(){
             get('/use').
             expect('3',done);
     });
+    it('should have $scope as its first arg when define a factory',function(done){
+        demo.factory('$arg',function($wel,$scope){
+            return function(){
+                return $scope.content;
+            };
+        });
+        demo.h('h0',function($scope,$arg){
+            $scope.content='wel';
+            $scope.res.writeHead(200,{'Content-Type':'text/plain'});
+            $scope.res.write($arg());
+            $scope.res.end();
+        });
+        demo.get('/','h0');
+        try{
+            request(demo.server(true)).
+                get('/').
+                expect('wel');
+        }
+        catch(err){
+            err.message.should.include('argument');
+            done();
+        }
+    });
 });
 
 describe('app.factory without service cache',function(){
@@ -242,6 +265,29 @@ describe('app.factory without service cache',function(){
         request(app.server(true)).
             get('/use').
             expect('3',done);
+    });
+    it('should have $scope as its first arg when define a factory',function(done){
+        app.factory('$arg',function($wel,$scope){
+            return function(){
+                return $scope.content;
+            };
+        });
+        app.h('h0',function($scope,$arg){
+            $scope.content='wel';
+            $scope.res.writeHead(200,{'Content-Type':'text/plain'});
+            $scope.res.write($arg());
+            $scope.res.end();
+        });
+        app.get('/','h0');
+        try{
+            request(app.server(true)).
+                get('/').
+                expect('wel');
+        }
+        catch(err){
+            err.message.should.include('argument');
+            done();
+        }
     });
 });
 
