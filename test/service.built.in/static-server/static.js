@@ -4,6 +4,7 @@ var Zeta=require('../../../'),
     should=require('chai').should();
 demo.config('root',__dirname);
 demo.config('public',__dirname+'/public');
+demo.config('circleCheck',false);
 demo.config.of('built-in').of('static-server').val('indexFile',['.html','.md']);
 demo.load();
 demo.any('static');
@@ -95,6 +96,21 @@ describe('service.built-in.static-server',function(){
             request(demo.server(true)).
                 get('/md').
                 expect(404,done);
+        });
+    });
+    describe('search priority should be consistent with the order they config',function(){
+        it('should get html file when index.html & index.md exists at the same time',function(done){
+            request(demo.server()).
+                get('/priority').
+                expect('html\n',done);
+        });
+        it('should get md instead',function(done){
+            demo.config.of('built-in').of('static-server').val('indexFile',['.md','.html']);
+            demo.l();
+            demo.any('static');
+            request(demo.server()).
+                get('/priority').
+                expect('md\n',done);
         });
     });
 });
