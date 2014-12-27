@@ -72,28 +72,21 @@ describe('demo.factory with service cache',function(){
     });
     it('should get a new one for every request',function(done){
         demo.handler('h3',function($scope,$sayhi){
-            $sayhi.content='wow';
-            $scope.res.writeHead(200,{'Content-Type':'text/plain'});
-            $scope.res.write($sayhi.content);
-            $scope.res.end();
+           $sayhi.content='wow';
+           $scope.res.writeHead(200,{'Content-Type':'text/plain'});
+           $scope.res.write($sayhi.content);
+           $scope.res.end();
         });
         demo.get('/boot','h3');
         request(demo.server(true)).
             get('/boot').
-            expect(200).
             end(function(err,res){
-                if(err) done(err);
-                res.text.should.equal('wow');
-            });
-        request(demo.server()).
-            get('/foo').
-            expect(200).
-            end(function(err,res){
-                if(err) done(err);
-                res.text.should.equal('hi,world');
-                done();
-            });
-
+            if(err) done(err);
+            res.text.should.equal('wow');
+            request(demo.server()).
+                get('/foo').
+                expect('hi,world',done);
+        });
     });
     it('should cover the previous one',function(){
         demo.factory('$sayhi',function(){
@@ -197,28 +190,21 @@ describe('app.factory without service cache',function(){
     });
     it('should get a new one for every request',function(done){
         app.handler('h3',function($scope,$sayhi){
-            $sayhi.content='wow';
-            $scope.res.writeHead(200,{'Content-Type':'text/plain'});
-            $scope.res.write($sayhi.content);
-            $scope.res.end();
+           $sayhi.content='wow';
+           $scope.res.writeHead(200,{'Content-Type':'text/plain'});
+           $scope.res.write($sayhi.content);
+           $scope.res.end();
         });
         app.get('/boot','h3');
         request(app.server(true)).
             get('/boot').
-            expect(200).
             end(function(err,res){
-                if(err) done(err);
-                res.text.should.equal('wow');
-            });
-        request(app.server()).
-            get('/foo').
-            expect(200).
-            end(function(err,res){
-                if(err) done(err);
-                res.text.should.equal('hi,world');
-                done();
-            });
-
+            if(err) done(err);
+            res.text.should.equal('wow');
+            request(app.server()).
+                get('/foo').
+                expect('hi,world',done);
+        });
     });
     it('should cover the previous one',function(){
         app.factory('$sayhi',function(){

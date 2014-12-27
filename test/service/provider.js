@@ -67,14 +67,10 @@ describe('demo.provider with service cache',function(){
             end(function(err,res){
                 if(err) done(err);
                 res.text.should.equal('wow');
-            });
-        request(demo.server()).
-            get('/foo').
-            expect(200).
-            end(function(err,res){
-                if(err) done(err);
-                res.text.should.equal('wow');
-                done();
+                request(demo.server()).
+                    get('/foo').
+                    expect(200).
+                    expect('wow',done);
             });
     });
     it('should cover the previous one',function(){
@@ -174,14 +170,10 @@ describe('app.provider without service cache',function(){
             end(function(err,res){
                 if(err) done(err);
                 res.text.should.equal('wow');
-            });
-        request(app.server()).
-            get('/foo').
-            expect(200).
-            end(function(err,res){
-                if(err) done(err);
-                res.text.should.equal('wow');
-                done();
+                request(app.server()).
+                    get('/foo').
+                    expect(200).
+                    expect('wow',done);
             });
     });
     it('should cover the previous one',function(){
