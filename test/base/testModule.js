@@ -18,13 +18,18 @@ m.config.of('ns').of('ns').val('v1', 1).val('v2', 2);
 
 conf.ns = {};
 conf.ns.ns = {};
-m.load();
-
-
 m.l0 = true;
 
 
+
+
+
+
 describe('module inheritation check', function() {
+    before(function() {
+        m.load();
+    });
+
     describe('the child module', function() {
         it('should inherit the attributes from all of its dependents', function() {
             assert.isTrue(m.l0 && m.l1a && m.l1b && m.l2a && m.l2b && m.l2c && m.l2d);

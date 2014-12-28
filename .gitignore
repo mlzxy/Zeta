@@ -3,7 +3,7 @@
 .tern*
 .#*
 node_modules/
-test/node_modules/
+!test/base/node_modules
 coverage/
 *.log
 !.gitignore
