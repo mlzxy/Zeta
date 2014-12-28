@@ -5,7 +5,21 @@
  */
 
 //Dependencies
-var Routes = require('./routes');
+
+//Methods
+var Methods = ['GET', 'POST', 'PUT', 'HEAD', 'DELETE', 'OPTIONS', 'TRACE', 'CONNECT'];
+
+//Routing hashtable
+var Table = {};
+
+//Build the table
+for (var i = 0; i < Methods.length; i++) {
+    Table[Methods[i]] = {
+        staticRoutes: {},
+        dynamicRoutes: {}
+    };
+}
+var Routes = Table;
 
 //Parse a route and put it into the routing table
 function Parser(pathname, handler) {
@@ -248,5 +262,6 @@ function splitPath(path) {
 
 //Exports
 Parser.trimPathname = trimPathname;
+Parser.Table = Table;
 Parser.url = urlParse;
 module.exports = Parser;

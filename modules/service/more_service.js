@@ -78,7 +78,6 @@ m.factory('$cookie', cookie);
 
 
 /*static server*/
-
 var indexFile = m.config.of('built-in').of('static-server').val('indexFile');
 var processFun = {};
 var idxEE = new emt();
