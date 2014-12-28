@@ -49,6 +49,6 @@
         "gulp-mocha": "^2.0.0",
         "mocha": "*",
         "mocha-lcov-reporter": "*",
-        "supertest": "*"
+        "supertest": "^0.15.0"
     }
 }
