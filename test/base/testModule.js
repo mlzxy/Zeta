@@ -1,4 +1,4 @@
-var Zeta = require('../../../'),
+var Zeta = require('../../'),
     chai = require('chai'),
     assert = chai.assert,
     expect = chai.expect,
@@ -28,6 +28,10 @@ describe('module inheritation check', function() {
     describe('the child module', function() {
         it('should inherit the attributes from all of its dependents', function() {
             assert.isTrue(m.l0 && m.l1a && m.l1b && m.l2a && m.l2b && m.l2c && m.l2d);
+        });
+
+        it('should inherit attributes that set in the dependents\' init function', function() {
+            assert.isTrue(m.il1a && m.il1b && m.il2a && m.il2b && m.il2c && m.il2d);
         });
 
         it('should inherit the providers from all of its dependents', function() {

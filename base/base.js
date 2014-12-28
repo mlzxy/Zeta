@@ -66,10 +66,15 @@ var load = function() {
 };
 
 var init = function(m) {
+    m._init = function() {};
     m.init = function() {
+        this._init();
         return this;
     };
-    m.i = m.init;
+    m.setInit = function(f) {
+        this._init = f;
+        return this;
+    };
     m.load = load;
     m.l = load;
     m.config = function(name, val) {
@@ -91,15 +96,14 @@ var init = function(m) {
         return rt;
     };
     m.c = m.config;
-    m.config.options = new options.initOptions();
+
 
 
     m.config.of = function(space) {
         this.of._nspstack = [space];
         return this.of;
     };
-    m.config.of.options = m.config.options;
-    m.config.of._nspstack = [];
+
 
     m.config.of.of = function(space) {
         this._nspstack.push(space);
@@ -133,6 +137,10 @@ var init = function(m) {
         return rt;
     };
 
+    m.config.options = {};
+    m.config.of.options = m.config.options;
+    options.initOptions(m);
+    m.config.of._nspstack = [];
     return m;
 };
 

@@ -1,4 +1,4 @@
-var Zeta = require('../../../'),
+var Zeta = require('../../'),
     chai = require('chai'),
     assert = chai.assert,
     expect = chai.expect,

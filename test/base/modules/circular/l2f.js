@@ -1,4 +1,4 @@
-var Zeta = require('../../../../../'),
+var Zeta = require('../../../../'),
     conf = require('../../conf.js'),
     m = Zeta.module('l2f', ['l2e', 'l2g']);
 
@@ -34,4 +34,9 @@ m.factory('l2f.f', function() {
     $scope.res.end(404);
 })
 
-.get('/l2f', 'l2f.h');
+.get('/l2f', 'l2f.h')
+
+
+.setInit(function() {
+    this.il2f = true;
+});

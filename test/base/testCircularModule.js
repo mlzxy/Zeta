@@ -1,4 +1,4 @@
-var Zeta = require('../../../'),
+var Zeta = require('../../'),
     chai = require('chai'),
     assert = chai.assert,
     expect = chai.expect,
@@ -41,6 +41,11 @@ describe('circular dependency check2', function() {
         it('should inherit the attributes from all of its dependents', function() {
             assert.isTrue(m.l0c && m.l1c && m.l2e && m.l2f && m.l2g);
         });
+
+        it('should inherit the attributes that set in init function in all of its dependent', function() {
+            assert.isTrue(m.il1c && m.il2e && m.il2f && m.il2g);
+        });
+
         it('should inherit the providers from all of its dependents', function() {
             assert.isDefined(m.save.provider['l1c.p']);
             assert.isDefined(m.save.provider['l2e.p']);

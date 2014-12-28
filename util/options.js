@@ -7,19 +7,19 @@ var defalta = {};
 
 
 
-function initOptions() {
-    this.circleCheck = true;
-    this.root = process.cwd();
-    this.public = "public";
-    this.debug = true;
-    this.serviceCache = true;
-    this.loadinfo = false;
-    this.guard = false;
-    this.globalDomain = false;
-    this['built-in'] = {};
-    this['built-in']['static-server'] = {};
-    this['built-in']['static-server'].indexFile = ['.html', '.htm', '.md'];
+function initOptions(m) {
+
+    m.config('circleCheck', false);
+    m.config('root', process.cwd());
+    m.config('public', "public");
+    m.config('debug', true);
+    m.config('serviceCache', true);
+    m.config('loadinfo', false);
+    m.config('guard', false);
+    m.config('globalDomain', false);
+    m.config.of('built-in').of('static-server').val('indexFile', ['.html', '.htm', '.md']);
 }
+
 
 
 
@@ -41,5 +41,7 @@ var removeDefault = function(opt) {
 /*for default options*/
 exports.initOptions = initOptions;
 exports.removeDefault = removeDefault;
+
+
 exports.circleCheck = 'circleCheck';
 exports.serviceCache = 'serviceCache';

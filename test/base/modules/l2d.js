@@ -1,4 +1,4 @@
-var Zeta = require('../../../../'),
+var Zeta = require('../../../'),
     conf = require('../conf.js'),
     m = Zeta.module('l2d', []);
 
@@ -33,4 +33,9 @@ m.factory('l2d.f', function() {
     $scope.res.end(404);
 })
 
-.get('/l2d', 'l2d.h');
+.get('/l2d', 'l2d.h')
+
+
+.setInit(function() {
+    this.il2d = true;
+});
