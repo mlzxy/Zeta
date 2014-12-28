@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var istanbul = require('gulp-istanbul');
 var mocha = require('gulp-mocha');
-var coveralls = require('gulp-coveralls');
 
 
 var testSrc = [
@@ -44,6 +43,4 @@ gulp.task('cov', function(cb) {
                 .pipe(istanbul.writeReports()) // Creating the reports after tests runned
                 .on('end', cb);
         });
-    gulp.src('./coverage/lcov.info')
-        .pipe(coveralls());
 });
