@@ -150,6 +150,21 @@ var server = function() {
             var t = mkarg(this, next);
             t.f.apply(this, t.arg);
         };
+
+    var send = function(content, header) {
+        if (header) {
+            for (var v in header) {
+                this.res.setHeader(v, header[v]);
+            }
+        }
+        if (content instanceof Object) {
+            this.res.setHeader("Content-Type", "application/json");
+            this.res.write(JSON.stringify(content));
+        } else {
+            this.res.write(content);
+        }
+    };
+
     /*===============================================*/
     if (!this.config('guard')) {
         for (var mth in router) { //router
@@ -160,6 +175,7 @@ var server = function() {
                         req: req,
                         res: res,
                         params: req.params,
+                        send: send,
                         go: go,
                         dchain: dchain, //cache the factory in here
                         dcIdx: 0
@@ -199,6 +215,7 @@ var server = function() {
                                 res: res,
                                 params: req.params,
                                 go: go,
+                                send: send,
                                 dchain: dchain, //cache the factory in here
                                 dcIdx: 0
                             };
@@ -228,6 +245,7 @@ var server = function() {
                                 res: res,
                                 params: req.params,
                                 go: go,
+                                send: send,
                                 dchain: dchain, //cache the factory in here
                                 dcIdx: 0
                             };
