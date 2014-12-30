@@ -163,7 +163,14 @@ var server = function() {
         } else {
             this.res.write(content);
         }
+        return this;
     };
+
+    var end = function(sb) {
+        this.res.end(sb);
+        return this;
+    };
+
 
     /*===============================================*/
     if (!this.config('guard')) {
@@ -176,6 +183,7 @@ var server = function() {
                         res: res,
                         params: req.params,
                         send: send,
+                        end: end,
                         go: go,
                         dchain: dchain, //cache the factory in here
                         dcIdx: 0
@@ -186,8 +194,7 @@ var server = function() {
                 pth == 'any' ? lrt.any(foo) : lrt[mth](pth, foo);
             }
         }
-    } else { //
-        //if use guard for error handling, need collect more info and use different routing fun
+    } else {
         /*===================error handling function =============================*/
         var err_handler_default = function($scope) {
             print.httpErr($scope.res.info);
@@ -216,6 +223,7 @@ var server = function() {
                                 params: req.params,
                                 go: go,
                                 send: send,
+                                end: end,
                                 dchain: dchain, //cache the factory in here
                                 dcIdx: 0
                             };
@@ -245,6 +253,7 @@ var server = function() {
                                 res: res,
                                 params: req.params,
                                 go: go,
+                                end: end,
                                 send: send,
                                 dchain: dchain, //cache the factory in here
                                 dcIdx: 0
