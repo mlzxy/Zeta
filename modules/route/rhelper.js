@@ -20,6 +20,10 @@ var methods = require('../../util/config.js').methods,
 
 
 
+
+
+
+
 var server = function() {
     if (this.save.server && !arguments[0]) {
         print.cacheServer();
@@ -151,12 +155,7 @@ var server = function() {
             t.f.apply(this, t.arg);
         };
 
-    var send = function(content, header) {
-        if (header) {
-            for (var v in header) {
-                this.res.setHeader(v, header[v]);
-            }
-        }
+    var send = function(content) {
         if (content instanceof Object) {
             this.res.setHeader("Content-Type", "application/json");
             this.res.write(JSON.stringify(content));
@@ -168,8 +167,19 @@ var server = function() {
 
     var end = function(sb) {
         this.res.end(sb);
+    };
+
+    var header = function(obj) {
+        if (obj instanceof Object) {
+            for (var v in obj)
+                this.res.setHeader(v, obj[v]);
+        } else {
+            for (var i = 0; i < arguments.length - 1; i += 2)
+                this.res.setHeader(arguments[i], arguments[i + 1]);
+        }
         return this;
     };
+
 
 
     /*===============================================*/
@@ -183,6 +193,7 @@ var server = function() {
                         res: res,
                         params: req.params,
                         send: send,
+                        header: header,
                         end: end,
                         go: go,
                         dchain: dchain, //cache the factory in here
@@ -223,6 +234,7 @@ var server = function() {
                                 params: req.params,
                                 go: go,
                                 send: send,
+                                header: header,
                                 end: end,
                                 dchain: dchain, //cache the factory in here
                                 dcIdx: 0
@@ -254,6 +266,7 @@ var server = function() {
                                 params: req.params,
                                 go: go,
                                 end: end,
+                                header: header,
                                 send: send,
                                 dchain: dchain, //cache the factory in here
                                 dcIdx: 0

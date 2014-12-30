@@ -17,11 +17,17 @@ demo.get('/json', function($scope) {
     }).end();
 });
 
-demo.get('/setHeader', function($scope) {
-    $scope.send('hello world', {
+demo.get('/setHeader-1', function($scope) {
+    $scope.header({
         "Content-Type": "text/html",
         "Set-Cookie": ["user=xyzhang"]
-    }).end();
+    }).send('hello world').end();
+});
+
+demo.get('/setHeader-2', function($scope) {
+    $scope.header("Content-Type", "text/html", "Set-Cookie", ["user=xyzhang"])
+        .send('hello world')
+        .end();
 });
 
 demo.get('/end', function($scope) {
@@ -54,10 +60,24 @@ describe('$scope', function() {
         });
     });
 
-    describe('.send(**, header)', function() {
+    describe('.header({x:y})', function() {
         it('should send stuff, and set http-header accroding to the header', function(done) {
             request(demo.server())
-                .get('/setHeader')
+                .get('/setHeader-1')
+                .expect("content-type", "text/html")
+                .expect('set-cookie', 'user=xyzhang')
+                .end(function(err, res) {
+                    res.text.should.include('hello world');
+                    done();
+                });
+        });
+    });
+
+
+    describe('.header(x,y)', function() {
+        it('should send stuff, and set http-header accroding to the header', function(done) {
+            request(demo.server())
+                .get('/setHeader-2')
                 .expect("content-type", "text/html")
                 .expect('set-cookie', 'user=xyzhang')
                 .end(function(err, res) {
