@@ -80,7 +80,13 @@ var loading = function(m) {
 
 
 var goNext = function(name) {
-    console.log('[' + clc.cyan('handler') + ']' + mtab(1) + "   --- {" + clc.bold.blue(name) + "} ---");
+    if (myUtil.isString(name))
+        console.log('[' + clc.cyan('handler') + ']' + mtab(1) + "   --- {" + clc.bold.blue(name) + "} ---");
+    else {
+        console.log('[' + clc.cyan('handler') + ']' + mtab(1) + clc.bold.magentaBright("   ===== Begin ====="));
+        console.log(clc.bold.blue(name));
+        console.log('[' + clc.cyan('handler') + ']' + mtab(1) + clc.bold.magentaBright("   ===== End ====="));
+    }
 };
 
 var ok = function(msg) {
