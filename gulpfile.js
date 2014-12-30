@@ -15,7 +15,8 @@ var testSrc = [
     './test/error.handle/guard.with.syntax.js',
     './test/error.handle/sync.error.js',
     './test/service.built.in/static-server/static.js',
-    './test/service/*.js'
+    './test/service/*.js',
+    './test/service.built.in/$scope/index.js'
 ];
 
 var zetaSrc = [
