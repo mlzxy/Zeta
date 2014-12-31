@@ -18,10 +18,13 @@ demo.get('/json', function($scope) {
 });
 
 demo.get('/setHeader-1', function($scope) {
-    $scope.header({
-        "Content-Type": "text/html",
-        "Set-Cookie": ["user=xyzhang"]
-    }).send('hello world').end();
+    $scope
+        .header({
+            "Content-Type": "text/html",
+            "Set-Cookie": ["user=xyzhang"]
+        })
+        .send('hello world')
+        .end();
 });
 
 demo.get('/setHeader-2', function($scope) {
