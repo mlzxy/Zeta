@@ -106,9 +106,8 @@ for (var i = 0; i < indexFile.length; i++) {
                         var pfun = processFun[indexFile[eidx]] || function(x) {
                             return x;
                         };
-                        // var contentType = mime.lookup(realPath);
                         response.writeHead(200, {
-                            'Content-Type': 'text/html'
+                            'Content-Type': mime.lookup(filename)
                         });
                         response.write(pfun(file), "binary");
                         response.end();
@@ -148,7 +147,6 @@ var sendFile = function(realPath, pathname, response) {
             fs.readFile(realPath, "binary", function(err, file) {
                 if (err) {
                     if (err.code == "EISDIR") {
-                        debugger;
                         if (realPath.endsWith('/'))
                             sendIndex(realPath, pathname, response);
                         else
@@ -160,9 +158,9 @@ var sendFile = function(realPath, pathname, response) {
                         response.end(JSON.stringify(err));
                     }
                 } else {
-                    var contentType = mime.lookup(realPath);
+
                     response.writeHead(200, {
-                        'Content-Type': contentType
+                        'Content-Type': mime.lookup(realPath)
                     });
                     response.write(file, "binary");
                     response.end();

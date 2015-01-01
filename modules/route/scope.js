@@ -1,18 +1,19 @@
 var swig = require('swig'),
-    fs = require('fs');
+    fs = require('fs'),
+    mime = require('mime');
 
 var cache = {},
     cacheTime = {},
-    public;
+    cacheMime = {};
 
 
 var render = function(file, json) {
     var self = this,
-        path = public + file;
+        path = this._public + file;
     if (cacheTime[file]) {
         fs.stat(path, function(err, stat) {
             if (err)
-                self.status(500).end('Server Internal Error');
+                self.status(500).end('Server Internal Error: ' + JSON.stringify(err));
             else {
                 if (stat.mtime == cacheTime[file]) {
                     self.end(swig.render(cache[file], {
@@ -21,11 +22,12 @@ var render = function(file, json) {
                 } else {
                     fs.readFile(path, function(err, data) {
                         if (err)
-                            self.status(500).end('Server Internal Error');
+                            self.status(500).end('Server Internal Error: ' + JSON.stringify(err));
                         else {
                             cacheTime[file] = stat.mtime;
-                            cache[file] = data;
-                            self.end(swig.render(data, {
+                            cacheMime[file] = mime.lookup(path);
+                            cache[file] = data instanceof Buffer ? data.toString() : data;
+                            self.end(swig.render(cache[file], {
                                 locals: json
                             }));
                         }
@@ -36,15 +38,16 @@ var render = function(file, json) {
     } else {
         fs.stat(path, function(err, stat) {
             if (err)
-                self.status(500).end('Server Internal Error');
+                self.status(500).end('Server Internal Error: ' + JSON.stringify(err));
             else {
                 fs.readFile(path, function(err, data) {
                     if (err)
-                        self.status(500).end('Server Internal Error');
+                        self.status(500).end('Server Internal Error: ' + JSON.stringify(err));
                     else {
                         cacheTime[file] = stat.mtime;
-                        cache[file] = data;
-                        self.end(swig.render(data, {
+                        cacheMime[file] = mime.lookup(path);
+                        cache[file] = data instanceof Buffer ? data.toString() : data;
+                        self.end(swig.render(cache[file], {
                             locals: json
                         }));
                     }
@@ -52,26 +55,30 @@ var render = function(file, json) {
             }
         });
     }
+    return this;
 };
 
 var sendFile = function(file) {
     var self = this,
-        path = public + file;
+        path = this._public + file;
     if (cacheTime[file]) {
         fs.stat(path, function(err, stat) {
             if (err)
-                self.status(500).end('Server Internal Error');
+                self.status(500).end('Server Internal Error: ' + JSON.stringify(err));
             else {
                 if (stat.mtime == cacheTime[file]) {
-                    self.end(cache[file]);
+                    self.head('Content-Type', cacheMime[file])
+                        .end(cache[file]);
                 } else {
                     fs.readFile(path, function(err, data) {
                         if (err)
-                            self.status(500).end('Server Internal Error');
+                            self.status(500).end('Server Internal Error: ' + JSON.stringify(err));
                         else {
                             cacheTime[file] = stat.mtime;
+                            cacheMime[file] = mime.lookup(path);
                             cache[file] = data;
-                            self.end(data);
+                            self.head('Content-Type', cacheMime[file])
+                                .end(cache[file]);
                         }
                     });
                 }
@@ -80,23 +87,25 @@ var sendFile = function(file) {
     } else {
         fs.stat(path, function(err, stat) {
             if (err)
-                self.status(500).end('Server Internal Error');
+                self.status(500).end('Server Internal Error: ' + JSON.stringify(err));
             else {
                 fs.readFile(path, function(err, data) {
                     if (err)
-                        self.status(500).end('Server Internal Error');
+                        self.status(500).end('Server Internal Error: ' + JSON.stringify(err));
                     else {
                         cacheTime[file] = stat.mtime;
+                        cacheMime[file] = mime.lookup(path);
                         cache[file] = data;
-                        self.end(data);
+                        self.head('Content-Type', cacheMime[file])
+                            .end(cache[file]);
                     }
                 });
             }
         });
     }
+    return this;
 };
 
 
 exports.render = render;
 exports.sendFile = sendFile;
-exports.public = public;

@@ -220,9 +220,9 @@ m.scope.reserve = m.scope.resv = function() {
     return this;
 };
 
-var scope = require('./scope.js');
-scope.public = m.config('public');
 
+
+var scope = require('./scope.js');
 
 m.scope.set('render', scope.render);
 m.scope.set('sendFile', scope.sendFile);

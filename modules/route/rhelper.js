@@ -167,6 +167,7 @@ var server = function() {
         json = function(obj) {
             this.setHeader("Content-Type", "application/json");
             this.write(JSON.stringify(obj));
+            return this;
         };
 
     this.scope
@@ -185,6 +186,7 @@ var server = function() {
         .resv('res', 'req', '_cacheService', 'params');
 
 
+    var public = this.config('public');
 
     /*===============================================*/
     if (!this.config('guard')) {
@@ -194,6 +196,7 @@ var server = function() {
                 var foo = function(fstate, dchain, req, res) {
                     res.res = res;
                     res.req = req;
+                    res._public = public;
                     res.dchain = dchain;
                     res.params = req.params;
                     res._cacheService = {};
@@ -228,6 +231,7 @@ var server = function() {
                             d.add(gdomain);
                             res.res = res;
                             res.req = req;
+                            res._public = public;
                             res.dchain = dchain;
                             res.params = req.params;
                             res._cacheService = {};
@@ -254,6 +258,7 @@ var server = function() {
                             d.add(res);
                             res.res = res;
                             res.req = req;
+                            res._public = public;
                             res.dchain = dchain;
                             res.params = req.params;
                             res._cacheService = {};
