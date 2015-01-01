@@ -23,6 +23,7 @@ describe('circular dependency check1', function() {
     it('should throw error if circleCheck is true', function() {
         try {
             m.load();
+            throw new Error();
         } catch (e) {
             e.message.toLowerCase().should.include('circular');
         }
