@@ -155,37 +155,35 @@ var server = function() {
             t.f.apply(this, t.arg);
         };
 
-    var __proto__res = http.ServerResponse.prototype;
-    __proto__res.dcIdx = 0;
-    __proto__res.go = go;
-    __proto__res.send = function(content) {
-        if (content instanceof Object) {
+    var send = function(content) {
+            if (content instanceof Object) {
+                this.setHeader("Content-Type", "application/json");
+                this.write(JSON.stringify(content));
+            } else {
+                this.write(content);
+            }
+            return this;
+        },
+        json = function(obj) {
             this.setHeader("Content-Type", "application/json");
-            this.write(JSON.stringify(content));
-        } else {
-            this.write(content);
-        }
-        return this;
-    };
-    __proto__res.json = function(obj) {
-        this.setHeader("Content-Type", "application/json");
-        this.write(JSON.stringify(obj));
-    };
-    __proto__res.status = function(code) {
-        this.statusCode = code;
-        return this;
-    };
+            this.write(JSON.stringify(obj));
+        };
 
-    __proto__res.head = function(name, val) {
-        this.setHeader(name, val);
-        return this;
-    };
+    this.scope
+        .set('dcIdx', 0)
+        .set('go', go)
+        .set('send', send)
+        .set('json', json)
+        .set('status', function(code) {
+            this.statusCode = code;
+            return this;
+        })
+        .set('head', function(name, val) {
+            this.setHeader(name, val);
+            return this;
+        })
+        .resv('res', 'req', '_cacheService', 'params');
 
-    __proto__res.res = undefined;
-    __proto__res.req = undefined;
-    __proto__res.dchain = undefined;
-    __proto__res._cacheService = undefined;
-    __proto__res.params = undefined;
 
 
     /*===============================================*/

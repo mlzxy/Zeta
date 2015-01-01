@@ -175,15 +175,7 @@ m.any = function(f) {
 /*===================above are some tedious work========================*/
 
 
-
-
-
-
-/*=================================================================================*/
-
-
-m.s = m.server = rhlp.server;
-m.app = function() {
+var app = function() {
     var port, server, t;
     if (myUtil.isNumber(arguments[0])) {
         port = arguments[0];
@@ -200,3 +192,37 @@ m.app = function() {
     server.listen(port);
     return server;
 };
+
+
+/*=================================================================================*/
+
+
+m.s = m.server = rhlp.server;
+m.app = app;
+
+
+/*======================================register into the $scope=============================================*/
+m.scope = {};
+m.scope.prototype = http.ServerResponse.prototype;
+m.scope.get = function(name) {
+    return this.prototype[name];
+};
+m.scope.set = function(name, val) {
+    this.prototype[name] = val;
+    return this;
+};
+m.scope.rm = function(name) {
+    delete this.prototype[name];
+};
+m.scope.reserve = m.scope.resv = function() {
+    for (var i = 0; i < arguments.length; i++)
+        this.prototype[arguments[i]] = undefined;
+    return this;
+};
+
+var scope = require('./scope.js');
+scope.public = m.config('public');
+
+
+m.scope.set('render', scope.render);
+m.scope.set('sendFile', scope.sendFile);

@@ -26,7 +26,7 @@ var render = function(fpath, json) {
     }
     return tpl(json);
 };
-render.renderHTML = function(string, json) {
+render.text = function(string, json) {
     return swig.render(string, {
         locals: json
     });
