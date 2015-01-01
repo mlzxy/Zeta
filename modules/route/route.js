@@ -213,6 +213,7 @@ m.scope.set = function(name, val) {
 };
 m.scope.rm = function(name) {
     delete this.prototype[name];
+    return this;
 };
 m.scope.reserve = m.scope.resv = function() {
     for (var i = 0; i < arguments.length; i++)

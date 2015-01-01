@@ -26,7 +26,7 @@ var guard,
     stack = [];
 
 gdm.on('error', function(err) {
-    print.warn('Global Domain catch error, means there is an exception thrown by your program, other than the http request and http response.');
+    print.warn('Global Domain catch error, means there is an exception thrown from places other than the http request and http response.');
     print.printErr(err);
     throw err;
 });

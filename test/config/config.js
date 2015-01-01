@@ -4,11 +4,18 @@ var Zeta = require('../../'),
     expect = chai.expect,
     should = chai.should(),
     m = Zeta.module('test.config', []);
+m.config('loadinfo', true).load();
 
 
 
 
 describe('module', function() {
+    describe('.config(loadinfo,true)', function() {
+        it('should save the loadinfo into the module', function() {
+            assert.isDefined(m.loadinfo);
+        });
+    });
+
     describe('.config()', function() {
         it('should return the options object', function() {
             m.config().should.be.equal(m.config.options);
@@ -88,7 +95,4 @@ describe('module', function() {
             });
         });
     });
-
-
-
-})
+});

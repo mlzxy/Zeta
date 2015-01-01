@@ -1,10 +1,5 @@
-# config
-- add loadinfo test
 
-
-# error handle
-
-
+# 4. error handle
 any
 
 delete
@@ -14,11 +9,3 @@ option
 post
 put
 trace
-
-还有guard(), globalDomain
-看是否能够不hurt
-
-
-
-# routing
-debug = false

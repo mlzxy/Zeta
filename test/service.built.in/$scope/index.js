@@ -4,9 +4,17 @@ var Zeta = require('../../../'),
     should = chai.should(),
     assert = chai.assert,
     demo = Zeta.module('demo', []);
+
+var __proto__res = require('http').ServerResponse.prototype;
+
 demo.config('public', __dirname + '/public');
 
 demo.load();
+
+
+
+
+
 
 demo.get('/string', function($scope) {
     $scope
@@ -57,6 +65,35 @@ demo.get('/sendFile', function($scope) {
     $scope.sendFile('/index.html');
 });
 
+
+describe('module.scope', function() {
+    describe('.set(test,hello world)', function() {
+        it('should set http.ServerResponse.prototype.test = hello world', function() {
+            demo.scope.set('test', 'hello world');
+            __proto__res.test.should.be.equal('hello world');
+        });
+    });
+    describe('.get(test)', function() {
+        it('should get http.ServerResponse.prototype.test', function() {
+            demo.scope.set('test', 'hello world');
+            __proto__res.test.should.be.equal(demo.scope.get('test'));
+        });
+    });
+    describe('.rm(test)', function() {
+        it('should rm the http.ServerResponse.prototype.test', function() {
+            demo.scope.set('test', 'hello world').rm('test');
+            assert.isUndefined(__proto__res.test);
+
+        });
+    });
+    describe('.resv(test1,test2)', function() {
+        it('should set the http.ServerResponse.prototype.test1,2 to be undefined', function() {
+            demo.scope.set('test1', 'hello world').set('test2', 'hello world').resv('test1', 'test2');
+            assert.isUndefined(__proto__res.test1);
+            assert.isUndefined(__proto__res.test2);
+        });
+    });
+});
 
 
 

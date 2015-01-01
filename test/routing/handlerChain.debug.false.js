@@ -3,7 +3,7 @@ var Zeta = require('../../'),
     request = require('supertest'),
     demo = Zeta.module('demo', []),
     should = require('chai').should();
-demo.load();
+demo.c('debug', false).load();
 describe('handler Chain', function() {
     describe('$scope.go', function() {
         it('should work when go next', function(done) {
