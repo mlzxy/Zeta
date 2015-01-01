@@ -20,6 +20,10 @@ var methods = require('../../util/config.js').methods,
 
 
 
+
+
+
+
 var server = function() {
     if (this.save.server && !arguments[0]) {
         print.cacheServer();
@@ -122,7 +126,7 @@ var server = function() {
     };
 
     var mkFactoryCache = function($scope, fatr) {
-        return $scope[fatr] || ($scope[fatr] = mkFactoryNoCache($scope, fatr));
+        return $scope._cacheService[fatr] || ($scope._cacheService[fatr] = mkFactoryNoCache($scope, fatr));
     };
 
     var mkFactory = this.config('serviceCache') ? mkFactoryCache : mkFactoryNoCache;
@@ -151,26 +155,38 @@ var server = function() {
             t.f.apply(this, t.arg);
         };
 
-    var send = function(content, header) {
-        if (header) {
-            for (var v in header) {
-                this.res.setHeader(v, header[v]);
+    var send = function(content) {
+            if (content instanceof Object) {
+                this.setHeader("Content-Type", "application/json");
+                this.write(JSON.stringify(content));
+            } else {
+                this.write(content);
             }
-        }
-        if (content instanceof Object) {
-            this.res.setHeader("Content-Type", "application/json");
-            this.res.write(JSON.stringify(content));
-        } else {
-            this.res.write(content);
-        }
-        return this;
-    };
+            return this;
+        },
+        json = function(obj) {
+            this.setHeader("Content-Type", "application/json");
+            this.write(JSON.stringify(obj));
+            return this;
+        };
 
-    var end = function(sb) {
-        this.res.end(sb);
-        return this;
-    };
+    this.scope
+        .set('dcIdx', 0)
+        .set('go', go)
+        .set('send', send)
+        .set('json', json)
+        .set('status', function(code) {
+            this.statusCode = code;
+            return this;
+        })
+        .set('head', function(name, val) {
+            this.setHeader(name, val);
+            return this;
+        })
+        .resv('res', 'req', '_cacheService', 'params');
 
+
+    var public = this.config('public');
 
     /*===============================================*/
     if (!this.config('guard')) {
@@ -178,17 +194,13 @@ var server = function() {
             var st = router[mth]; //post, get -> different hashmap of handler chain
             for (var pth in st) { //path1,path2 -> hander chain
                 var foo = function(fstate, dchain, req, res) {
-                    var $scope = {
-                        req: req,
-                        res: res,
-                        params: req.params,
-                        send: send,
-                        end: end,
-                        go: go,
-                        dchain: dchain, //cache the factory in here
-                        dcIdx: 0
-                    };
-                    $scope.go(fstate);
+                    res.res = res;
+                    res.req = req;
+                    res._public = public;
+                    res.dchain = dchain;
+                    res.params = req.params;
+                    res._cacheService = {};
+                    res.go(fstate);
                 };
                 foo = foo.bind(undefined, st[pth][0], st[pth]);
                 pth == 'any' ? lrt.any(foo) : lrt[mth](pth, foo);
@@ -197,8 +209,8 @@ var server = function() {
     } else {
         /*===================error handling function =============================*/
         var err_handler_default = function($scope) {
-            print.httpErr($scope.res.info);
-            $scope.res.end('500 Server Internal Error');
+            print.httpErr($scope.info);
+            $scope.end('500 Server Internal Error');
         };
         var err_handler_wrapper = function(eh, err) {
             err.domain.$scope.error = err;
@@ -217,21 +229,17 @@ var server = function() {
                             d.add(req);
                             d.add(res);
                             d.add(gdomain);
-                            var $scope = {
-                                req: req,
-                                res: res,
-                                params: req.params,
-                                go: go,
-                                send: send,
-                                end: end,
-                                dchain: dchain, //cache the factory in here
-                                dcIdx: 0
-                            };
-                            d.$scope = $scope;
+                            res.res = res;
+                            res.req = req;
+                            res._public = public;
+                            res.dchain = dchain;
+                            res.params = req.params;
+                            res._cacheService = {};
+                            d.$scope = res;
                             d.on('error', onErrorfun);
                             d.run(function() {
                                 gdomain.run(function() {
-                                    $scope.go(fstate);
+                                    res.go(fstate);
                                 });
                             });
                         };
@@ -248,20 +256,16 @@ var server = function() {
                             var d = domain.create();
                             d.add(req);
                             d.add(res);
-                            var $scope = {
-                                req: req,
-                                res: res,
-                                params: req.params,
-                                go: go,
-                                end: end,
-                                send: send,
-                                dchain: dchain, //cache the factory in here
-                                dcIdx: 0
-                            };
-                            d.$scope = $scope;
+                            res.res = res;
+                            res.req = req;
+                            res._public = public;
+                            res.dchain = dchain;
+                            res.params = req.params;
+                            res._cacheService = {};
+                            d.$scope = res;
                             d.on('error', e);
                             d.run(function() {
-                                $scope.go(fstate);
+                                res.go(fstate);
                             });
                         };
                     f = f.bind(undefined, s[p][0], s[p], err_handler_wrapper.bind(undefined, eh));

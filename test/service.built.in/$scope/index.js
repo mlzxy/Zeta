@@ -4,29 +4,59 @@ var Zeta = require('../../../'),
     should = chai.should(),
     assert = chai.assert,
     demo = Zeta.module('demo', []);
+demo.config('public', __dirname + '/public');
 
 demo.load();
 
 demo.get('/string', function($scope) {
-    $scope.send('hello world').end();
+    $scope
+        .send('hello world')
+        .end();
 });
 
-demo.get('/json', function($scope) {
-    $scope.send({
-        hello: 'world'
-    }).end();
+demo.get('/json-1', function($scope) {
+    $scope
+        .send({
+            hello: 'world'
+        })
+        .end();
 });
 
-demo.get('/setHeader', function($scope) {
-    $scope.send('hello world', {
-        "Content-Type": "text/html",
-        "Set-Cookie": ["user=xyzhang"]
-    }).end();
+demo.get('/json-2', function($scope) {
+    $scope
+        .json({
+            hello: 'world'
+        })
+        .end();
 });
 
-demo.get('/end', function($scope) {
-    $scope.end('hello world');
+
+demo.get('/head', function($scope) {
+    $scope
+        .head("Content-Type", "text/html")
+        .send('hello world')
+        .end();
 });
+
+
+
+demo.get('/status', function($scope) {
+    $scope
+        .status(302)
+        .end('hello world');
+});
+
+
+demo.get('/render', function($scope) {
+    $scope.render('/index.html', {
+        welcome: ':D'
+    });
+});
+
+demo.get('/sendFile', function($scope) {
+    $scope.sendFile('/index.html');
+});
+
 
 
 
@@ -45,7 +75,7 @@ describe('$scope', function() {
     describe('.send(obj)', function() {
         it('should send the JSON.stringify(obj), and set Content-Type', function(done) {
             request(demo.server())
-                .get('/json')
+                .get('/json-1')
                 .expect('content-type', 'application/json')
                 .end(function(err, res) {
                     res.body.hello.should.include('world');
@@ -54,27 +84,68 @@ describe('$scope', function() {
         });
     });
 
-    describe('.send(**, header)', function() {
-        it('should send stuff, and set http-header accroding to the header', function(done) {
+    describe('.json(obj)', function() {
+        it('should sent the JSON and set Content-type', function(done) {
             request(demo.server())
-                .get('/setHeader')
-                .expect("content-type", "text/html")
-                .expect('set-cookie', 'user=xyzhang')
+                .get('/json-2')
+                .expect('content-type', 'application/json')
                 .end(function(err, res) {
-                    res.text.should.include('hello world');
+                    res.body.hello.should.include('world');
                     done();
                 });
         });
     });
 
-    describe('.end(**)', function() {
-        it('should end this response with the string or buffer provided', function(done) {
+    describe('.head(x,y)', function() {
+        it('should set the header x to y', function(done) {
             request(demo.server())
-                .get('/end')
+                .get('/head')
+                .expect('content-type', "text/html")
+                .end(done);
+        });
+    });
+
+    describe('.status(code)', function() {
+        it('should set the response code', function(done) {
+            request(demo.server())
+                .get('/status')
+                .expect(302)
+                .end(done);
+        });
+    });
+
+    describe('.render(file,json)', function() {
+        it('should return the rendered file', function(done) {
+            request(demo.server())
+                .get('/render')
                 .end(function(err, res) {
-                    res.text.should.include('hello world');
-                    done();
+                    res.text.should.include(':D');
+                    request(demo.server())
+                        .get('/render')
+                        .end(function(err, res) {
+                            res.text.should.include(':D');
+                            done();
+                        });
                 });
         });
     });
+
+
+    describe('.sendFile(file)', function() {
+        it('should return the orig file', function(done) {
+            request(demo.server())
+                .get('/sendFile')
+                .end(function(err, res) {
+                    res.text.should.include('welcome');
+                    request(demo.server())
+                        .get('/sendFile')
+                        .end(function(err, res) {
+                            res.text.should.include('welcome');
+                            done();
+                        });
+                });
+        });
+    });
+
+
 });
