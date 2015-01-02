@@ -214,7 +214,6 @@ var server = function() {
         };
         var err_handler_wrapper = function(eh, err) {
             err.domain.$scope.error = err;
-            console.log('it should works!');
             var t = mkarg(err.domain.$scope, eh);
             t.f.apply(this, t.arg);
         };

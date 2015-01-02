@@ -9,7 +9,7 @@ var Zeta = require('../../'),
 conf.ns = {};
 conf.ns.ns = {};
 m.config('root', __dirname);
-m.config('circleCheck', true);
+
 
 /*=======================================================*/
 m.config('v', 1);
@@ -19,23 +19,11 @@ m.config.of('ns').of('ns').val('v1', 1).val('v2', 2);
 m.l0c = true;
 
 
-describe('circular dependency check1', function() {
-    it('should throw error if circleCheck is true', function() {
-        try {
-            m.load();
-        } catch (e) {
-            e.message.toLowerCase().should.include('circular');
-        }
-    });
-});
-
 conf.ns = {};
 conf.ns.ns = {};
-m.config('circleCheck', false);
+m.load();
+
 describe('circular dependency check2', function() {
-    it('should be ok if circleCheck is false', function() {
-        m.load();
-    });
 
     describe('module inheritation check', function() {
         it('should inherit the attributes from all of its dependents', function() {

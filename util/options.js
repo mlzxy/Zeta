@@ -8,8 +8,6 @@ var defalta = {};
 
 
 function initOptions(m) {
-
-    m.config('circleCheck', false);
     m.config('root', process.cwd());
     m.config('public', "public");
     m.config('debug', true);
