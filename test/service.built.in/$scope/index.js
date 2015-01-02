@@ -62,7 +62,7 @@ demo.get('/render', function($scope) {
 });
 
 demo.get('/sendFile', function($scope) {
-    $scope.sendFile('/index.html');
+    $scope.sendFile('/index2.html');
 });
 
 

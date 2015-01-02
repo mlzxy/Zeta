@@ -48,7 +48,7 @@ m.g = m.guard = guard =
                 print.warn(msg2);
             }
         }
-        return this;
+        return this.guard;
     };
 
 var addItem = function(method, path) {

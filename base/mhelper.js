@@ -76,36 +76,6 @@ var mergeModule = function(m1, m2) {
 };
 
 
-var printCircle = function(idx, arr) {
-    print.detail("It is detected in the module:" + arr[idx]);
-    for (var i = idx; i < arr.length; i++) {
-        print.detail("Module " + arr[i] + " depends on " + JSON.stringify(global.ngld[arr[i]].dependent));
-    }
-    console.log('\n');
-};
-
-
-var circle = function(name, arr) {
-    var m = global.ngld[name];
-    if (m === undefined) return;
-    var deps = m.dependent;
-
-    if (deps.length == 1 && deps[0] == cfg.buildin)
-        deps = [];
-
-    if (arr.indexOf(name) !== -1) { //circular
-        var msg = "Circular dependency found in your modules!";
-        print.error(msg);
-        printCircle(arr.indexOf(name), arr);
-        throw new Error(msg);
-    }
-    var narr; //continue to check
-    for (var i = 0; i < deps.length; i++) {
-        narr = arr.slice();
-        narr.push(name);
-        circle(deps[i], narr);
-    }
-};
 
 
 
@@ -137,6 +107,5 @@ function updateOptions(a, b) {
 
 exports.init_mMap = init_mMap;
 exports.mergeModule = mergeModule;
-exports.circle = circle;
 exports.resetEnv = resetEnv;
 exports.updateOptions = updateOptions;

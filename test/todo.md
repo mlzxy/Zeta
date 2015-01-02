@@ -1,13 +1,13 @@
 
 # 0 
-fix bugs in base.circle
+fix bugs in base.circle [x]
 
 # 1
-guard()
+guard()   [x]
 
 
 # 2
-two html files for .sendFile and render
+two html files for .sendFile and render  [x]
 
 
 # 3

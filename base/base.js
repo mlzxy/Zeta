@@ -20,8 +20,6 @@ var load = function() {
     }
     var mOpt = global.mOpt;
     mhlp.updateOptions(this.config.options, mOpt);
-    if (this.config(options.circleCheck))
-        mhlp.circle(this.name, []);
 
     var deps = this.dependent,
         mMap = global.mMap;
@@ -36,7 +34,7 @@ var load = function() {
                 if (deps.length === 1 && i === 0) { //only one dependence and it's also circular
                     deps.push(cfg.builtin);
                 }
-                print.warn("Maybe there has some circular dependencies in the modules you used, in this case, config " + options.circleCheck + " to be true and you could see the problem.\n");
+                print.warn("Maybe there has some circular dependencies in the modules you used");
                 print.detail("In here, we assume it's ok, skip the problem and try to continue.");
                 continue;
             }
