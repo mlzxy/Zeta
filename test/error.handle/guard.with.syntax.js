@@ -26,7 +26,9 @@ m.handler('h1', function($scope) {
 m.post('/', 'h1');
 m.get('/', 'h1');
 m.get('/2', 'h1');
-m.guard.get().post('/').post('/form', 'h1').with(fe);
+m.guard.get().post('/').post('/form', 'h1').any('h1').with(fe);
+
+/*====other methods====*/
 
 
 describe('guard', function() {
@@ -60,4 +62,28 @@ describe('guard', function() {
         });
     });
 
+    describe('.any(f)', function() {
+        it('should set router:any and protect them', function(done) {
+            request(m.server())
+                .post('/any')
+                .expect(500)
+                .end(function(err, res) {
+                    res.text.should.include('Internal');
+                    done();
+                });
+        });
+    });
+
+    describe('peusdo test for all req methods', function() {
+        it('should work because they are treated totally the same internally', function() {
+            m.guard
+                .get().get('/').get('/', 'h1')
+                .head().head('/').head('/', 'h1')
+                .options().options('/').options('/', 'h1')
+                .delete().delete('/').delete('/', 'h1')
+                .put().put('/').put('/', 'h1')
+                .trace().trace('/').trace('/', 'h1')
+                .connect().connect('/').connect('/', 'h1').with(fe);
+        });
+    });
 });
