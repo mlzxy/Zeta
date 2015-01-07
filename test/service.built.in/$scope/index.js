@@ -34,8 +34,7 @@ demo.get('/json-2', function($scope) {
     $scope
         .json({
             hello: 'world'
-        })
-        .end();
+        });
 });
 
 

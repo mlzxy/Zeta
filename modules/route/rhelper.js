@@ -166,8 +166,7 @@ var server = function() {
         },
         json = function(obj) {
             this.setHeader("Content-Type", "application/json");
-            this.write(JSON.stringify(obj));
-            return this;
+            this.end(JSON.stringify(obj));
         };
 
     this.scope
