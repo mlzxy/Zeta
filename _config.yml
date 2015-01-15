@@ -1,15 +1,14 @@
 # Site settings
-title: Your awesome title
-subtitle: Your awesome subtitle
-email: your-email@domain.com
+title: Zetajs
+subtitle: Web Framework
 logo: /img/logo.svg
 favicon: /img/logo.svg
 description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+ Zeta is a simple, fast, and very extendable Web Framework in Nodejs.
+
+ Help you to Write your node web app in an angular and unexpress way.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://www.www.com" # the base hostname & protocol for your site
+url: "http://zetajs.io" # the base hostname & protocol for your site
 
 
 permalink: /post/:year/:month/:day/:title.html
