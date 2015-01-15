@@ -15,6 +15,9 @@ url: "http://www.www.com" # the base hostname & protocol for your site
 permalink: /post/:year/:month/:day/:title.html
 paginate: 1
 paginate_path: blog/page:num
+github: https://github.com/BenBBear/Zeta/
+footer_github: https://github.com/BenBBear/Zeta/tree/gh-pages
+
 
 # Build settings
 markdown: kramdown
