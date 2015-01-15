@@ -1,0 +1,107 @@
+---
+layout: gpost
+title: Material List
+---
+
+<style>
+.pag-button {
+  display: inline-block;
+  font-size: 0.8em;
+  color: #42b983;
+  font-weight: 700;
+  background-color: #fff;
+  padding: 8px 14px;
+  border-radius: 9px;
+  border: 1px solid #42b983;
+  transition: all 0.15s ease;
+  margin-right:7%;
+}
+.pag-button:hover {
+  color: #fff;
+  -webkit-transform: scale(1.03);
+  transform: scale(1.03);
+  background-color: #42b983;
+}
+
+.post {
+padding: 10px 10px 30px 10px;
+margin-bottom: 20px;
+}
+
+.prev{
+left:12%;
+}
+.curr{
+margin-top:1%;
+left:45%;
+}
+.next{
+right: 5%
+}
+
+.readmore{
+padding-top:10px;
+float:right;
+}
+
+.excerpt{
+background-color:#F7F7F7;
+padding:10px;
+}
+
+.pag-contain{
+position: relative;
+padding-bottom: 1%;
+}
+
+.pag-contain a{
+position: absolute;
+}
+.pag-contain span{
+position: absolute;
+}
+
+
+
+</style>
+<div class="blog ">
+    {% for post in paginator.posts %}
+        {% if post.url == page.url %}
+            {% else %}
+                <div class="post  clearfix" >
+                    <h2>
+                        <a href="{{ post.url | prepend: site.baseurl }}" style='color:#2c3e50;font-size:1.8em;font-weight:300;'>
+                        {{post.title}}
+                        </a>
+                    </h2>
+                    <div class='excerpt'>{{ post.content | strip_html | truncatewords:50}}</div>
+                    <a href="{{ post.url | prepend: site.baseurl }}" class="readmore">
+                        Continue Reading
+                    </a>
+
+                </div>
+            {% endif %}
+        {% endfor %}
+
+
+                <div class="pagination buttons pag-contain">
+
+      {% if paginator.previous_page %}
+      {% if paginator.page == 2 %}
+      <a class="prev pag-button" href="/blog/">Prev Post</a>
+      {% else %}
+        <a class="prev pag-button" href="/blog/page{{ paginator.previous_page }}">Prev Post</a>
+        {% endif %}
+      {% endif %}
+
+      <span class="curr">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
+
+
+      {% if paginator.next_page %}
+        <a class="pag-button next" href="/blog/page{{ paginator.next_page }}">Next Post</a>
+      {% endif %}
+
+
+
+    </div>
+</div>

@@ -1,0 +1,5 @@
+{% for x in include.url %}
+<li>
+<a class="nav-link " href="{{ site.baseurl }}{{x}}">{{include.val[forloop.index0]}} </a>
+</li>
+{% endfor %}

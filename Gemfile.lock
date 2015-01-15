@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: https://ruby.taobao.org/
   specs:
     RedCloth (4.2.9)
     activesupport (4.2.0)
@@ -124,3 +124,4 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages
+  jekyll-sitemap

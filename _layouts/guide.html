@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  {% include ghead.html %}
+  <body>
+
+    <div id="header">
+      {% include gheader.html %}
+    </div>
+
+    <div id="main">
+      <div class="sidebar">
+        {% include gmenu.html  %}
+      </div>
+
+      <div class="content with-sidebar">
+          {{ content }}
+        <div class="footer">
+          {% include gfooter.html %}
+        </div>
+      </div>
+
+    </div>
+  </body>
+  <script src="{{ "/lib/smooth-scroll.js" | prepend: site.baseurl }}"></script>
+  <script src="{{ "/lib/common.js" | prepend: site.baseurl }}"></script>
+</html>

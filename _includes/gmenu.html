@@ -1,0 +1,16 @@
+<div class="list">
+    <h2>Guide</h2>
+    <ul class="menu-root">
+        {% for gpage in site.guide  %}
+            {% if gpage.title == page.title %}
+            <li>
+                <a class="sidebar-link current" href="{{ gpage.url | prepend: site.baseurl  }}">{{ gpage.title }}</a>
+            </li>
+            {% else %}
+            <li>
+                <a class="sidebar-link" href="{{ gpage.url | prepend: site.baseurl  }}">{{ gpage.title }}</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
