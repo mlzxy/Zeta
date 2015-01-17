@@ -1,0 +1,12 @@
+<script>
+  if(window.innerWidth<720){
+      $('.content').css('max-width','100%');
+      $('.sidebar').css('width','220px');
+  }
+  $(window).on('resize',function(){
+      if(this.innerWidth<720) $('.content').css('max-width','100%');
+      else  $('.content').css('max-width','55%');
+  });
+</script>
+<script src="{{ "/lib/smooth-scroll.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/lib/common.js" | prepend: site.baseurl }}"></script>
