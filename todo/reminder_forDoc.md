@@ -1,1 +1,0 @@
-circleCheck为true时不能重复load, 为false时可以，重复load之后之前注册的东西都会丢失
