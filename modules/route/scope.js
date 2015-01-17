@@ -3,6 +3,7 @@ var swig = require('swig'),
     mime = require('mime');
 
 var cache = {},
+    cacheRender = {},
     cacheTime = {},
     cacheMime = {};
 
@@ -16,22 +17,11 @@ var render = function(file, json) {
                 self.status(500).end('Server Internal Error: ' + JSON.stringify(err));
             else {
                 if (stat.mtime == cacheTime[file]) {
-                    self.end(swig.render(cache[file], {
-                        locals: json
-                    }));
+                    self.end(cacheRender[file](json));
                 } else {
-                    fs.readFile(path, function(err, data) {
-                        if (err)
-                            self.status(500).end('Server Internal Error: ' + JSON.stringify(err));
-                        else {
-                            cacheTime[file] = stat.mtime;
-                            cacheMime[file] = mime.lookup(path);
-                            cache[file] = data instanceof Buffer ? data.toString() : data;
-                            self.end(swig.render(cache[file], {
-                                locals: json
-                            }));
-                        }
-                    });
+                    cacheTime[file] = stat.mtime;
+                    cacheRender[file] = swig.compileFile(path);
+                    self.end(cacheRender[file](json));
                 }
             }
         });
@@ -40,18 +30,9 @@ var render = function(file, json) {
             if (err)
                 self.status(500).end('Server Internal Error: ' + JSON.stringify(err));
             else {
-                fs.readFile(path, function(err, data) {
-                    if (err)
-                        self.status(500).end('Server Internal Error: ' + JSON.stringify(err));
-                    else {
-                        cacheTime[file] = stat.mtime;
-                        cacheMime[file] = mime.lookup(path);
-                        cache[file] = data instanceof Buffer ? data.toString() : data;
-                        self.end(swig.render(cache[file], {
-                            locals: json
-                        }));
-                    }
-                });
+                cacheTime[file] = stat.mtime;
+                cacheRender[file] = swig.compileFile(path);
+                self.end(cacheRender[file](json));
             }
         });
     }

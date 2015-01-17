@@ -9,4 +9,5 @@ coverage/
 !.gitignore
 !.travis.yml
 *.wiki
+_site
 tmp.txt
