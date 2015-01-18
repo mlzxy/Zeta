@@ -4,7 +4,6 @@ title: Provider
 date: 2015-01-16
 ---
 #Provider
------------------
 
 ##Overview
 
@@ -154,7 +153,6 @@ This is a design which makes sense. But kinds of unique work done in handling ju
 - You can overwrite the previous Provider by defining one with the same name once more.
 - Remember to add your Provider name to the argument list of request handler function.
 - Provider is shared between differnt handlers whether they belong to the same request or not. So be cautious to change Provider in handlers. 
-
 
 
 
