@@ -151,8 +151,39 @@ This is a design which makes sense. But kinds of unique work done in handling ju
 ##Attention
 
 - You can overwrite the previous Provider by defining one with the same name once more.
+
+~~~js
+demo.provider('$say',{content:'hi'});
+console.log(demo.provider('$say').content);
+//hi
+demo.provider('$say',{content:'hello'});
+console.log(demo.provider('$say').content);
+//hello
+~~~
+
 - Remember to add your Provider name to the argument list of request handler function.
-- Provider is shared between differnt handlers whether they belong to the same request or not. So be cautious to change Provider in handlers. 
+- Provider is shared between differnt handlers whether they belong to the same request or not. So be cautious to change Provider in handlers. The follow examples can help you figure this out, and we recommend you to read chapter handler before scanning it.
+
+~~~js
+demo.provider('$count',{num:0});
+demo.get('/count',function($scope,$count){
+    $count.num++;
+    $scope.send($count.num.toString()).end();
+});
+//you will get 1,2,3,4.. with client request '/count'
+~~~
+
+~~~js
+demo.provider('$count',{num:0});
+demo.handler('h0',function($scope,$count){
+    $count.num++;
+    $scope.go('next');
+});
+demo.handler('h1',function($scope,$count){
+    $scope.send($count.num.toString()).end();
+});
+//you will get 1 instead of 0 when request '/count' for first time
+~~~
 
 
 
