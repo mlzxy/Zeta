@@ -162,7 +162,7 @@ console.log(demo.provider('$say').content);
 ~~~
 
 - Remember to add your Provider name to the argument list of request handler function.
-- Provider is shared between differnt handlers whether they belong to the same request or not. So be cautious to change Provider in handlers. The follow examples can help you figure this out, and we recommend you to read chapter handler before scanning it.
+- Provider is shared between differnt handlers whether they belong to the same request or not. So be cautious to change Provider in handlers. The follow examples can help you figure this out, and we recommend you to read chapter Routing before scanning it.
 
 ~~~js
 demo.provider('$count',{num:0});
