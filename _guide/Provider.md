@@ -61,10 +61,10 @@ Then a question comes, why we use Provider instead of sending the string itself 
 
 ~~~js
 demo.get('/abc',function($scope,$sayhi){
-    $scope.send($sayhi.content).send('abc').end();
+    $scope.send($sayhi.content+'abc').end();
 });
 demo.get('/efg',function($scope,$sayhi){
-    $scope.send($sayhi.content).send('efg').end();
+    $scope.send($sayhi.content+'efg').end();
 });
 ....
 ~~~
