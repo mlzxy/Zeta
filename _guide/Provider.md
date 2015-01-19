@@ -79,7 +79,7 @@ demo.provider('$sayhi',{
 
 But without it, who knows? More will be described to help you use Provider in proper situations next.
 
-###A simple Example
+###A Simple Example
 We give a more complicated example for you to comprehend Provider globally, just ignore the part that you cannot understand now.
 
 ~~~js
