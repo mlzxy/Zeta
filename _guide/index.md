@@ -1,8 +1,10 @@
 ---
 layout: guide
 title: Introduction
-date: 2015-01-16
+date: 2015-01-13
 ---
+
+# Introduction
 
 ![npm version](https://badge.fury.io/js/zeta.svg)
 ![](https://travis-ci.org/BenBBear/Zeta.svg)
