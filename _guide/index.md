@@ -36,8 +36,6 @@ npm install zeta
 
 ### Module
 - Angular-like module mechanism.
-    - Handle circular dependency
-    - Config dependent modules
 
 
 ![]({{site.baseurl}}/img/module.png)
