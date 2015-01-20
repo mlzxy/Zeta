@@ -51,11 +51,9 @@ npm install zeta
 app
 .provider('foo',{})
 .factory('bar',function(foo){
-   //do stuff;
-   return morefoo; 
+   return foo; 
 })
 .get('/', function($scope, foo, bar){
-     // stuff
 })
 ~~~
 
@@ -68,13 +66,12 @@ app
 
 ~~~javascript
 app
-.handler('login', function($scope){
-   // stuff
+.handler('login', function($scope){//stuff
 })
 .handler('checkLogin', function($scope,$cookie,db){
      db.check($cookie.val('user'), function(ok){
           if (ok){
-             $scope.go('next');  //resume on the array
+             $scope.go('next'); 
            }else{
              $scope.go('login');
          }         
@@ -93,21 +90,16 @@ app
 
 ~~~javascript
 app.config('guard',true)
-.guard.get().post('/')  //protect all get paths, and '/' post path with the following function
+.guard.get().post('/') 
 .with(function($scope){
- //$scope.error is the error Object
- //deal with error
- $scope.end('404 not found');
+ $scope.end('404 not found'); 
 });
 ~~~
-
-(note that domain method is not perfect, but seems no ideal choice around. See more in our [Error Handle Section](http://zetajs.io/guide/ErrorHandle.html).)
-
 
 
 ### More
 
-- Use Node Default Http Module: No Worries about Library Support like [socket.io](socket.io)
+- **Use Node Default Http Module**: No Worries about Library Support like [socket.io](socket.io)
 - **Built-in Factory & Handler**: Ready To Use & Easy to Add 
 
 ## Quick Start
