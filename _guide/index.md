@@ -30,6 +30,7 @@ npm install zeta
 
 ## Features
 
+
 ### Speed
 - Fast, see our [benchmark with express](https://github.com/BenBBear/Zeta-benchmark).
 
@@ -38,10 +39,13 @@ npm install zeta
     - Handle circular dependency
     - Config dependent modules
 
+
 ![]({{site.baseurl}}/img/module.png)
 
 
+
 ### Service
+
 - Angular-like Factory & Provider
 - Dependency Injection for Factory & Handler
 
@@ -57,7 +61,10 @@ app
 })
 ~~~
 
+
 ### Middleware
+
+
 
 - **More Flexible Approach** to handle "Middleware"
 
@@ -80,7 +87,9 @@ app
 }]);
 ~~~
 
+
 ### Error Handle
+
 
 - **Built-in Error Handle Support** use [Domain](nodejs.org/api/domain.html): 
 
@@ -95,6 +104,7 @@ app.config('guard',true)
 ~~~
 
 (note that domain method is not perfect, but seems no ideal choice around. See more in our [Error Handle Section](http://zetajs.io/guide/ErrorHandle.html).)
+
 
 
 ### More
