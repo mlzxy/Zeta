@@ -89,7 +89,7 @@ app
 - **Built-in Error Handle Support** use [Domain](nodejs.org/api/domain.html): 
 
 ~~~javascript
-app.config('guard',true)
+app
 .guard.get().post('/') 
 .with(function($scope){
  $scope.end('404 not found'); 
