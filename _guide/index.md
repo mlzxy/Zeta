@@ -12,11 +12,10 @@ date: 2015-01-13
 
 ~~~javescript
 var m = require('zeta').module('test',[])
-m.config('root',__dirname)
 
 .load()
 .get('/', function ($scope) {
-  $scope.send('Hello World').end();
+  $scope.end('Hello World');
 })
 .app(8000);
 ~~~
@@ -32,10 +31,10 @@ npm install zeta
 
 
 ### Speed
-- Fast, see our [benchmark with express](https://github.com/BenBBear/Zeta-benchmark).
+- Fast, See our [benchmark with express](https://github.com/BenBBear/Zeta-benchmark).
 
 ### Module
-- Angular-like module mechanism.
+- Angular-like Module Mechanism.
 
 
 ![]({{site.baseurl}}/img/module.png)
