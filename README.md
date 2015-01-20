@@ -18,17 +18,8 @@
 
 ## Guide Table of Contents (TODO)
 
-- Introduction(可以当做readme)                           [BenBBear]
-如何安装, 特点, benchmark结果粗略讲, 最简单的例子
 
-- Module                                                 [BenBBear]
-概念, 如何继承, 继承图. config的option传播. 使用时的坑
 
-- provider                                               [suemi]
-什么情况下使用provider, 怎么使用, 大家共享
-
-- factory                                                 [suemi]
-什么情况下使用factory, 怎么使用, 大家共享
 
 - routing                                                 [suemi]
 路径声明方式1
