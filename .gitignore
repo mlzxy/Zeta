@@ -1,2 +1,9 @@
+*~
+.tern*
+.#*
+node_modules/
+coverage/
+*.log
+!.gitignore
 _site
-.sass-cache
+.sass-cache/
