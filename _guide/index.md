@@ -30,14 +30,18 @@ npm install zeta
 
 ## Features
 
+#### Speed
 - Fast, see our [benchmark with express](https://github.com/BenBBear/Zeta-benchmark).
+
+#### Module
 - Angular-like module mechanism.
-    - could handle circular dependency
-    - use config to customize dependent modules before `app.load()` to load them.
-    - config support namespace for easier to use.
+    - Handle circular dependency
+    - Config dependent modules before `app.load()` to load them.
 
 ![]({{site.baseurl}}/img/module.png)
 
+
+#### Service
 - Angular-like Factory & Provider
 - Dependency Injection for Factory & Handler
 
@@ -52,6 +56,8 @@ app
      // stuff
 })
 ~~~
+
+#### Middleware
 
 - **More Flexible Approach** to handle "Middleware"
 
@@ -74,6 +80,8 @@ app
 }]);
 ~~~
 
+#### Error Handle
+
 - **Built-in Error Handle Support** use [Domain](nodejs.org/api/domain.html): 
 
 ~~~javascript
@@ -87,6 +95,9 @@ app.config('guard',true)
 ~~~
 
 (note that domain method is not perfect, but seems no ideal choice around. See more in our [Error Handle Section](http://zetajs.io/guide/ErrorHandle.html).)
+
+
+#### More
 
 - Use Node Default Http Module: No Worries about Library Support like [socket.io](socket.io)
 - **Built-in Factory & Handler**: Ready To Use & Easy to Add 
