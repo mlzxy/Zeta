@@ -406,6 +406,9 @@ ul.demo li {
 }
 .content h1 {
   margin: 0 0 1em;
+  padding-top: 10%;
+  padding-bottom: 5%;
+  border-bottom: 1px solid #eee;
 }
 .content h2 {
   margin: 2em 0 0.8em;
