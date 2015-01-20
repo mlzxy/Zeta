@@ -7,7 +7,7 @@
         "test": "test"
     },
     "scripts": {
-        "test": "gulp test "
+        "test": "node --stack-size=655000 ./node_modules/gulp/bin/gulp.js test"
     },
     "repository": {
         "type": "git",
