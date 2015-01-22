@@ -56,11 +56,9 @@ depends on **whether object b has _isNamespace attribute to be true.**
 
 Here comes the ugly part :(  **Don't read it if you haven't finished those sections above.**
 
----
 
-We know Zeta will find modules for you when the `root` is configed. And the module name don't have to be the same with the file name.
 
-> But, how this works?
+> We know Zeta will find modules for you when the **root** is configed. And the module name don't have to be the same with the file name. But, how this works?
 
 
 In short, Zeta will read the first 10 lines of each js file in `root` directory. And use regex to match Pattern
