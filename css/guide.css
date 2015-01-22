@@ -405,7 +405,7 @@ ul.demo li {
   margin-left: 20px;
 }
 .content h1 {
-  margin: 1em 0 0 1em;
+  margin: 1em 0 0 0em;
   padding-top: 0.7em;
   padding-bottom: 3%;
   border-bottom: 1px solid #eee;
