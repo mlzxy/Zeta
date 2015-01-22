@@ -2,10 +2,7 @@ var Zeta = require('../../../'),
     conf = require('../conf.js'),
     m = Zeta.module('l1b', ['l2c', 'l2d']);
 
-//this changes would not take effects
-m.config('v', 2);
-m.config.of('ns').val('v1', 2).val('v2', 4);
-m.config.of('ns').of('ns').val('v1', 2).val('v2', 4);
+
 m.load();
 
 conf.v = m.config('v');

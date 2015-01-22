@@ -3,9 +3,7 @@ var Zeta = require('../../../../'),
     m = Zeta.module('l1c', ['l2e', 'l2f', 'l2g']);
 
 
-m.config('v', 2);
-m.config.of('ns').val('v1', 2).val('v2', 4);
-m.config.of('ns').of('ns').val('v1', 2).val('v2', 4);
+
 m.load();
 
 conf.v = m.config('v');

@@ -2,11 +2,18 @@ var Zeta = require('../../../'),
     conf = require('../conf.js'),
     m = Zeta.module('l2d', []);
 
-m.config('v', 2);
-m.config.of('ns').val('v1', 2).val('v2', 4);
-m.config.of('ns').of('ns').val('v1', 2).val('v2', 4);
+if (m.config('v') !== 1)
+    throw new Error('m.config(v) = ' + m.config('v'));
+
+var tmp = m.config('v');
+m.config('v', 3);
+
 m.load();
 
+if (m.config('v') !== 3)
+    throw new Error();
+
+m.config('v', tmp);
 conf.v = m.config('v');
 conf.ns.v1 = m.config.of('ns').val('v1');
 conf.ns.v2 = m.config.of('ns').val('v2');

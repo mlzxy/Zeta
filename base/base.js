@@ -18,8 +18,7 @@ var load = function() {
         masterLoad = true;
         global.mOpt = this.config.options;
     }
-    var mOpt = global.mOpt;
-    mhlp.updateOptions(this.config.options, mOpt);
+
 
     var deps = this.dependent,
         mMap = global.mMap;
@@ -157,6 +156,7 @@ var module = function(mname, mnArr) {
         m.dependent = [cfg.builtin];
     }
     /*the ngld here is to log module loading order*/
+    mhlp.updateOptions(m.config.options, global.mOpt);
     return m;
 };
 
