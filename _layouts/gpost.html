@@ -3,20 +3,11 @@
   {% include ghead.html %}
   <body>
     <style>
-        #mobile-bar{
-            text-align:center;
-            vertical-align:middle;
-        }
-        #mobile-bar .menu-button{
-            position:relative;
-            border:0;
-            width:30%;
-            top:30%;
-        }
+      {% include mobile-bar.css %}
     </style>
     <div id="mobile-bar">
         <button class="menu-button">Menu</button>
-    </div> 
+    </div>
     <div id="header">
       {% include gheader.html %}
     </div>

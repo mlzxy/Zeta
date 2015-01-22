@@ -1,0 +1,14 @@
+#mobile-bar{
+    text-align:center;
+    vertical-align:middle;
+}
+#mobile-bar .menu-button{
+    position: relative;
+    border: 0em;
+    left: 1%;
+    font-weight: bolder;
+    font-size: large;
+    color: #2c3e50;
+    width: 30%;
+    top: 30%;
+}
