@@ -406,13 +406,13 @@ ul.demo li {
 }
 .content h1 {
   margin: 0 0 1em;
-  padding-top: 10%;
+  padding-top: 0.7em;
   padding-bottom: 5%;
   border-bottom: 1px solid #eee;
 }
 .content h2 {
-  margin: 2em 0 0.8em;
-  padding-bottom: 0.7em;
+  margin: 3em 0 0.8em;
+  padding-bottom: 0.5em;
   border-bottom: 1px solid #ddd;
 }
 .content h3 {
@@ -424,7 +424,7 @@ ul.demo li {
 .content p,
 .content ul,
 .content ol {
-  margin: 0.8em 0 0.8em 0.8em;
+  margin: 0.8em 0 0.8em 0em;
 }
 .content p,
 .content ul,
@@ -440,7 +440,11 @@ ul.demo li {
   font-weight: 600;
 }
 .content blockquote {
-  margin: 0;
+    border-left: 8px solid #5CEFA8;
+    margin: 1em 0 0 1em;
+    padding: 0.1em 0.4em 0.1em 0.4em;
+    background-color: aliceblue;
+    font-style: italic;
 }
 .content blockquote p {
   margin-left: 0;
