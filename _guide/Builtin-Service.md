@@ -94,7 +94,7 @@ demo.load();
 demo.any('static');
 ~~~
 
-For instance,  ./public/avatar.img will be transferred to client side when request for path '/avatar.img' arrives if the image file really exists. Otherwise you will get a 404. The subdirectory is also supported and you can left the last letter '/' of file path out.
+For instance,  ./public/img/avatar.jpg will be transferred to client side when request for path '/img/avatar.jpg' arrives if the image file really exists. Otherwise you will get a 404. The subdirectory is also supported and you can left the last letter '/' of file path out.
 
 ###Index Situation
 
