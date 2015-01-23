@@ -41,14 +41,15 @@ m.factory('foo', function($scope){
 
 # Getting Start
 
-`$scope` contains **request & response information and a lot of other crucial utilities**.
+`$scope` contains **request & response information and some utilities**.
 
-## Utility
+## Utilities
 
 $scope is just a ServerResponse with more useful attributes.
 
-> $scope.constructor.prototype === http.ServerResponse.prototype
-
+~~~javascript 
+$scope.constructor.prototype === http.ServerResponse.prototype
+~~~
 
 ### $scope.sendFile
 
