@@ -45,9 +45,10 @@ m.factory('foo', function($scope){
 
 ## Utility
 
+$scope is just a ServerResponse with more useful attributes.
+
 > $scope.constructor.prototype === http.ServerResponse.prototype
 
-$scope is just a serverresponse with more useful attributes.
 
 ### $scope.sendFile
 
@@ -74,7 +75,6 @@ var m = require('zeta').module('m1',[])
 })
 ~~~
 
-> Notice here!
 
 if `index.html` is
 
@@ -94,7 +94,7 @@ Really easy.
 $scope.send(string or jsonObject);
 ~~~
 
-> Note that $scope.send won't end the response.
+Note that $scope.send won't end the response.
 
 
 ### $scope.json
@@ -103,7 +103,7 @@ $scope.send(string or jsonObject);
 $scope.json(jsonObject);
 ~~~
 
-> Note that $scope.json only accept json like Object, and will end the string.
+Note that $scope.json only accept json like Object, and will end the string.
 
 ### $scope.head
 
