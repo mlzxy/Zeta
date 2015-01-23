@@ -79,7 +79,7 @@ var m = require('zeta').module('m1',[])
 if `index.html` is
 
 ~~~html
-{% extends 'other.html' %}
+< include other.html >
 ~~~
 
 and the `other.html` changed, but the `mtime` of `index.html` do not, so render will still use the cache. So you have to change `index.html` to have the cache updated.
