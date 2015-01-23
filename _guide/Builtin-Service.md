@@ -106,4 +106,4 @@ demo.config.of('built-in').of('static-server').val('indexFile',['.html','.md']);
 //you get /views/index.html when request for path /views
 ~~~
 
-What's more, the priority of suffix follows the order of your config array. For our example, the index.html is preferred compared with index.md.
+What's more, the priority of suffix follows the order of your config array. For our example, the index.html is preferred compared with index.md.The index.html will be got if two files exist at the same time.
