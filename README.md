@@ -31,12 +31,9 @@ get对应一个数组, 这时候讲如何3个handler之间如何交互go, (说�
 之后再讲go可以跳到其他地方再回来(最好有张图)
 
 
-- scope                                                  [BenBBear]
-就是response, 里面有什么函数, 分别怎么用. 如何定制scope
-其他还未讲过的scope变量, 列出来, 一句话简介.
 
-- builtin services                                       [suemi]
-每个介绍一下
+
+
 
 - error handle                                           [BenBBear]
 domain(node天生很难解决error throw问题) 这个放在more materials里面
