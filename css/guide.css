@@ -310,7 +310,8 @@ ul.demo li {
   height: 24px;
   top: 8px;
   left: 12px;
-  background: url("../images/menu.png") center center no-repeat;
+  /* background: url("../images/menu.png") center center no-repeat; */
+  background-color:white;
   background-size: 24px;
 }
 #mobile-bar .logo {
