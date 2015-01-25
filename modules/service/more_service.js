@@ -79,7 +79,7 @@ m.factory('$cookie', cookie);
 
 /*static server*/
 var indexFile = m.config.of('built-in').of('static-server').val('indexFile');
-var processFun = {};
+var processFun = m.config.of('built-in').of('static-server').val('processFun');
 var idxEE = new emt();
 idxEE.on('notFound', function(realPath, pathname, response) {
     response.writeHead(404, {
@@ -158,11 +158,13 @@ var sendFile = function(realPath, pathname, response) {
                         response.end(JSON.stringify(err));
                     }
                 } else {
-
+                    var pfun = processFun[path.extname(realPath)] || function(x) {
+                        return x;
+                    };
                     response.writeHead(200, {
                         'Content-Type': mime.lookup(realPath)
                     });
-                    response.write(file, "binary");
+                    response.write(pfun(file), "binary");
                     response.end();
                 }
             });

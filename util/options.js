@@ -16,6 +16,7 @@ function initOptions(m) {
     m.config('guard', false);
     m.config('globalDomain', false);
     m.config.of('built-in').of('static-server').val('indexFile', ['.html', '.htm', '.md']);
+    m.config.of('built-in').of('static-server').val('processFun', {});
 }
 
 
