@@ -23,15 +23,31 @@ m.guard
 });
 ~~~
 
-Then if  your server `throw error` on `/`, rather than crash, it will return user a `500`.
+Then if  your server `throw error` on `/`, rather than crash, it will return user a `500`. **(with limitation)**
 
 # Getting Start
 
-The `guard.with` is very easy to use and  carries limitations.
+The `guard.with` is very easy to use and also carries limitations.
 
 ## Use
 
-### 
+- guard `/` get path with `fe`
+
+~~~javascript
+m.guard.get('/').with(fe);  //'get' could be post, delete, put...
+~~~
+
+- guard all get paths with `fe`
+
+~~~javascript
+m.guard.get().with(fe);  //'get' could be post, delete, put...
+~~~
+
+- guard any paths that haven't been guarded 
+
+~~~javascript
+m.guard.any().with(fe); 
+~~~
 
 
 ## Limit
