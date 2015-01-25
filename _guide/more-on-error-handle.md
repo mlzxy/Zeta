@@ -5,7 +5,7 @@ date: 2015-01-19
 ---
 
 
-# Include More EventEmitters
+#  More on Error Handle
 
 
 ## Use

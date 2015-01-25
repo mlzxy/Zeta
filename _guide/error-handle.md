@@ -75,7 +75,7 @@ d.run(function() {
 });
 ~~~
 
-And in case you want to catch the exceptions from other EventEmitter like database, please see the [More on Error Handle]({{ site.baseurl }}/guide/more-on-error-handle.html).
+And in case you want to catch the exceptions from other EventEmitters like database, please see the [More on Error Handle]({{ site.baseurl }}/guide/more-on-error-handle.html).
 
 
 
