@@ -34,11 +34,6 @@ get对应一个数组, 这时候讲如何3个handler之间如何交互go, (说�
 
 
 
-
-- error handle                                           [BenBBear]
-domain(node天生很难解决error throw问题) 这个放在more materials里面
-讲一下global domain怎么用, 但是有问题, 具体怎么回事, 看more materials
-
 - config                                                 [suemi]
 namespace, 每个option讲一下
 
