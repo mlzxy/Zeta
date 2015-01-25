@@ -4,10 +4,11 @@ title: Built-in Service
 date: 2015-01-22
 ---
 
-# Builtin Service
+# Built-in Service
 
 ## Overview
-Zeta.js has provided several kinds of service in common use in order to make it convenient for users to write the server-side code for web application. In the parts followed, we will introduce them in brief  for you separately.
+
+Here are some built-in useful services.
 
 ## $render
 
@@ -16,22 +17,19 @@ The service renders file & string using swig engine.
 > Note that $render is obsolete, please don't use it! Use $scope.render instead.
 
 ### Render A String
-You need to use the provider $render explicitly to render a string even there are variables in it.
 
 ~~~js
-demo.get('/',function($scope,$render){
+m.get('/',function($scope,$render){
     $scope.end($render.text('<p>{{msg}}</p>'),{
         msg:"hello,world"
     });
 });
-//demo is a module
 ~~~
 
 ### Render A File
-We have exposed an ease api for you to render html or swig file.
 
 ~~~js
-demo.get('/',function($scope){
+m.get('/',function($scope){
     $scope.render('/index.swig',{
         title:'Welcome'
     })
@@ -66,7 +64,7 @@ $cookie.val('user','bevis','maxAge',10000);
 $cookie.write($scope);
 
 //a complete example
-demo.get('/',function($scope,$cookie){
+m.get('/',function($scope,$cookie){
     $cookie.val('user','bevis',{
         path:'/user',
         maxAge:10000
@@ -78,10 +76,10 @@ demo.get('/',function($scope,$cookie){
 
 ## Form
 
-The factory `$form` returns a IncomingForm object of formidable, for the next operation, you can refer to formidable's documents.
+The factory `$form` returns a `IncomingForm` object of [formidable](https://github.com/felixge/node-formidable), you can refer to formidable's documents.
 
 ~~~js
-demo.post('/',function($scope,$form){
+m.post('/',function($scope,$form){
     .....
 });
 //$form is a IncomingForm object of formidable
@@ -95,28 +93,29 @@ demo.post('/',function($scope,$form){
 ### Use
 
 ~~~js
-demo.config('public',__dirname+'/public');
-demo.load();
-demo.any('static');
+m.config('public',__dirname+'/public');
+m.load();
+m.any('static');
 ~~~
 
 For instance,  ./public/img/avatar.jpg will be transferred to client side when request for path '/img/avatar.jpg' arrives.
 
 ### Render files
 
+For example, set render function for ".md" files.
 ~~~javascript
-demo.config.of('built-in').of('static-server').val('indexFile',{'.md': function(x){
+m.config.of('built-in').of('static-server').val('processFun',{'.md': function(x){
                                                                           return rendered x;
                                                                           }});
 ~~~
 
-Then `.md` file will get rendered and be sent to client.
+Then `.md` file will get rendered and then be sent to client.
 
 
 ### index.* 
 
 ~~~js
-demo.config.of('built-in').of('static-server').val('indexFile',['.html','.md']);
+m.config.of('built-in').of('static-server').val('indexFile',['.html','.md']);
 ~~~
 
 Then when you access `/`, it will return `index.html` and `index.md`. The priority  follows the order of `indexFile`. For our example, the `index.html` is preferred compared with `index.md`.

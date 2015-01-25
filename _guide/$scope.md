@@ -104,7 +104,7 @@ Note that $scope.send won't end the response.
 $scope.json(jsonObject);
 ~~~
 
-Note that $scope.json only accept json like Object, and will end the string.
+Note that $scope.json only accept json like Object, and will end the response.
 
 ### $scope.head
 

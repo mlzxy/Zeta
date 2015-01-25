@@ -6,10 +6,10 @@ date: 2015-01-19
 
 # Overview
 
-Zeta provide built-in support for error handling, and you could enable it by
+Zeta provide simple built-in support for error handling, and you could enable it by
 
 ~~~javascript
-m.config('guard',true);
+m.config('guard',true);  //by default it's false
 ~~~
 
 Then you could use 
@@ -49,11 +49,33 @@ m.guard.get().with(fe);  //'get' could be post, delete, put...
 m.guard.any().with(fe); 
 ~~~
 
+- set paths & guard
+
+~~~javascript
+m.guard.get('/', function($scope){   //could also be "post(x,y)", "any(x)" and etc... 
+                            $scope.end('hello world');
+                        })
+       .with(fe); 
+~~~
+
 
 ## Limit
 
+> guard only catch exceptions from req & res and those EventEmitter that default bind to [domain](nodejs.org/api/domain.html).
+
+
+Here is how guarded handler chain begins.
+
+~~~javascript
+var d = domain.create();
+d.add(req);
+d.add(res);
+d.run(function() {
+   $scope.go(fstate);
+});
+~~~
+
+And in case you want to catch the exceptions from other EventEmitter like database, please see the [{{ site.baseurl }}/guide/more-on-error-handle.html](Next Post).
 
 
 
-
-[{{ site.baseurl }}/guide/more-on-error-handle.html](Next Post)

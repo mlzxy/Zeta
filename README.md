@@ -36,9 +36,6 @@ should add `any`  m.any('/')
 
 
 
-- config                                                 [suemi]
-namespace, 每个option讲一下
-
 
 - a complete demo                                        [BenBBear]
 改一下angular-express-seed
