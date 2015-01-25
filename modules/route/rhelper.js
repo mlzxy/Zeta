@@ -71,7 +71,8 @@ var server = function() {
     }
 
     for (var i2 = 0; i2 < handlerE.length; i2++)
-        getF[handlerE[i2]] = handlerE[i2];
+        if (myUtil.isFunction(handlerE[i2]))
+            getF[handlerE[i2]] = handlerE[i2];
 
 
     //f2argH & f2argF
@@ -113,6 +114,9 @@ var server = function() {
     }
 
 
+    var toFunction = function(h){
+        return myUtil.isFunction(h) ? h : getF[h];
+    };
 
 
     /*=============================functions below would be called in the real request============================*/
@@ -221,7 +225,7 @@ var server = function() {
             for (var m in router) { //router
                 var s = router[m]; //post, get -> different hashmap of handler chain
                 for (var p in s) { //path1,path2 -> hander chain
-                    var eh = handlerE[((routerE[m][p] + 1) || (routerE.any.any + 1)) - 1] || err_handler_default,
+                    var eh = toFunction( handlerE[((routerE[m][p] + 1) || (routerE.any.any + 1)) - 1] ) || err_handler_default,
                         f = function(fstate, dchain, onErrorfun, req, res) {
                             var d = domain.create();
                             d.add(req);
@@ -249,7 +253,7 @@ var server = function() {
             for (var m in router) { //router
                 var s = router[m]; //post, get -> different hashmap of handler chain
                 for (var p in s) { //path1,path2 -> hander chain
-                    var eh = handlerE[((routerE[m][p] + 1) || (routerE.any.any + 1)) - 1] || err_handler_default,
+                    var eh = toFunction( handlerE[((routerE[m][p] + 1) || (routerE.any.any + 1)) - 1] ) || err_handler_default;
                         f = function(fstate, dchain, e, req, res) {
                             var d = domain.create();
                             d.add(req);

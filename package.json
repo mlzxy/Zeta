@@ -1,6 +1,6 @@
 {
     "name": "zeta",
-    "version": "0.5.5",
+    "version": "0.6.0",
     "description": "Write node web app in an angular and unexpress way",
     "main": "index.js",
     "directories": {
