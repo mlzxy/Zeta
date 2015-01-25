@@ -14,7 +14,7 @@ Here are some built-in useful services.
 
 The service renders file & string using swig engine.
 
-> Note that $render is obsolete, please don't use it! Use $scope.render instead.
+> Note that **$render** is obsolete, please don't use it! Use **$scope.render** instead.
 
 ### Render A String
 
@@ -103,10 +103,14 @@ For instance,  ./public/img/avatar.jpg will be transferred to client side when r
 ### Render files
 
 For example, set render function for ".md" files.
+
 ~~~javascript
-m.config.of('built-in').of('static-server').val('processFun',{'.md': function(x){
-                                                                          return rendered x;
-                                                                          }});
+m.config.of('built-in')
+        .of('static-server')
+        .val('processFun',{'.md': 
+                              function(x){
+                                 return rendered x;
+                                 }});
 ~~~
 
 Then `.md` file will get rendered and then be sent to client.
@@ -118,4 +122,4 @@ Then `.md` file will get rendered and then be sent to client.
 m.config.of('built-in').of('static-server').val('indexFile',['.html','.md']);
 ~~~
 
-Then when you access `/`, it will return `index.html` and `index.md`. The priority  follows the order of `indexFile`. For our example, the `index.html` is preferred compared with `index.md`.
+Then when you access `/`, it will return `index.html` or `index.md`. The priority  follows the order of `indexFile`. For our example, the `index.html` is preferred compared with `index.md`.

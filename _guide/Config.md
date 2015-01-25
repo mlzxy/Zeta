@@ -7,7 +7,7 @@ date: 2015-01-25
 #Config
 
 ##Overview
-In this chapter, we introduce how to configure a module in order to make better use of the powerful Zeta framework.
+In this chapter, we introduce how to configure a module in order to make better use of this framework.
 
 ##Base Usage
 
@@ -38,7 +38,7 @@ demo.load();
 ~~~
 
 ##Namespace
-The namespace part has been explained in the module chapter, so there will be no replication.
+The namespace part has been explained in the [module chapter](http://zetajs.io/guide/Module.html).
 
 ##What To Config
 

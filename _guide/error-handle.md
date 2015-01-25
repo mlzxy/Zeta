@@ -23,7 +23,7 @@ m.guard
 });
 ~~~
 
-Then if  your server `throw error` on `/`, rather than crash, it will return user a `500`. **(with limitation)**
+Then if  your server `throw error` on `/`, rather than crash, it will return user a `500`. 
 
 # Getting Start
 
@@ -61,7 +61,7 @@ m.guard.get('/', function($scope){   //could also be "post(x,y)", "any(x)" and e
 
 ## Limit
 
-> guard only catch exceptions from req & res and those EventEmitter that default bind to [domain](nodejs.org/api/domain.html).
+> guard only catch exceptions from req & res and those EventEmitters that default binded to [domain](nodejs.org/api/domain.html).
 
 
 Here is how guarded handler chain begins.
@@ -75,7 +75,7 @@ d.run(function() {
 });
 ~~~
 
-And in case you want to catch the exceptions from other EventEmitter like database, please see the [{{ site.baseurl }}/guide/more-on-error-handle.html](Next Post).
+And in case you want to catch the exceptions from other EventEmitter like database, please see the [More on Error Handle]({{ site.baseurl }}/guide/more-on-error-handle.html).
 
 
 

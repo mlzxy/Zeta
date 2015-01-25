@@ -454,7 +454,7 @@ ul.demo li {
     font-style: italic;
 }
 .content blockquote p {
-  margin-left: 0;
+  margin-left: 1em;
 }
 .content iframe {
   margin: 1em 0;
