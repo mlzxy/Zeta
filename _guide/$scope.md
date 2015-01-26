@@ -181,3 +181,10 @@ var m = require('zeta').module('m1',[])
 Then access `/` will return `hello world`.
 
 > $scope.dchain is the handler chain, $scope.go('next') will pick the next handler in that array. So $scope could resume back to the chain even it goes nowhere.
+
+
+
+### $scope.params
+
+The variables get matched in the dynmaic url will be available in the `$scope.params`. 
+
