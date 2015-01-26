@@ -10,8 +10,8 @@ date: 2015-01-16
 You register `provider` to module, then it will be available to handlers & factories through dependency injection.
 
 ~~~javascript
-m.provider('$hello', "hello");
-m.get('/', function($scope, $hello){
+m.provider('$hello', "hello")
+.get('/', function($scope, $hello){
              $scope.end($hello);
 })
 
