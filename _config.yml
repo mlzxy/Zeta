@@ -2,7 +2,7 @@
 title: Zetajs
 subtitle: Web Framework
 logo: /img/logo.svg
-favicon: /img/logo.svg
+favicon: /img/favicon.ico
 description: > # this means to ignore newlines until "baseurl:"
  Zeta is a simple, fast, and very extendable Web Framework in Nodejs.
 
