@@ -67,7 +67,7 @@ var addItem = function(method, path) {
 
 
 var w = function(f) { //f is a handler function
-    myUtil.checkErr(!myUtil.isFunction(f), 'You could not guard your server with a non-function object :(');
+    myUtil.checkErr(!(myUtil.isFunction(f) || myUtil.isString(f)), 'You could not guard your server with a non-handler :(');
     var hidx = dh.length;
     dh.push(f);
     for (var i = 0; i < stack.length; i++) {

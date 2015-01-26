@@ -24,14 +24,15 @@ var parseName = function(str) {
 
 
 
-
+var maxLines = 10;
 var init_mMap = function(root) {
     var mMap = {};
     var ff = function(root, stat, next) {
         var filename = root + '/' + stat.name;
         if (!myUtil.isHidden(filename) && filename.endsWith(".js")) {
-            var source = fs.readFileSync(filename); //readFile, parse file, get name!
-            var name = parseName(source.toString());
+            var source = fs.readFileSync(filename).toString(); //readFile, parse file, get name!
+            var lines = source.split('\n').slice(0, maxLines).join();
+            var name = parseName(lines);
             if (name !== undefined)
                 mMap[name] = filename;
         }

@@ -24,9 +24,10 @@ var testService_Built_in = ['./test/service.built.in/*.js',
 
 
 var testErrHandle = ['./test/error.handle/async.error.js',
-    './test/error.handle/guard.with.syntax.js',
-    './test/error.handle/sync.error.js'
-];
+                     './test/error.handle/guard.with.syntax.js',
+                     './test/error.handle/sync.error.js',
+                     './test/error.handle/guard.handler.js'
+                    ];
 
 /*==============================================================================*/
 
