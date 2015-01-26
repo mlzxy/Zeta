@@ -64,7 +64,7 @@ m.factory('$cookie',function($scope, $parse){
 Just like the Provider, you can get the Factory already registered , otherwise `undefined` will come to you.
 
 ~~~js
-var $cookie= m.factory('$cookie');
+var $cookie = m.factory('$cookie');
 /*
 $cookie == function($scope, $parse){
        return mkcookie($parse($scope.req));
@@ -92,8 +92,9 @@ var m1 = require('zeta').module('m1',['f1']);
 ~~~js
 //Factory.js
 var f = require('zeta').module('f1',[]),
-    mg = require('mongoose'');
+    mg = require('mongoose');
 
+//stuff
 f.provider('$db', mg)
 .factory('$cookie', function($scope){  //only for **example**, $cookie is already built-in.
       //stuff
