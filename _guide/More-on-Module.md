@@ -1,8 +1,8 @@
 ---
 layout: guide
 title: More on Module
-date: 2015-01-16
-premalink: /Module-more.html
+date: 2015-01-12
+premalink: /More-On-Module.html
 ---
 
 

@@ -1,7 +1,7 @@
 ---
 layout: guide
 title: Introduction
-date: 2015-01-13
+date: 2015-01-10
 ---
 
 # Introduction

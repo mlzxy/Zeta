@@ -1,13 +1,13 @@
 ---
 layout: guide
 title: Config
-date: 2015-01-25
+date: 2015-01-20
 ---
 
 # Config
 
 ## Overview
-In this chapter, we introduce how to configure a module in order to make better use of this framework.
+In this chapter, we introduce how to configure a module and some built-in configurations.
 
 ## Base Usage
 
