@@ -448,7 +448,7 @@ ul.demo li {
   font-weight: 600;
 }
 .content blockquote {
-    border-left: 8px solid #5CEFA8;
+    border-top: 8px solid #5CEFA8;
     margin: 1em 0 0 1em;
     padding: 0.1em 0.4em 0.1em 0.4em;
     background-color: aliceblue;

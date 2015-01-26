@@ -58,7 +58,7 @@ var p = m.provider('$sayhi');
 // p  === $sayhi
 ~~~
 
-### A Simple Example
+## A Simple Example
 
 
 ~~~js
