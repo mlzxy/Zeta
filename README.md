@@ -7,7 +7,7 @@
 ![](https://coveralls.io/repos/BenBBear/Zeta/badge.png)
 
 
-<img src="http://zetajs.io/img/logo.svg" class="" alt="logo" style="width:50%" /> 
+<img src="http://zetajs.io/img/logo.svg" class="" alt="logo" style="max-width:50%" /> 
 
 
 ```javescript
