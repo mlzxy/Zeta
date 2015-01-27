@@ -6,7 +6,9 @@
 ![](https://travis-ci.org/BenBBear/Zeta.svg)
 ![](https://coveralls.io/repos/BenBBear/Zeta/badge.png)
 
-![](http://zetajs.io/img/logo.svg)
+
+<img src="http://zetajs.io/img/logo.svg" class="" alt="logo" style="width:50%" /> 
+
 
 ```javescript
 var m = require('zeta').module('test',[])
@@ -18,12 +20,15 @@ var m = require('zeta').module('test',[])
 .app(8000);
 ```
 
+<br><br><br>
+
 ## Installation
 
 ```shell
 npm install zeta
 ```
 
+<br><br><br>
 
 ## Features
 
@@ -35,7 +40,7 @@ npm install zeta
 - Angular-like Module Mechanism.
 
 
-![]({{site.baseurl}}/img/module.png)
+![](http://zetajs.io/img/module.png)
 
 
 
@@ -83,7 +88,7 @@ app
 ### Error Handle
 
 
-- **Built-in Error Handle Support** use [Domain](nodejs.org/api/domain.html): 
+- **Built-in Error Handle Support** use [Domain](http://nodejs.org/api/domain.html): 
 
 ```javascript
 app
@@ -96,14 +101,18 @@ app
 
 ### More
 
-- **Use Node Default Http Module**: No Worries about Library Support like [socket.io](socket.io)
+- **Use Node Default Http Module**: No Worries about Library Support like [socket.io](http://socket.io)
 - **Built-in Factory & Handler**: Ready To Use & Easy to Add 
+
+
+<br><br><br>
 
 ## Quick Start
 
 1. Our [Guide](http://zetajs.io/guide) is a nice place to get start.
 2. You could bootstrap your code from [zeta-seed](https://github.com/cloud-bear/zeta-seed).
 
+<br><br><br>
 
 ## Tests
 
@@ -114,6 +123,8 @@ $ git clone https://github.com/BenBBear/Zeta dir && cd dir
 $ npm install
 $ npm test
 ```
+
+<br><br><br>
 
 ## License
 
