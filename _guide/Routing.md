@@ -4,11 +4,11 @@ title: Routing
 date: 2015-01-27
 ---
 
-#Routing
+# Routing
 
 
-#Overview
-In this chapter, you learn how to handle requests form client through Zeta. The code can be written in the familiar express way.
+# Overview
+In this chapter, you will learn how to handle requests form client through Zeta. The code can be written in the familiar express way.
 
 ~~~js
 m.get('/',function($scope){
@@ -19,15 +19,19 @@ m.get('/',function($scope){
 Dynamic Routing and Regex is also supported.
 
 ~~~js
-m.get('/v1/time/:gmt(^\\+[0-9]{1,2}$)',function($scope){
+m.get('/v1/time/:gmt(^\\+[0-9]{1,2}$)',function($scope){ 
 	$scope.end($scope.params.gmt);
 });
 ~~~
 
-##Handler
+- the rule is `/:varname(pattern)`
 
-###Single Handler
-The work can be also complted by handlers.
+
+## Handler
+
+### Single Handler
+
+The work can be also completed by handlers.
 
 ~~~js
 m.handler('h0',function($scope){
@@ -35,7 +39,7 @@ m.handler('h0',function($scope){
 });
 m.get('/','h0');
 ~~~
-You can also use h for handler in short like below.
+You can also use `h` for `handler` in short like below.
 
 ~~~js
 m.h('h0',function($scope){
@@ -43,7 +47,7 @@ m.h('h0',function($scope){
 });
 ~~~
 
-###Chain Handlers
+### Chain Handlers
 A chain of handlers is also allowed.
 
 ~~~js
@@ -60,27 +64,38 @@ m.h('h1',function($scope){
 m.h('h2',function($scope){
 	$scope.send($scope.count.toString());
 });
+
+m.get('/', ['h0','h1','h2']);
 ~~~
-The function $scope.go described in chapter $scope ensures you jump from one handler to another successfully.
+The function $scope.go described in chapter $scope, which enables you jump from one handler to another.
 
-##Request Methods
 
-###Method Any
+And you could mix `function` and `string` in the chain, like below:
+
+~~~javascript
+m.get('/', [function($scope){$scope.go('next');},
+            'h1']);
+~~~
+## Request Methods
+
+### Any
+
+The paths that haven't caught by anyone will go `any`.
 
 ~~~js
 m.any(function($scope){
 	$scope.status(404).end('Not Found');
 });
 
-###Other Methods
-Zeta supports almost all http methods including get, post, head, put, delete, option, trace and any. All methods except any have the same interface. Here is an instance for post.
+### Other Methods
+Zeta supports almost all http methods including get, post, head, put, delete, option, trace and any. All methods have the same interface. Here is an instance for post.
 
 ~~~js
 m.post('/',handler);
 m.post('/',function($scope){..});
 ~~~
 
-##Routong Path
+## Routong Path
 With powerful $scope.go, you can design your own routing path using handlers in the chain.
 
 ~~~js
