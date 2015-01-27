@@ -1,9 +1,29 @@
 ---
 layout: guide
 title: More on Module
-date: 2015-01-12
 premalink: /More-On-Module.html
 ---
+
+
+## Init 
+
+You could set `init function` for your module
+
+~~~javascript
+m.setInit(function(){
+  this.val = 1;  //val will be accessible from this module
+});
+~~~
+
+And the `init function` will be executed right after that module been load.
+
+~~~javascript
+for (var i in dependents){
+   tmp_m = require(dependents[i]);
+   tmp_m.init();
+   m = merge(m,tmp_m);
+}
+~~~
 
 
 

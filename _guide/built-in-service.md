@@ -1,7 +1,6 @@
 ---
 layout: guide
 title: Built-in Service
-date: 2015-01-17
 ---
 
 # Built-in Service
@@ -10,13 +9,14 @@ date: 2015-01-17
 
 Here are some built-in useful services.
 
-## $render
+## render
 
-The service renders file & string using swig engine.
+The service renders file & string using [swig engine](paularmstrong.github.io/swig/).
 
-> Note that **$render** is obsolete, please don't use it! Use **$scope.render** instead.
 
 ### Render A String
+
+> Note that **$render** is obsolete, please don't use it! Use **$scope.render** instead.
 
 ~~~js
 m.get('/',function($scope,$render){

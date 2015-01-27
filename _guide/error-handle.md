@@ -1,7 +1,6 @@
 ---
 layout: guide
 title: Error Handle
-date: 2015-01-18
 ---
 
 # Overview

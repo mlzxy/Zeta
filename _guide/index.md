@@ -1,7 +1,6 @@
 ---
 layout: guide
 title: Introduction
-date: 2015-01-10
 ---
 
 # Introduction
@@ -103,8 +102,8 @@ app
 
 ## Quick Start
 
-1. Our [Guide](http://zetajs.io/guide) is the best place to get start.
-2. You could bootstrap your code from [angular-zeta-seed](https://github.com/cloud-bear/angular-zeta-seed).
+1. Our [Guide](http://zetajs.io/guide) is a nice place to get start.
+2. You could bootstrap your code from [zeta-seed](https://github.com/cloud-bear/zeta-seed).
 
 
 ## Tests

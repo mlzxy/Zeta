@@ -1,7 +1,6 @@
 ---
 layout: guide
 title: Factory
-date: 2015-01-14
 ---
 
 # Factory

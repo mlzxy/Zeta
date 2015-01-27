@@ -1,7 +1,6 @@
 ---
 layout: guide
 title: Config
-date: 2015-01-20
 ---
 
 # Config

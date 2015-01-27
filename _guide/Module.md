@@ -1,7 +1,6 @@
 ---
 layout: guide
 title: Module
-date: 2015-01-11
 ---
 
 # Overview
