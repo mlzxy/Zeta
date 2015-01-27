@@ -1,6 +1,6 @@
 ---
 layout: guide
-title: $scope
+title: Shortcuts
 ---
 
 
