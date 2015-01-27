@@ -426,9 +426,16 @@ ul.demo li {
 .content h3 {
     background-color:aliceblue;
     border-left: 5px solid #42b983;
-    margin: 2em 0 0.8em;
+    margin: 5em 0 0.8em;
     padding-left: 0.5em;
 }
+
+.content h4 {
+    background-color: whitesmoke;
+    border-left: 4px solid #C5C5C5;
+    padding-left: 1em;
+}
+
 .content figure,
 .content p,
 .content ul,
