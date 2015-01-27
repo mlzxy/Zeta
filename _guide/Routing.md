@@ -76,6 +76,7 @@ And you could mix `function` and `string` in the chain, like below:
 m.get('/', [function($scope){$scope.go('next');},
             'h1']);
 ~~~
+
 ## Request Methods
 
 ### Any
@@ -95,7 +96,7 @@ m.post('/',handler);
 m.post('/',function($scope){..});
 ~~~
 
-## Routong Path
+## Routing Path
 With powerful $scope.go, you can design your own routing path using handlers in the chain.
 
 ~~~js
