@@ -235,7 +235,57 @@ Register a chain of handlers for http-trace requests.
 ### m.with
 
 
+
+
 ## $scope
+
+### $scope.sendFile
+
+#### $scope#$scope.sendFile(path)
+
+#### Parameters
+
+### $scope.render
+
+#### $scope#$scope.render(path)
+
+#### Parameters
+
+### $scope.send
+
+#### $scope#$scope.send(x)
+
+#### Parameters
+
+
+### $scope.json
+
+#### $scope#$scope.json(obj)
+
+#### Parameters
+
+
+
+### $scope.status
+
+#### $scope#$scope.status(num)
+
+#### Parameters
+
+
+### $scope.head
+
+#### $scope#$scope.head(key,val)
+
+#### Parameters
+
+### $scope.go
+
+#### undefined#$scope.go(name)
+
+#### Parameters
+
+
 
 ## Builtin Service
 

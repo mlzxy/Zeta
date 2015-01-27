@@ -424,9 +424,10 @@ ul.demo li {
   border-bottom: 1px solid #ddd;
 }
 .content h3 {
-  border-left: 5px solid #42b983;
-  margin: 2em 0 0.8em;
-  padding-left: 0.5em;
+    background-color:aliceblue;
+    border-left: 5px solid #42b983;
+    margin: 2em 0 0.8em;
+    padding-left: 0.5em;
 }
 .content figure,
 .content p,
