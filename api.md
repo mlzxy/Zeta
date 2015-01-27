@@ -54,7 +54,7 @@ Get configure namespace.
 - namespace(String)
 
 4. NamespaceObject#m.config.of(namespace).val(key,value)
-Set the value of the key option in the namespace.
+Set the value of the key option in the namespace. 
 *Parameters* 
 - name(String)Namespce name
 - key(String)The option name you want to set
