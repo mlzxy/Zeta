@@ -87,6 +87,8 @@ The paths that haven't caught by anyone will go `any`.
 m.any(function($scope){
 	$scope.status(404).end('Not Found');
 });
+~~~
+
 
 ### Other Methods
 Zeta supports almost all http methods including get, post, head, put, delete, option, trace and any. All methods have the same interface. Here is an instance for post.
