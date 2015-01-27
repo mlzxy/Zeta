@@ -125,6 +125,14 @@ $ npm test
 
 <br><br><br>
 
+## Contributors
+
+
+
+- [BenBBear](https://github.com/BenBBear/)
+- [suemi994](https://github.com/suemi994/)
+
+
 ## License
 
 MIT
