@@ -16,11 +16,11 @@ m.get('/',function($scope){
 });
 ~~~
 
-Dynamic Routing is also supported.
+Dynamic Routing and Regex is also supported.
 
 ~~~js
-m.get('/users/:name',function($scope){
-	$scope.end($scope.params.name);
+m.get('/v1/time/:gmt(^\\+[0-9]{1,2}$)',function($scope){
+	$scope.end($scope.params.gmt);
 });
 ~~~
 
