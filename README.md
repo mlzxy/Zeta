@@ -1,8 +1,4 @@
----
-layout: guide
-title: Introduction
-premalink: /guide/index.html
----
+
 
 # Introduction
 
@@ -10,7 +6,7 @@ premalink: /guide/index.html
 ![](https://travis-ci.org/BenBBear/Zeta.svg)
 ![](https://coveralls.io/repos/BenBBear/Zeta/badge.png)
 
-![](logo.svg)
+![](https://github.com/BenBBear/Zeta/blob/dev/logo.svg)
 
 ~~~javescript
 var m = require('zeta').module('test',[])
