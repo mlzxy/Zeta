@@ -6,8 +6,7 @@
 ![](https://travis-ci.org/BenBBear/Zeta.svg)
 ![](https://coveralls.io/repos/BenBBear/Zeta/badge.png)
 
-
-<img src="http://zetajs.io/img/logo.svg" class="" alt="logo" style="max-width:50%" /> 
+![logo](https://raw.githubusercontent.com/BenBBear/Zeta/dev/logo.png) 
 
 
 ```javescript
