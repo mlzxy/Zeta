@@ -45,7 +45,7 @@ float:right;
 }
 
 .excerpt{
-background-color:#F7F7F7;
+background-color:#FeFeFe;
 padding:10px;
 }
 
@@ -74,7 +74,9 @@ position: absolute;
                         {{post.title}}
                         </a>
                     </h2>
-                    <div class='excerpt'>{{ post.content | strip_html | truncatewords:50}}</div>
+
+                    <div class='excerpt'>{{ post.content | strip_html | truncatewords:50}} </div>
+
                     <a href="{{ post.url | prepend: site.baseurl }}" class="readmore">
                         Continue Reading
                     </a>

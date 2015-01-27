@@ -1,7 +1,7 @@
 ---
-layout: guide
+layout: gpost
 title: More on Module
-premalink: /More-On-Module.html
+premalink: /mt/more-on-module.html
 ---
 
 

@@ -1,6 +1,7 @@
 ---
-layout: guide
+layout: gpost
 title: More on Error Handle
+premalink: /mt/more-on-error-handle.html
 ---
 
 

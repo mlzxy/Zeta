@@ -1,6 +1,7 @@
 ---
-layout: guide
+layout: gpost
 title: Shortcuts
+premalink: /mt/shortcut.html
 ---
 
 
