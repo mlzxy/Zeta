@@ -9,7 +9,7 @@
 ![logo](https://raw.githubusercontent.com/BenBBear/Zeta/dev/logo.png) 
 
 
-```javescript
+```javascript
 var m = require('zeta').module('test',[])
 
 .load()
