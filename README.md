@@ -108,7 +108,7 @@ app
 
 ## Quick Start
 
-1. Our [Guide](http://zetajs.io/guide) is a nice place to get start.
+1. Our [Guide](http://zetajs.io/guide/1.Introduction.html) is a nice place to get start.
 2. You could bootstrap your code from [zeta-seed](https://github.com/cloud-bear/zeta-seed).
 
 <br><br><br>
