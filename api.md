@@ -42,26 +42,22 @@ Start a server and attach it to a module.
 1. configObject#m.config(key)
 Return the value of the option you specific.
 *Parameters*
-
 - key(String)Option name you specific
 
 2. module#m.config(key,val)
 Set the value of the option sepecificed by key.
 *Parameters*
-
 - key(String)Option name
 - val(String,Boolean)Value you want to set
 
 3. NamespaceObject#m.config.of(namespace)
 Get configure namespace.
 *Parameters*
-
 - namespace(String)
 
 4. NamespaceObject#m.config.of(namespace).val(key,value)
 Set the value of the key option in the namespace. 
 *Parameters*
-
 - name(String)Namespce name
 - key(String)The option name you want to set
 - value(String,Array,Object)The option value you want to set
