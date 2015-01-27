@@ -23,7 +23,7 @@ Create a module instance.
 #### module#m.any(x)
 Handle unregistered requests.
 
-#### Parameters
+**Parameters**:  
 - x(String,Array,Function)The handler name, a chain of handlers or a handler function with its first argument as $scope
 
 ### m.app
@@ -31,7 +31,7 @@ Handle unregistered requests.
 #### server#m.app(port,bool)
 Start a server and attach it to a module.
 
-#### Parameters
+**Parameters**:  
 - port(Integer)The port your server will listen to
 - bool(Boolean)Recreate the server when it's true while using the server from cache for flase, default is false
 
@@ -40,31 +40,36 @@ Start a server and attach it to a module.
 #### configObject#m.config(key)
 Return the value of the option you specific.
 
-#### Parameters
+**Parameters**:  
 - key(String)Option name you specific
 
 #### module#m.config(key,val)
 Set the value of the option sepecificed by key.
 
-#### Parameters
+**Parameters**:  
 - key(String)Option name
 - val(String,Boolean)Value you want to set
 
 #### NamespaceObject#m.config.of(namespace)
 Get configure namespace.
 
-#### Parameters
+**Parameters**:  
 - namespace(String)
 
-#### NamespaceObject#m.config.of(namespace).val(key,val)
+#### NamespaceObject#m.config.of(namespace).val(key,value)
 Set the value of the key option in the namespace.
+
+**Parameters**:  
+- name(String)Namespce name
+- key(String)The option name you want to set
+- value(String,Array,Object)The option value you want to set
 
 ### m.delete
 
 #### module#m.delete(path,x)
 Register handlers for http-delete requests.
 
-#### Parameters
+**Parameters**:  
 - path(String)Relative url the clent requests
 - x(String,Array,Function)The handler name, a chain of handlers or a handler function with its first argument as $scope
 
@@ -74,13 +79,13 @@ Register handlers for http-delete requests.
 #### factory#m.factory(name)
 Get the factory already defined.
 
-#### Parameters
+**Parameters**:  
 - name(String)The factory name
 
 #### factory#m.factory(name,func)
 Define a new factory.
 
-#### Parameters
+**Parameters**:  
 - name(String)The factory name you register
 - func(Function)The factory entity you define
 
@@ -89,7 +94,7 @@ Define a new factory.
 #### module#m.get(path,x)
 Register handlers for http-get requests.
 
-#### Parameters
+**Parameters**:  
 - path(String)Relative url the clent requests
 - x(String,Array,Function)The handler name, a chain of handlers or a handler function with its first argument as $scope
 
@@ -99,7 +104,7 @@ Register handlers for http-get requests.
 #### module#m.guard(emt)
 Set the global errorhandler.
 
-#### Parameters
+**Parameters**:  
 - emt(Emitter)The emmiter object used to handle global exceptions
 
 ### m.handler
@@ -107,13 +112,13 @@ Set the global errorhandler.
 #### handler#m.handler(name)
 Get the handler already defined.
 
-#### Parameters
+**Parameters**:  
 - name(String)The handler name
 
 #### handler#m.handler(name,func)
 Define a new handler.
 
-#### Parameters
+**Parameters**:  
 - name(String)The handler name you register
 - func(Function)The handler function with its first argument as $scope
 
@@ -122,7 +127,7 @@ Define a new handler.
 #### module#m.head(path,x)
 Register handlers for http-head requests.
 
-#### Parameters
+**Parameters**:  
 - path(String)Relative url the clent requests
 - x(String,Array,Function)The handler name, a chain of handlers or a handler function with its first argument as $scope
 
@@ -135,7 +140,7 @@ Load dependency modules.
 #### module#m.option(path,x)
 Register handlers for http-option requests.
 
-#### Parameters
+**Parameters**:  
 - path(String)Relative url the clent requests
 - x(String,Array,Function)The handler name, a chain of handlers or a handler function with its first argument as $scope
 
@@ -144,7 +149,7 @@ Register handlers for http-option requests.
 #### module#m.post(path,x)
 Register handlers for http-post requests.
 
-#### Parameters
+**Parameters**:  
 - path(String)Relative url the clent requests
 - x(String,Array,Function)The handler name, a chain of handlers or a handler function with its first argument as $scope
 
@@ -153,13 +158,13 @@ Register handlers for http-post requests.
 #### provider#m.provider(name)
 Get the provider already defined.
 
-#### Parameters
+**Parameters**:  
 - name(String)The provider name
 
 #### provider#m.provider(name,obj)
 Define a new provider.
 
-#### Parameters
+**Parameters**:  
 - name(String)The provider name you register
 - obj(Object)The provider entity you define
 
@@ -168,7 +173,7 @@ Define a new provider.
 #### module#m.put(path,x)
 Register handlers for http-put requests.
 
-#### Parameters
+**Parameters**:  
 - path(String)Relative url the clent requests
 - x(String,Array,Function)The handler name, a chain of handlers or a handler function with its first argument as $scope
 
@@ -177,27 +182,18 @@ Register handlers for http-put requests.
 #### module#m.trace(path,x)
 Register handlers for http-trace requests.
 
-#### Parameters
+**Parameters**:  
 - path(String)Relative url the clent requests
 - x(String,Array,Function)The handler name, a chain of handlers or a handler function with its first argument as $scope
 
 
-### m.config.of(name).val
-
-#### ConfigObject#m.config.of(name).val(key,value)
-Set the option value in specific namespace.
-
-#### Parameters
-- name(String)Namespce name
-- key(String)The option name you want to set
-- value(String,Array,Object)The option value you want to set
 
 ### m.with
 
 #### m.guard.get(..).post(..).with(x)
 Add error handler for requests registered next to the guard.
 
-#### Parameters
+**Parameters**:  
 - x(String,Array,Function)The handler name, a chain of handlers or a handler function with its first argument as $scope
 
 
@@ -211,7 +207,7 @@ Add error handler for requests registered next to the guard.
 #### CookieObject#$cookie.write(res)
 Write cookie to the client.
 
-#### Parameters
+**Parameters**:  
 - res(Object)The response object of node
 
 #### String#$cookie.val(key)
@@ -220,14 +216,14 @@ Return the value of the specific cookie
 #### CookieObject#$cookie.val(key,value)
 Set the cookie named key.
 
-#### Parameters
+**Parameters**:  
 - key(String)Cookie name
 - value(String)Cookie value
 
 #### CookieObject#$cookie.val(key,value,opt)
 Set the cookie with options initialized.
 
-#### Parameters
+**Parameters**:  
 - key(String)Cookie name
 - value(String)Cookie value
 - opt(Object)The option object of cookie
@@ -235,7 +231,7 @@ Set the cookie with options initialized.
 #### CookieObject#$cookie.val(key,value,optName,optValue)
 Set cookie value and option value.
 
-#### Parameters
+**Parameters**:  
 - key(String)Cookie name
 - value(String)Cookie value
 - optName(String)The option name you want to specify
@@ -250,7 +246,7 @@ Set cookie value and option value.
 #### String#$render.text(str,json)
 Return a new string with variables replaced according to json.
 
-#### Parameters
+**Parameters**:  
 - str(String)The string in swig format you want to render 
 - json(Object)Variables in string and their values
 
