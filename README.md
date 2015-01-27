@@ -6,9 +6,9 @@
 ![](https://travis-ci.org/BenBBear/Zeta.svg)
 ![](https://coveralls.io/repos/BenBBear/Zeta/badge.png)
 
-![](https://github.com/BenBBear/Zeta/blob/dev/logo.svg)
+![](http://zetajs.io/img/logo.svg)
 
-~~~javescript
+```javescript
 var m = require('zeta').module('test',[])
 
 .load()
@@ -16,13 +16,13 @@ var m = require('zeta').module('test',[])
   $scope.end('Hello World');
 })
 .app(8000);
-~~~
+```
 
 ## Installation
 
-~~~shell
+```shell
 npm install zeta
-~~~
+```
 
 
 ## Features
@@ -44,7 +44,7 @@ npm install zeta
 - Angular-like Factory & Provider
 - Dependency Injection for Factory & Handler
 
-~~~javascript
+```javascript
 app
 .provider('foo',{})
 .factory('bar',function(foo){
@@ -52,7 +52,7 @@ app
 })
 .get('/', function($scope, foo, bar){
 })
-~~~
+```
 
 
 ### Middleware
@@ -61,7 +61,7 @@ app
 
 - **More Flexible Approach** to handle "Middleware"
 
-~~~javascript
+```javascript
 app
 .handler('login', function($scope){//stuff
 })
@@ -77,7 +77,7 @@ app
 .get('/home', ['checkLogin', function($scope){
        $scope.end('welcome');
 }]);
-~~~
+```
 
 
 ### Error Handle
@@ -85,13 +85,13 @@ app
 
 - **Built-in Error Handle Support** use [Domain](nodejs.org/api/domain.html): 
 
-~~~javascript
+```javascript
 app
 .guard.get().post('/') 
 .with(function($scope){
  $scope.end('404 not found'); 
 });
-~~~
+```
 
 
 ### More
@@ -109,11 +109,11 @@ app
 
 To run the test suite, first clone the code, install the dependancies, then run `npm test`:
 
-~~~shell
+```shell
 $ git clone https://github.com/BenBBear/Zeta dir && cd dir
 $ npm install
 $ npm test
-~~~
+```
 
 ## License
 
