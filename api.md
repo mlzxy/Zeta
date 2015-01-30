@@ -234,6 +234,24 @@ Add error handler for requests registered next to the guard.
 
 ## $scope
 
+### $scope.provide
+
+#### $scope#$scope.provide(name,val)
+
+Inject component, which will be available for the following handlers
+
+*Parameters*
+
+- **name(string)**
+- **val(anything)**
+
+#### val#$scope.provide(name)
+
+return the $scope.component[name]
+
+*Parameters*
+
+- **name(string)**
 
 ### $scope.sendFile
 
