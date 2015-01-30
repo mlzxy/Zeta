@@ -75,22 +75,26 @@ var server = function() {
             getF[handlerE[i2]] = handlerE[i2];
 
 
-    //f2argH & f2argF
+        //f2argH & f2argF
     var getArg = function(v, arr, msg) {
         var args = [];
         var pvd, fat, arg;
-        for (var j = 0; j < arr.length; j++) { //args could only be from provider & factory
-            myUtil.checkErr(arr[j] == '$scope', msg + ': ' + v + ' use $scope not as its first argument');
+        for (var j = 0; j < arr.length; j++) {
+            myUtil.checkErr(arr[j] == '$scope', msg + ': ' + v + ' use $scope not as its first argument'); //这里不应再出现$scope
             pvd = provider[arr[j]];
             fat = factory[arr[j]];
             myUtil.checkErr(pvd !== undefined && fat !== undefined, 'Same Name conflicts founded between provider and factory: ' + a[j].toString());
-            myUtil.checkErr(pvd === undefined && fat === undefined, 'No provider or factory: ' + a[j].toString() + ' found. Maybe you use a wrong name');
+            myUtil.checkWarn(pvd === undefined && fat === undefined, 'No provider or factory: ' + a[j].toString() + ' found. Then you have to $scope.provide() it in the handler !!!');
             if (pvd !== undefined) {
                 arg = pvd;
-            } else {
+            } else if (fat !== undefined) {
                 arg = fat;
                 arg.isFactory = (myUtil.argOf(fat)[0] == '$scope') ? needScope : notNeedScope;
+            } else { //all undefined, must be provided by $scope.provide()
+                arg = {};
             }
+
+            arg.__name__ = arr[j];
             args.push(arg);
         }
         return args;
@@ -114,7 +118,7 @@ var server = function() {
     }
 
 
-    var toFunction = function(h){
+    var toFunction = function(h) {
         return myUtil.isFunction(h) ? h : getF[h];
     };
 
@@ -124,7 +128,7 @@ var server = function() {
         var a = f2argF[fatr];
         var args = fatr.isFactory == needScope ? [$scope] : [];
         for (var i = 0; i < a.length; i++) {
-            args.push(a[i].isFactory ? mkFactory($scope, a[i]) : a[i]);
+            args.push($scope._pvd[a[i].__name__] || a[i].isFactory ? mkFactory($scope, a[i]) : a[i]);
         }
         return fatr.apply(this, args);
     };
@@ -140,7 +144,7 @@ var server = function() {
         var a = f2argH[next] || [];
         var args = [$scope];
         for (var i = 0; i < a.length; i++)
-            args.push(a[i].isFactory ? mkFactory($scope, a[i]) : a[i]);
+            args.push($scope._pvd[a[i].__name__] || (a[i].isFactory ? mkFactory($scope, a[i]) : a[i]));
         return {
             f: f,
             arg: args
@@ -200,6 +204,7 @@ var server = function() {
                     res.res = res;
                     res.req = req;
                     res._public = public;
+                    res._pvd = {};
                     res.dchain = dchain;
                     res.params = req.params;
                     res._cacheService = {};
@@ -225,7 +230,7 @@ var server = function() {
             for (var m in router) { //router
                 var s = router[m]; //post, get -> different hashmap of handler chain
                 for (var p in s) { //path1,path2 -> hander chain
-                    var eh = toFunction( handlerE[((routerE[m][p] + 1) || (routerE.any.any + 1)) - 1] ) || err_handler_default,
+                    var eh = toFunction(handlerE[((routerE[m][p] + 1) || (routerE.any.any + 1)) - 1]) || err_handler_default,
                         f = function(fstate, dchain, onErrorfun, req, res) {
                             var d = domain.create();
                             d.add(req);
@@ -234,6 +239,7 @@ var server = function() {
                             res.res = res;
                             res.req = req;
                             res._public = public;
+                            res._pvd = {};
                             res.dchain = dchain;
                             res.params = req.params;
                             res._cacheService = {};
@@ -253,23 +259,24 @@ var server = function() {
             for (var m in router) { //router
                 var s = router[m]; //post, get -> different hashmap of handler chain
                 for (var p in s) { //path1,path2 -> hander chain
-                    var eh = toFunction( handlerE[((routerE[m][p] + 1) || (routerE.any.any + 1)) - 1] ) || err_handler_default;
-                        f = function(fstate, dchain, e, req, res) {
-                            var d = domain.create();
-                            d.add(req);
-                            d.add(res);
-                            res.res = res;
-                            res.req = req;
-                            res._public = public;
-                            res.dchain = dchain;
-                            res.params = req.params;
-                            res._cacheService = {};
-                            d.$scope = res;
-                            d.on('error', e);
-                            d.run(function() {
-                                res.go(fstate);
-                            });
-                        };
+                    var eh = toFunction(handlerE[((routerE[m][p] + 1) || (routerE.any.any + 1)) - 1]) || err_handler_default;
+                    f = function(fstate, dchain, e, req, res) {
+                        var d = domain.create();
+                        d.add(req);
+                        d.add(res);
+                        res.res = res;
+                        res.req = req;
+                        res._public = public;
+                        res._pvd = {};
+                        res.dchain = dchain;
+                        res.params = req.params;
+                        res._cacheService = {};
+                        d.$scope = res;
+                        d.on('error', e);
+                        d.run(function() {
+                            res.go(fstate);
+                        });
+                    };
                     f = f.bind(undefined, s[p][0], s[p], err_handler_wrapper.bind(undefined, eh));
                     p == 'any' ? lrt.any(f) : lrt[m](p, f);
                 }

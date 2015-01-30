@@ -225,5 +225,8 @@ m.scope.reserve = m.scope.resv = function() {
 
 var scope = require('./scope.js');
 
-m.scope.set('render', scope.render);
-m.scope.set('sendFile', scope.sendFile);
+m.scope.set('render', scope.render)
+    .set('sendFile', scope.sendFile)
+    .set('provider', scope.provider)
+    .set('provide', scope.provider)
+    .set('p', scope.provider);

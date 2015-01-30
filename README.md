@@ -35,13 +35,14 @@ npm install zeta
 ### Speed
 - Fast, See our [benchmark with express](https://github.com/BenBBear/Zeta-benchmark).
 
+<br> 
 ### Module
 - Angular-like Module Mechanism.
 
 
 ![](http://zetajs.io/img/module.png)
 
-
+<br> 
 
 ### Service
 
@@ -57,7 +58,7 @@ app
 .get('/', function($scope, foo, bar){
 })
 ```
-
+<br> 
 
 ### Middleware
 
@@ -83,6 +84,24 @@ app
 }]);
 ```
 
+- **Handlers Collaboration**: Component Injection for $scope
+
+```javascript
+app
+.h('h1', function($scope){
+    $scope
+       .provide('localInfo', 'hello world')  //then 'localInfo' will be available for injection in the following handlers
+       .go('next');
+})
+
+.h('h2', function($scope, localInfo){
+    $scope.end(localinfo)  // => hello world
+})
+
+.get('/', ['h1', 'h2']);
+```
+
+<br> 
 
 ### Error Handle
 
@@ -96,7 +115,7 @@ app
  $scope.end('404 not found'); 
 });
 ```
-
+<br> 
 
 ### More
 
@@ -131,6 +150,7 @@ $ npm test
 
 - [BenBBear](https://github.com/BenBBear/)
 - [suemi994](https://github.com/suemi994/)
+
 
 
 ## License
