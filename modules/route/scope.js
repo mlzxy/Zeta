@@ -88,5 +88,15 @@ var sendFile = function(file) {
 };
 
 
+var provider = function(k, v) {
+    if (arguments.length == 2) {
+        this._pvd[k] = v;
+        return this;
+    } else
+        return this._pvd[k];
+
+};
+
 exports.render = render;
 exports.sendFile = sendFile;
+exports.provider = provider;

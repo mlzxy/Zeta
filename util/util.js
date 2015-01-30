@@ -54,9 +54,13 @@ var checkErr = function(t, msg) {
         print.error(msg);
         throw new Error(msg);
     }
-
 };
 
+var checkWarn = function(t, msg) {
+    if (t) {
+        print.warn(msg);
+    }
+};
 
 
 function updateObj(a, b) {
@@ -128,6 +132,7 @@ exports.updateObj = updateObj;
 exports.quiteRequire = quiteRequire;
 exports.safeRequire = safeRequire;
 exports.checkErr = checkErr;
+exports.checkWarn = checkWarn;
 exports.invalidate = invalidate;
 exports.resetEnv = resetEnv;
 
