@@ -65,6 +65,27 @@ demo.get('/sendFile', function($scope) {
 });
 
 
+demo.get('/provide', [function($scope) {
+    $scope
+        .p('$cookie', 'helloworld')
+        .go('next');
+}, function($scope, $cookie) {
+    $scope.end($cookie);
+}]);
+
+
+demo.get('/provide2', [function($scope) {
+    $scope
+        .p('$helloworld', 'helloworld')
+        .go('next');
+}, function($scope, $helloworld) {
+    if ($helloworld === $scope.p('$helloworld'))
+        $scope.end($helloworld);
+    else
+        throw new Error();
+}]);
+
+
 describe('module.scope', function() {
     describe('.set(test,hello world)', function() {
         it('should set http.ServerResponse.prototype.test = hello world', function() {
@@ -183,5 +204,26 @@ describe('$scope', function() {
         });
     });
 
+    describe('.provide(key,val)', function() {
+        it('should provide dependency injected arguments for next handlers', function(done) {
+            request(demo.server())
+                .get('/provide')
+                .end(function(err, res) {
+                    res.text.should.equal('helloworld');
+                    done();
+                });
+        });
+    });
+
+    describe('.provide(key)', function() {
+        it('should return injected component', function(done) {
+            request(demo.server())
+                .get('/provide2')
+                .end(function(err, res) {
+                    res.text.should.equal('helloworld');
+                    done();
+                });
+        });
+    });
 
 });
